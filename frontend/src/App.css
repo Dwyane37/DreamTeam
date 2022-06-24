@@ -1,38 +1,38 @@
-.App {
+.welcomeMessageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.welcomeMessage {
   text-align: center;
+  color: #92ba92;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.login_registerForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50vw;
+  height: 30vh;
+  min-width: 250px;
+  min-height: 200px;
+  margin: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2rem;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.login_registerPage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login_registerMain {
+  background-color: #92ba92;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
