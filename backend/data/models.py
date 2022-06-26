@@ -1,5 +1,6 @@
 from sqlalchemy import Column,String,Integer,TIMESTAMP
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import class_mapper
 
 db = SQLAlchemy()
 
@@ -15,10 +16,13 @@ class User(db.Model):
     deleted = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
-    tag = Column(String(255))
     photo = Column(String(255))
     email = Column(String(255))
-    points = Column(Integer)
+    deleted = Column(Integer)
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)

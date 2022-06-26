@@ -10,6 +10,7 @@ jwt = JWTManager()
 app = Flask(__name__, static_url_path='/')
 app.config.from_object(Config)
 app.config.from_object(Data)
+app.register_blueprint(user_opt, url_prefix="/user/")
 jwt.init_app(app)
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -17,11 +18,7 @@ CORS(app, supports_credentials=True)
 
 @app.route("/", endpoint="test")
 def test():
-    res = db.session.query(User)
-    for row in res:
-        print(row.id, row.username)
-
-    return 'hellp'
+    return 'hello'
 
 
 if __name__ == '__main__':
