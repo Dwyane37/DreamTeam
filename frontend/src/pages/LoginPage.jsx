@@ -1,6 +1,7 @@
 import LoginForm from '../components/LoginForm';
 import React from 'react';
 import LoginNav from '../components/LoginNav';
+import ForgotPassword from '../components/ForgotPassword';
 
 function LoginPage() {
   //   localStorage.setItem('authToken', '');
@@ -12,6 +13,7 @@ function LoginPage() {
         <h1>Login</h1>
         <LoginForm />
       </div>
+      <ForgotPassword />
     </div>
   );
 }

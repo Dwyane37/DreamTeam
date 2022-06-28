@@ -11,14 +11,16 @@
   color: #92ba92;
 }
 
-.login_registerForm {
+.login_registerForm,
+.find_password_form,
+.verification_code_box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 50vw;
   height: 30vh;
   min-width: 250px;
-  min-height: 200px;
+  min-height: 230px;
   margin: 20px;
   border: 1px solid black;
   border-radius: 5px;
@@ -30,8 +32,15 @@
   align-items: center;
 }
 .login_registerMain {
-  background-color: #92ba92;
+  /* background-color: #92ba92; */
   width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.find_password_page {
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
