@@ -1,26 +1,96 @@
 import pymysql
-
+import datetime
 from interface.userApi import *
 from utils.exceptionMessage import *
+from utils.generator import *
 
 def checkRegistered(username, mobile, email):
-    if User.query(username=username) is not None:
+    if User.query.filter_by(username=username).first() is not None:
         return errorMessage(1, "This user is already exist")
-    elif User.query(email=email) is not None:
+    elif User.query.filter_by(email=email).first() is not None:
         return errorMessage(1, "This email is already registered")
-    elif User.query(mobile=mobile) is not None:
+    elif User.query.filter_by(mobile=mobile).first() is not None:
         return errorMessage(1, "This mobile is already registered")
 
     return errorMessage(2, "ok")
 
 def registerNewAccount(inputs):
     try:
-        newUser=User(username=inputs["username"],password=inputs["password"],mobile=inputs["mobile"],
-                     nickname=inputs['nickname'],sex=inputs['sex'],
-                     country = inputs['country'],deleted=inputs['deleted'],
-                     create_time=pymysql.Timestamp,update_time=pymysql.Timestamp,
-                     tag=inputs['tag'],photo=inputs['photo'],email=inputs['email'],points=1)
+        # newUser=User(username=inputs["username"],password=inputs["password"],mobile=inputs["mobile"],
+        #              nickname=inputs['nickname'],sex=inputs['sex'],
+        #              country = inputs['country'],deleted=inputs['deleted'],
+        #              create_time=pymysql.Timestamp,update_time=pymysql.Timestamp,
+        print('username:',inputs.username,"password:",inputs.password)
+
+        newUser = User(id=getuuid(),username=inputs.username, password=inputs.password, deleted=0,
+                           create_time=getTime(datetime),
+                       update_time=getTime(datetime),
+                       points=1)
+        print(newUser)
         db.session.add(newUser)
         db.session.commit()
     except Exception as e:
-        print(e)
+        print('here')
+        return errorMessage(1, e)
+
+def checkInfoCorrect(username, password):
+    try:
+        if User.query.filter_by(username=username).first() is None:
+            return errorMessage(1, "username is not exists")
+        user = User.query.filter_by(username=username).first()
+        if password != user.password:
+            return errorMessage(1,"username or password is incorrect")
+        return errorMessage(200, "ok")
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getUserId(username):
+    user = User.query.filter_by(username=username).first()
+    id = user.id
+    return id
+
+def checkOldPassword(id, old_password):
+    try:
+        user = User.query.get(id)
+        if user.password != old_password:
+            return errorMessage(1, "password is incorrect")
+        return errorMessage(2, "ok")
+    except Exception as e:
+        return errorMessage(1, e)
+
+def changepasswd(id, new_password):
+    try:
+        user = User.query.get(id)
+        user.password = new_password
+        db.session.commit()
+        return errorMessage(200, "ok")
+
+    except Exception as e:
+        return errorMessage(1, e)
+
+def checkEmailIsRegister(email):
+    try:
+        user = User.query.filter_by(email=email)
+        if user is None:
+            return errorMessage(1, "This email is not registered")
+        return errorMessage(2, "ok")
+
+    except Exception as e:
+        return errorMessage(1, e)
+
+def reset_password(email,password):
+    try:
+        user = User.query.filter_by(email=email).first()
+        user.password = password
+        db.session.commit()
+        return errorMessage(2,"ok")
+    except Exception as e:
+        return errorMessage(1, e)
+
+def logout_user(id):
+    try:
+        user = User.query.get(id)
+        return errorMessage(2, user.username)
+
+    except Exception as e:
+        return errorMessage(1, e)
