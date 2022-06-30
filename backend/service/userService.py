@@ -9,8 +9,6 @@ def checkRegistered(username, mobile, email):
         return errorMessage(1, "This user is already exist")
     elif User.query.filter_by(email=email).first() is not None:
         return errorMessage(1, "This email is already registered")
-    elif User.query.filter_by(mobile=mobile).first() is not None:
-        return errorMessage(1, "This mobile is already registered")
 
     return errorMessage(2, "ok")
 
@@ -20,15 +18,17 @@ def registerNewAccount(inputs):
         #              nickname=inputs['nickname'],sex=inputs['sex'],
         #              country = inputs['country'],deleted=inputs['deleted'],
         #              create_time=pymysql.Timestamp,update_time=pymysql.Timestamp,
-        print('username:',inputs.username,"password:",inputs.password)
-
-        newUser = User(id=getuuid(),username=inputs.username, password=inputs.password, deleted=0,
-                           create_time=getTime(datetime),
+        # print('username:',inputs.username,"password:",inputs.password)
+        id = getuuid()
+        newUser = User(id=id, username=inputs.username, password=inputs.password, deleted=0,
+                       email=inputs.email,
+                       create_time=getTime(datetime),
                        update_time=getTime(datetime),
-                       points=1)
-        print(newUser)
+                       points=1,
+                       type=0)
         db.session.add(newUser)
         db.session.commit()
+        return errorMessage(200, id)
     except Exception as e:
         print('here')
         return errorMessage(1, e)
@@ -39,7 +39,7 @@ def checkInfoCorrect(username, password):
             return errorMessage(1, "username is not exists")
         user = User.query.filter_by(username=username).first()
         if password != user.password:
-            return errorMessage(1,"username or password is incorrect")
+            return errorMessage(1, "username or password is incorrect")
         return errorMessage(200, "ok")
     except Exception as e:
         return errorMessage(1, e)
@@ -56,6 +56,7 @@ def checkOldPassword(id, old_password):
             return errorMessage(1, "password is incorrect")
         return errorMessage(2, "ok")
     except Exception as e:
+        print(e)
         return errorMessage(1, e)
 
 def changepasswd(id, new_password):
@@ -70,7 +71,7 @@ def changepasswd(id, new_password):
 
 def checkEmailIsRegister(email):
     try:
-        user = User.query.filter_by(email=email)
+        user = User.query.filter_by(email=email).first()
         if user is None:
             return errorMessage(1, "This email is not registered")
         return errorMessage(2, "ok")
@@ -83,7 +84,7 @@ def reset_password(email,password):
         user = User.query.filter_by(email=email).first()
         user.password = password
         db.session.commit()
-        return errorMessage(2,"ok")
+        return errorMessage(2, "ok")
     except Exception as e:
         return errorMessage(1, e)
 
@@ -94,3 +95,28 @@ def logout_user(id):
 
     except Exception as e:
         return errorMessage(1, e)
+
+def getuserfromid(id):
+    try:
+        user = User.query.get(id)
+        return errorMessage(200, user)
+    except Exception as e:
+        return errorMessage(1, e)
+
+def changedetail(id,mobile,nickname,sex,country,update_time,description,tag,
+                 photo,email):
+    try:
+        user = User.query.get(id)
+        user.mobile = mobile
+        user.nickname = nickname
+        user.sex = sex
+        user.country = country
+        user.update_time = update_time
+        user.description = description
+        user.tag = tag
+        user.photo = photo
+        user.email = email
+        db.session.commit()
+        return errorMessage(200, "ok")
+    except Exception as e:
+        return errorMessage(1,e)

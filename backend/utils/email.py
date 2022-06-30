@@ -1,6 +1,5 @@
-from flask_mail import Message
+
 from flask_mail import Mail
-import smtplib
 mail = Mail()
 #
 # def send_email(subject, recipients, text_body, html_body):
