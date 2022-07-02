@@ -11,12 +11,10 @@ export const apiPost = async (path, content) => {
   const res = await fetch(`http://127.0.0.1:5500/${path}`, init);
   await console.log(res);
   const body = await res.json();
-  if (body.errortype == 1) {
-    const errormsg = body.errormessage;
-    alert(errormsg);
-    return null;
+  if (body.errortype == 200) {
+    return (body)
   } else {
-    return body.errorMessage;
+    throw new Error(body.errormessage)
   }
 };
 
@@ -42,12 +40,10 @@ export const apiGet = async (path, paramDic) => {
   // await console.log(res);
   const body = await res.json();
   await console.log(body);
-  if (body.errortype == 1) {
-    const errormsg = body.errormessage;
-    alert(errormsg);
-    return null;
+  if (body.errortype == 200) {
+    return (body)
   } else {
-    return body.errorMessage;
+    throw new Error(body.errormessage)
   }
 };
 
@@ -57,11 +53,9 @@ export const apiCall = async (path, paramDic) => {
   // await console.log(res);
   const body = await res.json();
   await console.log(body);
-  if (body.errortype == 1) {
-    const errormsg = body.errormessage;
-    alert(errormsg);
-    return null;
+  if (body.errortype == 200) {
+    return (body)
   } else {
-    return body.errormessage;
+    throw new Error(body.errormessage)
   }
 };

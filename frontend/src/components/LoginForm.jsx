@@ -12,13 +12,11 @@ function LoginForm () {
 
   const login = (e) => {
     e.preventDefault();
-    apiGet('user/login', { username, password }).then((token) => {
-      if (token) {
-        localStorage.setItem('token', token);
-        navigate('/home')
-      }
-
-    });
+    apiGet('user/login', { username, password }).then((body) => {
+      console.log(body)
+      localStorage.setItem('token', body.errormessage);
+      navigate('/home')
+    }).catch(e => alert(e))
   };
 
   return (

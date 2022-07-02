@@ -18,12 +18,10 @@ function RegisterForm (props) {
   const register = (e) => {
     e.preventDefault();
     apiPost('user/register', { username, password, email }).then((body) => {
-      if (body) {
-        console.log(body);
-        navigate('/login')
-      }
 
-    });
+      console.log(body);
+      navigate('/login')
+    }).catch(e => alert(e))
   };
 
   return (
