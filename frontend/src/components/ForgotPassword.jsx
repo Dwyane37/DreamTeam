@@ -7,10 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
-
-export default function ForgotPassword() {
+import { apiGet } from './API';
+export default function ForgotPassword () {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [email, setEmail] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,9 +22,14 @@ export default function ForgotPassword() {
   };
 
   const handleSend = () => {
+    console.log(email)
     // TODO
     // send email to backend
-    navigate('/find_password');
+    apiGet('/user/forget', { email }).then(body => {
+      localStorage.setItem('code', body.errormessage)
+      navigate('/find_password');
+    }).catch(e => alert(e))
+
   };
 
   return (
@@ -33,7 +39,7 @@ export default function ForgotPassword() {
         <DialogTitle>Need help woth your password?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter your email you use for I-Student, and we will send you a code to verify your account.
+            Enter the email you use for I-Student, and we will send you a code to verify your account.
           </DialogContentText>
           <TextField
             autoFocus
@@ -43,6 +49,7 @@ export default function ForgotPassword() {
             type="email"
             fullWidth
             variant="standard"
+            onChange={(e) => { setEmail(e.target.value) }}
           />
         </DialogContent>
         <DialogActions>
