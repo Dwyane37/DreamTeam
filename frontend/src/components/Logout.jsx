@@ -24,14 +24,11 @@ export default function Logout () {
   const handleLogOut = () => {
     // id = localStorage.getItem('id') ? localStorage.getItem('id') : 1
     apiCall('user/logout', { id: 1 }).then((body) => {
-      if (body) {
-        console.log(body);
-        setOpen(false);
-        navigate('/')
-        localStorage.clear()
-      }
+      setOpen(false);
+      navigate('/')
+      localStorage.clear()
 
-    });
+    }).catch(e => alert(e))
 
   };
 
