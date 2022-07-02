@@ -11,12 +11,9 @@ class User(db.Model):
     password = Column(String(255),nullable=False)
     mobile = Column(Integer)
     nickname = Column(String(255))
-    sex = Column(Integer)
-    country = Column(String(255))
-    deleted = Column(Integer)
+    type = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
-    photo = Column(String(255))
     email = Column(String(255))
     deleted = Column(Integer)
 
