@@ -20,7 +20,6 @@ function RegisterForm (props) {
     apiPost('user/register', { username, password, email }).then((body) => {
       console.log(body);
       navigate('/login')
-
     });
   };
 

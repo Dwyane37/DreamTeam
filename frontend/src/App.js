@@ -5,6 +5,7 @@ import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import FindPasswordPage from './pages/FindPasswordPage';
+import HomePage from './pages/HomePage';
 function App() {
   return (
     <div>
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/find_password" element={<FindPasswordPage />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
       </Router>
     </div>
