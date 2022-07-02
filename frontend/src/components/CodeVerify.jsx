@@ -6,12 +6,16 @@ import Box from '@mui/material/Box';
 
 export default function CodeVerify(props) {
   const [code, setCode] = React.useState('');
-  const setCodeCorrect = props.verifyResult;
+  const [codeCorrect, setCodeCorrect] = props.verifyResult;
+
   const handleSubmit = (e) => {
+    if (code === localStorage.getItem('code')) {
+      setCodeCorrect(true);
+    } else {
+      setCodeCorrect(false);
+    }
     e.preventDefault();
     //TODO send code to backend
-    console.log('code submit');
-    setCodeCorrect(true);
   };
 
   return (
@@ -24,10 +28,16 @@ export default function CodeVerify(props) {
     >
       <label htmlFor="code">Enter the code you received</label>
       <TextField
+        error={codeCorrect === false && code !== '' ? true : false}
         aria-label="Verification Code"
         id="code"
         placeholder="abc123"
-        onChange={(e) => {
+        helperText={codeCorrect === false && code !== '' ? 'Incorrect code.' : null}
+        // onChange={(e) => {
+        //   setCode(e.target.value);
+        // }}
+        onBlur={(e) => {
+          setCodeCorrect(null);
           setCode(e.target.value);
         }}
       ></TextField>

@@ -8,10 +8,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 import { apiGet } from './API';
-export default function ForgotPassword () {
+export default function ForgotPassword() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,14 +22,13 @@ export default function ForgotPassword () {
   };
 
   const handleSend = () => {
-    console.log(email)
-    // TODO
-    // send email to backend
-    apiGet('/user/forget', { email }).then(body => {
-      localStorage.setItem('code', body.errormessage)
-      navigate('/find_password');
-    }).catch(e => alert(e))
-
+    apiGet('/user/forget', { email })
+      .then((body) => {
+        localStorage.setItem('code', body.errormessage);
+        localStorage.setItem('email', email);
+        navigate('/find_password');
+      })
+      .catch((e) => alert(e));
   };
 
   return (
@@ -49,7 +48,9 @@ export default function ForgotPassword () {
             type="email"
             fullWidth
             variant="standard"
-            onChange={(e) => { setEmail(e.target.value) }}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         </DialogContent>
         <DialogActions>
