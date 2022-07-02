@@ -3,6 +3,7 @@ import datetime
 from interface.userApi import *
 from utils.exceptionMessage import *
 from utils.generator import *
+from data.models import *
 
 def checkRegistered(username, email):
     if User.query.filter_by(username=username).first() is not None:
@@ -24,7 +25,6 @@ def registerNewAccount(inputs):
                        email=inputs.email,
                        create_time=getTime(datetime),
                        update_time=getTime(datetime),
-                       points=1,
                        type=0)
         db.session.add(newUser)
         db.session.commit()
@@ -72,6 +72,7 @@ def changepasswd(id, new_password):
 def checkEmailIsRegister(email):
     try:
         user = User.query.filter_by(email=email).first()
+
         if user is None:
             return errorMessage(1, "This email is not registered")
         return errorMessage(2, "ok")

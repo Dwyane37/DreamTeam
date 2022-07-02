@@ -103,7 +103,6 @@ def forget():
     body = 'Your verification code is :%s' % captcha
     htmlbody = '<h1>HTML body </h1>'
     message = errorMessage(200, captcha)
-
     try:
         # send_email('Website email verification code',mail,body,htmlbody)
         msg = Message('Website email verification code', sender='1184344283@qq.com', recipients=[email])
@@ -113,7 +112,6 @@ def forget():
         mail.send(msg)
 
     except Exception as e:
-
         message = errorMessage(1, e)
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
@@ -131,5 +129,5 @@ def logout():
     username = message.errormessage
     if username in login_users:
         login_users.remove(username)
-        message = errorMessage(200, "ok")
+    message = errorMessage(200, "ok")
     return json.dumps(message, default=lambda obj: obj.__dict__)

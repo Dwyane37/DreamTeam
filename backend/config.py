@@ -3,7 +3,7 @@ class Config(object):
     SECRET_KEY = 'Internship'
     JWT_SECRET_KEY = 'Internship'
     SESSION_COOKIE_NAME = False
-    SERVER_NAME = '127.0.0.1:5000'
+    SERVER_NAME = '127.0.0.1:5500'
     JWT_TOKEN_LOCATION = 'headers'
     MAIL_SERVER = "smtp.qq.com"
     MAIL_PORT = '465'
