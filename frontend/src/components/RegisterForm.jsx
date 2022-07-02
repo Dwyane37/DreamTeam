@@ -6,30 +6,22 @@ import Box from '@mui/material/Box';
 // import { apiCall, emailValid, passwordValid } from './Helper';
 // import styles from './Style.module.css';
 import { useNavigate } from 'react-router-dom';
+import { apiPost } from './API';
 
-function RegisterForm(props) {
+function RegisterForm (props) {
   const account = props.account;
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [name, setName] = React.useState('');
+  const [username, setName] = React.useState('');
   const navigate = useNavigate();
 
   const register = (e) => {
     e.preventDefault();
-    console.log('register');
-    console.log(email);
-    console.log(account);
-    //   apiCall('admin/auth/register', 'POST', { email, password, name }).then(
-    //     (data) => {
-    //       if (data.token) {
-    //         localStorage.setItem('authToken', data.token);
-    //         localStorage.setItem('email', email);
-    //         navigate('/dashboard');
-    //       } else if (data.error) {
-    //         alert(data.error);
-    //       }
-    //     }
-    //   );
+    apiPost('user/register', { username, password, email }).then((body) => {
+      console.log(body);
+      navigate('/login')
+
+    });
   };
 
   return (
@@ -55,7 +47,7 @@ function RegisterForm(props) {
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <TextField required id="nameRegister" label="Name" onChange={(e) => setName(e.target.value)} />
+      <TextField required id="nameRegister" label="Username" onChange={(e) => setName(e.target.value)} />
       <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button id="registerCancel" variant="outlined" color="error" onClick={() => navigate('/login')}>
           Cancel
