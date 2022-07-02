@@ -12,13 +12,13 @@ export const apiPost = async (path, content) => {
   await console.log(res);
   const body = await res.json();
   if (body.errortype == 200) {
-    return (body)
+    return body;
   } else {
-    throw new Error(body.errormessage)
+    throw new Error(body.errormessage);
   }
 };
 
-function objToQueryString (obj) {
+function objToQueryString(obj) {
   const keyValuePairs = [];
   for (const key in obj) {
     keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
@@ -41,9 +41,9 @@ export const apiGet = async (path, paramDic) => {
   const body = await res.json();
   await console.log(body);
   if (body.errortype == 200) {
-    return (body)
+    return body;
   } else {
-    throw new Error(body.errormessage)
+    throw new Error(body.errormessage);
   }
 };
 
@@ -54,8 +54,8 @@ export const apiCall = async (path, paramDic) => {
   const body = await res.json();
   await console.log(body);
   if (body.errortype == 200) {
-    return (body)
+    return body;
   } else {
-    throw new Error(body.errormessage)
+    throw new Error(body.errormessage);
   }
 };
