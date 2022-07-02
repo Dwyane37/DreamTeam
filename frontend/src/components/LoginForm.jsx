@@ -3,16 +3,19 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
+import { apiGet } from './API';
 
-function LoginForm() {
-  const [email, setEmail] = React.useState('');
+function LoginForm () {
+  const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigate = useNavigate();
 
   const login = (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    apiGet('user/login', { username, password }).then((token) => {
+      localStorage.setItem('token', token);
+      navigate('/home')
+    });
   };
 
   return (
@@ -24,11 +27,11 @@ function LoginForm() {
       }}
     >
       <TextField
-        aria-label="Email input"
+        aria-label="Username input"
         id="loginEmail"
-        label="Email"
+        label="Username"
         onChange={(e) => {
-          setEmail(e.target.value);
+          setUsername(e.target.value);
         }}
       />
       <TextField
