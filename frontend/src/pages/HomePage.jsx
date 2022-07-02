@@ -6,7 +6,7 @@ export default function HomePage () {
     const navigate = useNavigate()
 
     React.useEffect(() => {
-        if (!localStorage.getItem('name')) {
+        if (!localStorage.getItem('token')) {
             navigate('/login')
             alert('Your are not logged in')
         }
