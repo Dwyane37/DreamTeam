@@ -13,8 +13,11 @@ function LoginForm () {
   const login = (e) => {
     e.preventDefault();
     apiGet('user/login', { username, password }).then((token) => {
-      localStorage.setItem('token', token);
-      navigate('/home')
+      if (token) {
+        localStorage.setItem('token', token);
+        navigate('/home')
+      }
+
     });
   };
 
