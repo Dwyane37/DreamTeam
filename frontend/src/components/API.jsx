@@ -9,12 +9,18 @@ export const apiPost = async (path, content) => {
     body: JSON.stringify(content),
   };
   const res = await fetch(`http://127.0.0.1:5500/${path}`, init);
-  // await console.log(res);
+  await console.log(res);
   const body = await res.json();
-  return body;
+  if (body.errortype == 1) {
+    const errormsg = body.errormessage;
+    alert(errormsg);
+    return null;
+  } else {
+    return body.errorMessage;
+  }
 };
 
-function objToQueryString(obj) {
+function objToQueryString (obj) {
   const keyValuePairs = [];
   for (const key in obj) {
     keyValuePairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
@@ -35,8 +41,11 @@ export const apiGet = async (path, paramDic) => {
   const res = await fetch(`http://127.0.0.1:5500/${path}?${params}`, init);
   // await console.log(res);
   const body = await res.json();
+  await console.log(body);
   if (body.errortype == 1) {
-    alert(body.errorMessage);
+    const errormsg = body.errormessage;
+    alert(errormsg);
+    return null;
   } else {
     return body.errorMessage;
   }
@@ -47,10 +56,12 @@ export const apiCall = async (path, paramDic) => {
   const res = await fetch(`http://127.0.0.1:5500/${path}?${params}`);
   // await console.log(res);
   const body = await res.json();
-  console.log(body);
+  await console.log(body);
   if (body.errortype == 1) {
-    alert(body.errorMessage);
+    const errormsg = body.errormessage;
+    alert(errormsg);
+    return null;
   } else {
-    return body.errorMessage;
+    return body.errormessage;
   }
 };
