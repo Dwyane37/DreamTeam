@@ -48,7 +48,7 @@ export default function FindPassword() {
     <>
       {resetSuccess && (
         <Alert severity="success">
-          Your password has been reset, click <u>here</u> to login
+          Your password has been reset, click <u onClick={navigateToLogin}>here</u> to login
         </Alert>
       )}
       {!resetSuccess && (
