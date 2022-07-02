@@ -33,12 +33,11 @@ export default function CodeVerify(props) {
         id="code"
         placeholder="abc123"
         helperText={codeCorrect === false && code !== '' ? 'Incorrect code.' : null}
-        // onChange={(e) => {
-        //   setCode(e.target.value);
-        // }}
-        onBlur={(e) => {
-          setCodeCorrect(null);
+        onChange={(e) => {
           setCode(e.target.value);
+          if (e.target.value === '') {
+            setCodeCorrect(null);
+          }
         }}
       ></TextField>
       <div style={{ textAlign: 'right' }}>
