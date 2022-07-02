@@ -4,7 +4,7 @@ from interface.userApi import *
 from utils.exceptionMessage import *
 from utils.generator import *
 
-def checkRegistered(username, mobile, email):
+def checkRegistered(username, email):
     if User.query.filter_by(username=username).first() is not None:
         return errorMessage(1, "This user is already exist")
     elif User.query.filter_by(email=email).first() is not None:

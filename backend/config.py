@@ -5,6 +5,12 @@ class Config(object):
     SESSION_COOKIE_NAME = False
     SERVER_NAME = '127.0.0.1:5000'
     JWT_TOKEN_LOCATION = 'headers'
+    MAIL_SERVER = "smtp.qq.com"
+    MAIL_PORT = '465'
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = "1184344283@qq.com"
+    MAIL_PASSWORD = "czoqakvgsgtvgfdj"
+    MAIL_DEFAULT_SENDER = "1184344283@qq.com"
 
 class Data(object):
     HOSTNAME = '127.0.0.1'

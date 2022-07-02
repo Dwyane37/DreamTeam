@@ -20,9 +20,9 @@ token_key = "dreamTeam"
 @user_opt.route("/register",methods=['POST'], endpoint="register")
 def register():
     data = json.loads(request.data)
-    username = data['params']['username']
-    password = data['params']['password']
-    email = data['params']['email']
+    username = data['username']
+    password = data['password']
+    email = data['email']
     # gender = data['params']['gender']
     # if gender == 'male':
     #     gender = 1
