@@ -7,11 +7,9 @@ import { apiCall } from '../components/API';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
-
-export default function Logout () {
+export default function Logout() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,13 +21,13 @@ export default function Logout () {
 
   const handleLogOut = () => {
     // id = localStorage.getItem('id') ? localStorage.getItem('id') : 1
-    apiCall('user/logout', { id: 1 }).then((body) => {
-      setOpen(false);
-      navigate('/')
-      localStorage.clear()
-
-    }).catch(e => alert(e))
-
+    apiCall('user/logout', { id: 1 })
+      .then((body) => {
+        setOpen(false);
+        navigate('/');
+        localStorage.clear();
+      })
+      .catch((e) => alert(e));
   };
 
   return (
@@ -52,10 +50,10 @@ export default function Logout () {
           </DialogContentText>
         </DialogContent> */}
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleLogOut} autoFocus>
-            Confirm
+          <Button onClick={handleClose} autoFocus>
+            Cancel
           </Button>
+          <Button onClick={handleLogOut}>Confirm</Button>
         </DialogActions>
       </Dialog>
     </div>
