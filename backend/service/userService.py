@@ -3,8 +3,9 @@ import datetime
 from interface.userApi import *
 from utils.exceptionMessage import *
 from utils.generator import *
+from data.models import *
 
-def checkRegistered(username, mobile, email):
+def checkRegistered(username, email):
     if User.query.filter_by(username=username).first() is not None:
         return errorMessage(1, "This user is already exist")
     elif User.query.filter_by(email=email).first() is not None:
@@ -24,7 +25,7 @@ def registerNewAccount(inputs):
                        email=inputs.email,
                        create_time=getTime(datetime),
                        update_time=getTime(datetime),
-                       points=1,
+                    #    points=1,
                        type=0)
         db.session.add(newUser)
         db.session.commit()
