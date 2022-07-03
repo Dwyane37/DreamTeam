@@ -23,16 +23,15 @@ def register():
     username = data['username']
     password = data['password']
     email = data['email']
-    # gender = data['params']['gender']
-    # if gender == 'male':
-    #     gender = 1
-    # else:
-    #     gender = 0
-    # print(username,password,email)
+    type = request.values.get('type')
+    if type == 'student':
+        type = 0
+    else:
+        type = 1
     message = checkRegistered(username, email)
     if message.errortype == 1:
         return json.dumps(message, default=lambda obj: obj.__dict__)
-    user = User(username=username, password=password, email=email)
+    user = User(username=username, password=password, email=email,type=type)
     mesvalue = registerNewAccount(user)
     start_date = time.time() + 3600
     id = mesvalue.errormessage

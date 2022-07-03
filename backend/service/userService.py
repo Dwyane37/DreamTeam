@@ -25,12 +25,11 @@ def registerNewAccount(inputs):
                        email=inputs.email,
                        create_time=getTime(datetime),
                        update_time=getTime(datetime),
-                       type=0)
+                       type=inputs.type)
         db.session.add(newUser)
         db.session.commit()
         return errorMessage(200, id)
     except Exception as e:
-        print('here')
         return errorMessage(1, e)
 
 def checkInfoCorrect(username, password):
@@ -85,7 +84,7 @@ def reset_password(email,password):
         user = User.query.filter_by(email=email).first()
         user.password = password
         db.session.commit()
-        return errorMessage(2, "ok")
+        return errorMessage(200, "ok")
     except Exception as e:
         return errorMessage(1, e)
 
