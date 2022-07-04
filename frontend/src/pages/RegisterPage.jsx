@@ -11,19 +11,20 @@ function RegisterPage() {
   return (
     <div className="login_registerPage">
       <LoginNav />
-      <h1>Select your account type</h1>
-      <div>
-        <AccountType typename="Student" colour="orange" handler={updateState} />
-        <AccountType typename="Company" handler={updateState} />
-      </div>
 
       {accType ? (
         <div className="login_registerMain">
-          <h1>Register</h1>
+          <h1>{`Register as a ${accType}`}</h1>
           <RegisterForm account={accType} />
         </div>
       ) : (
-        <></>
+        <>
+          <h1>Select your account type</h1>
+          <div>
+            <AccountType typename="student" colour="orange" handler={updateState} />
+            <AccountType typename="company" handler={updateState} />
+          </div>
+        </>
       )}
     </div>
   );
