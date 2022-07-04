@@ -23,7 +23,7 @@ def register():
     username = data['username']
     password = data['password']
     email = data['email']
-    type = request.values.get('type')
+    type = data['type']
     if type == 'student':
         type = 0
     else:
