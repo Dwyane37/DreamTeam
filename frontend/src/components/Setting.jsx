@@ -32,8 +32,11 @@ export default function Settings() {
 
   const resetPassword = () => {
     if (matching && passwords.old_password !== '') {
-      console.log(passwords);
-      apiGet('user/changepassword', { token: localStorage.getItem('token'), old_password, new_password })
+      apiGet('user/changepassword', {
+        token: localStorage.getItem('token'),
+        old_password: passwords.old_password,
+        new_password: passwords.new_password,
+      })
         .then((body) => {
           console.log(body);
         })
