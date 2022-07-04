@@ -59,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function NavBar () {
+export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
@@ -69,31 +69,44 @@ export default function NavBar () {
     setAnchorEl(event.currentTarget);
   };
 
-
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
   const navigateHome = () => {
-    navigate('/home')
-  }
+    navigate('/home');
+  };
 
+  const navigateProfile = () => {
+    setAnchorEl(null);
+    navigate('/profile');
+  };
+
+  const navigateSettings = () => {
+    setAnchorEl(null);
+    navigate('/settings');
+  };
+
+  const navigateFollowedEmployers = () => {
+    setAnchorEl(null);
+    navigate('/favourites');
+  };
+
+  const navigateSavings = () => {
+    setAnchorEl(null);
+    navigate('/saved-jobs');
+  };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      id={menuId}
-      keepMounted
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    <Menu anchorEl={anchorEl} id={menuId} keepMounted open={isMenuOpen} onClose={handleMenuClose}>
+      <MenuItem onClick={navigateProfile}>Profile</MenuItem>
+      <MenuItem onClick={navigateFollowedEmployers}>Followed Employers</MenuItem>
+      <MenuItem onClick={navigateSavings}>Saved Jobs</MenuItem>
+      <MenuItem onClick={navigateSettings}>Settings</MenuItem>
       <Logout />
     </Menu>
   );
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -108,22 +121,14 @@ export default function NavBar () {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            onClick={navigateHome}
-          >
+          <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
             I-Student
           </Typography>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
           <FilterListIcon />
           <Box sx={{ flexGrow: 1 }} />
@@ -133,11 +138,7 @@ export default function NavBar () {
                 <MailIcon />
               </Badge>
             </IconButton> */}
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
+            <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
@@ -154,10 +155,9 @@ export default function NavBar () {
               <AccountCircle />
             </IconButton>
           </Box>
-
         </Toolbar>
       </AppBar>
       {renderMenu}
-    </Box >
+    </Box>
   );
 }
