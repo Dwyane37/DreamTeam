@@ -8,8 +8,8 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { apiPost } from './API';
 
-function RegisterForm (props) {
-  const account = props.account;
+function RegisterForm(props) {
+  const type = props.account;
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [username, setName] = React.useState('');
@@ -17,11 +17,12 @@ function RegisterForm (props) {
 
   const register = (e) => {
     e.preventDefault();
-    apiPost('user/register', { username, password, email }).then((body) => {
-
-      console.log(body);
-      navigate('/login')
-    }).catch(e => alert(e))
+    apiPost('user/register', { username, password, email, type })
+      .then((body) => {
+        console.log(body);
+        navigate('/login');
+      })
+      .catch((e) => alert(e));
   };
 
   return (
