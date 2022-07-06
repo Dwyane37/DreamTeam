@@ -16,7 +16,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from './Logout';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import Filter from './Filter_component/Filter';
+// import FilterListIcon from '@mui/icons-material/FilterList';
 import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
@@ -130,7 +131,7 @@ export default function NavBar() {
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
-          <FilterListIcon />
+          <Filter />
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">

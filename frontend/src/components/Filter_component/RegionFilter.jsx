@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Country, State, City } from 'country-state-city';
 
@@ -29,7 +27,7 @@ function RegionFilterElement(props) {
   );
 }
 
-export function RegionFilter() {
+export default function RegionFilter() {
   const countries = Country.getAllCountries();
   const [country, setCountry] = React.useState(null);
   const [state, setState] = React.useState(null);
@@ -62,21 +60,5 @@ export function RegionFilter() {
         />
       )}
     </>
-  );
-}
-
-export function FieldFilter() {
-  return (
-    <div>
-      <h3>Field</h3>
-    </div>
-  );
-}
-
-export function CitizenshipFilter() {
-  return (
-    <div>
-      <h3>Citizenship</h3>
-    </div>
   );
 }
