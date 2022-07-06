@@ -1,0 +1,10 @@
+.job-card-action {
+  display: flex;
+  justify-content: space-between;
+}
+
+.job-card {
+  min-width: 275;
+  width: 50vw;
+  margin: 1rem;
+}

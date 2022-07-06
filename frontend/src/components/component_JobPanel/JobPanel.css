@@ -1,0 +1,7 @@
+.job-panel {
+  border: 1px solid red;
+  border-radius: 5px;
+  height: 100vw;
+  display: flex;
+  flex-direction: column;
+}
