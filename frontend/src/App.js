@@ -7,6 +7,8 @@ import RegisterPage from './pages/RegisterPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
+import ResumePage from './pages/ResumePage';
+
 function App() {
   return (
     <div>
@@ -18,6 +20,7 @@ function App() {
           <Route path="/find_password" element={<FindPasswordPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/profile" element={<ResumePage />} />
         </Routes>
       </Router>
     </div>
