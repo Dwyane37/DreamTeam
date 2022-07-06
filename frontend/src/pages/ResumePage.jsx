@@ -10,6 +10,7 @@ import Skill from '../components/resume_component/skill';
 import Awards from '../components/resume_component/awards';
 import ProjectDisplay from '../components/resume_component/project-display';
 import MyDialog from '../components/resume_component/my-dialog';
+import NavBar from '../components/NavBar';
 // import { getResume, submitResume } from '../../api/resume';
 
 function ResumePage() {
@@ -211,6 +212,7 @@ function ResumePage() {
 
   return (
     <>
+      <NavBar />
       <div className="resume">
         <div className="user_info resume_item">
           <div className="header">
