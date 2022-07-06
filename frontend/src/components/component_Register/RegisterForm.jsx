@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 // import { apiCall, emailValid, passwordValid } from './Helper';
 // import styles from './Style.module.css';
 import { useNavigate } from 'react-router-dom';
-import { apiPost } from './API';
+import { apiPost } from '../API';
 
 function RegisterForm(props) {
   const type = props.account;

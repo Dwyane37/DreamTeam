@@ -1,7 +1,7 @@
 import React from 'react';
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from '../components/component_Register/RegisterForm';
 import LoginNav from '../components/LoginNav';
-import AccountType from '../components/AccountType';
+import AccountType from '../components/component_Register/AccountType';
 function RegisterPage() {
   const [accType, setAccType] = React.useState('');
   const updateState = (state) => {

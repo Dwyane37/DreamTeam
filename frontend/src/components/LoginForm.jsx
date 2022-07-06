@@ -5,18 +5,20 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { apiGet } from './API';
 
-function LoginForm () {
+function LoginForm() {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigate = useNavigate();
 
   const login = (e) => {
     e.preventDefault();
-    apiGet('user/login', { username, password }).then((body) => {
-      console.log(body)
-      localStorage.setItem('token', body.errormessage);
-      navigate('/home')
-    }).catch(e => alert(e))
+    apiGet('user/login', { username, password })
+      .then((body) => {
+        console.log(body);
+        localStorage.setItem('token', body.errormessage);
+        navigate('/home');
+      })
+      .catch((e) => alert(e));
   };
 
   return (

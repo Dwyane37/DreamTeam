@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
-import JobCard from '../components/JobCard';
+import JobPanel from '../components/component_JobPanel/JobPanel';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -15,8 +15,7 @@ export default function HomePage() {
   return (
     <div>
       <NavBar />
-      <JobCard />
-      <AddJob />
+      <JobPanel />
     </div>
   );
 }
