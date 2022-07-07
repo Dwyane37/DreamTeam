@@ -1,5 +1,5 @@
 import React from 'react';
-import Settings from '../components/Setting';
+import Settings from '../components/component_Setting/Setting';
 import NavBar from '../components/NavBar';
 import Typography from '@mui/material/Typography';
 
