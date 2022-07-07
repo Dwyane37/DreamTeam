@@ -1,3 +1,17 @@
 .recommender-panel {
   margin-bottom: 3rem;
+  border: 1px solid #274c77;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.recommender-refresh {
+  display: flex;
+  align-items: center;
+  font-size: x-small;
+  margin: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.recommender-refresh:hover {
+  color: #274c77;
 }

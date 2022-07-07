@@ -1,5 +1,6 @@
 import * as React from 'react';
 import RecommenderCard from './RecommenderCard';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import './RecommenderPanel.css';
 export default function RecommenderPanel() {
   const jobs = [
@@ -35,9 +36,17 @@ export default function RecommenderPanel() {
     },
   ];
 
+  const handleRefresh = () => {
+    console.log('fetch new recommendations');
+  };
+
   return (
     <div className="recommender-panel">
       <div>Recommended Internships</div>
+      <div className="recommender-refresh" onClick={handleRefresh}>
+        <RefreshIcon fontSize="small" />
+        <span>Click to get more recommendations</span>
+      </div>
       {jobs.map((job, idx) => (
         <RecommenderCard key={idx} title={job.title} company={job.company} location={job.region} />
       ))}
