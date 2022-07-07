@@ -14,13 +14,20 @@ export default function CitizenshipFilter() {
   return (
     <>
       <h3>Citizenship</h3>
-      <Autocomplete
+      {/* <Autocomplete
         disablePortal
         id="citizenship_filter"
         options={citizenship}
         getOptionLabel={(option) => option.label}
         sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Field" />}
+        renderInput={(params) => <TextField {...params} label="Citizenship" />}
+      /> */}
+      <Autocomplete
+        multiple
+        id="citizenship_filter"
+        options={citizenship}
+        getOptionLabel={(option) => option.label}
+        renderInput={(params) => <TextField {...params} label="Citizenship" />}
       />
     </>
   );

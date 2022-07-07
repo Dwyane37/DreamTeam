@@ -1,0 +1,12 @@
+.filter_section {
+  padding: 0 10px;
+}
+
+.region_filter_box {
+  min-width: 200px;
+  flex: 1;
+}
+
+.region_filter_container {
+  display: flex;
+}

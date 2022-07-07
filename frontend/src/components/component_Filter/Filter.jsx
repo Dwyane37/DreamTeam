@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import RegionFilter from './RegionFilter';
 import FieldFilter from './FieldFilter';
 import CitizenshipFilter from './CitizenshipFilter';
+import './Filter.css';
 
 export default function Filter() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -33,22 +33,23 @@ export default function Filter() {
         getContentAnchorEl={null}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'left',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'center',
         }}
       >
-        <MenuItem>
+        <div className="filter_section">
           <RegionFilter />
-        </MenuItem>
-        <MenuItem>
+        </div>
+        <div className="filter_section">
           <FieldFilter />
-        </MenuItem>
-        <MenuItem>
+        </div>
+        <div className="filter_section">
           <CitizenshipFilter />
-        </MenuItem>
+        </div>
+        <Button>Search</Button>
       </Menu>
     </div>
   );

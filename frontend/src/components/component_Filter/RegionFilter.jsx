@@ -2,6 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Country, State, City } from 'country-state-city';
+import './Filter.css';
 
 function RegionFilterElement(props) {
   const updateFunction = props.updateFunction;
@@ -14,11 +15,11 @@ function RegionFilterElement(props) {
   };
   return (
     <Autocomplete
+      className="region_filter_box"
       disablePortal
       id={props.id}
       getOptionLabel={(option) => option.name}
       options={props.options}
-      sx={{ width: 300 }}
       onChange={(e, value, reason) => {
         handleUpdate(value, reason);
       }}
@@ -38,7 +39,7 @@ export default function RegionFilter() {
     return State.getStatesOfCountry(countryCode);
   };
   const getCity = (countryCode, stateCode) => {
-    return City.getCitiesOfState(countryCode, stateCode);
+    return stateCode ? City.getCitiesOfState(countryCode, stateCode) : City.getCitiesOfCountry(countryCode);
   };
   React.useEffect(() => {
     console.log(region);
@@ -47,18 +48,22 @@ export default function RegionFilter() {
   return (
     <>
       <h3>Region</h3>
-      <RegionFilterElement id="country" label="Country" options={countries} updateFunction={setCountry} />
-      {region.country && (
-        <RegionFilterElement id="state" label="State" options={getState(region.country)} updateFunction={setState} />
-      )}
-      {region.state && (
-        <RegionFilterElement
-          id="city"
-          label="City"
-          options={getCity(region.country, region.state)}
-          updateFunction={setCity}
-        />
-      )}
+      <div className="region_filter_container">
+        <RegionFilterElement id="country" label="Country" options={countries} updateFunction={setCountry} />
+
+        {region.country && (
+          <RegionFilterElement id="state" label="State" options={getState(region.country)} updateFunction={setState} />
+        )}
+
+        {(region.state || region.country) && (
+          <RegionFilterElement
+            id="city"
+            label="City"
+            options={getCity(region.country, region.state)}
+            updateFunction={setCity}
+          />
+        )}
+      </div>
     </>
   );
 }
