@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { apiCall } from '../API';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
+import './ForgottenPassword.css';
 
 export default function FindPassword() {
   const [passwords, setPasswords] = React.useState({ new_password: '', new_password_confirm: '' });
