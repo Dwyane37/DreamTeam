@@ -1,0 +1,10 @@
+.home-content-container {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 5rem;
+}
+
+.home-side-panel {
+  display: flex;
+  flex-direction: column;
+}
