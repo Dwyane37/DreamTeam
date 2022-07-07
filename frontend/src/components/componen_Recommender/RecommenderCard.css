@@ -1,0 +1,16 @@
+.recommender-card {
+  width: 300px;
+  height: 100px;
+  margin: 10px 0;
+}
+
+.recommender-card:hover {
+  transform: scale(1.02, 1.02);
+  border: 1px solid lightcoral;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.recommender-card-subtext {
+  font-size: 12px;
+}
