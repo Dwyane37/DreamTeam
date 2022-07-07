@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 
-import './JobCar.css';
+import './JobCard.css';
 
 export default function JobCard(props) {
   const [save, setSave] = React.useState(false);
@@ -48,8 +48,8 @@ export default function JobCard(props) {
           Apply
         </Button>
         <div>
-          {!save && <BookmarkAddOutlinedIcon onClick={handleSave} />}
-          {save && <BookmarkAddedIcon onClick={handleSave} />}
+          {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" onClick={handleSave} />}
+          {save && <BookmarkAddedIcon className="BookmarkIcon" onClick={handleSave} />}
         </div>
       </CardActions>
     </Card>

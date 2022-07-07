@@ -1,0 +1,28 @@
+.job-card-action {
+  display: flex;
+  justify-content: space-between;
+}
+
+.BookmarkIcon {
+  border-radius: 5px;
+}
+
+.BookmarkIcon:hover {
+  background-color: rgba(231, 236, 239, 0.6);
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+.job-card {
+  min-width: 275px;
+  height: 200px;
+  width: 50vw;
+  margin: 1rem;
+}
+
+.job-card:hover {
+  border: 1px solid lightcoral;
+  transform: scale(1.01, 1.01);
+  transition: 0.1s;
+  cursor: pointer;
+}
