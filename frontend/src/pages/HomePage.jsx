@@ -7,23 +7,30 @@ import PopularJobPanel from '../components/component_PopularJobs/PopularJobPanel
 import './HomePage.css';
 export default function HomePage() {
   const navigate = useNavigate();
+  const [logedIn, setLogedIn] = React.useState(false);
 
   React.useEffect(() => {
     if (!localStorage.getItem('token')) {
-      navigate('/login');
       alert('Your are not logged in');
+      navigate('/login');
+    } else {
+      setLogedIn(true);
     }
-  }, []);
+  }, [logedIn]);
+
+  console.log(logedIn);
   return (
-    <div>
-      <NavBar />
-      <div className="home-content-container">
-        <JobPanel />
-        <div className="home-side-panel">
-          <RecommenderPanel />
-          <PopularJobPanel />
+    logedIn && (
+      <div>
+        <NavBar type="student" />
+        <div className="home-content-container">
+          <JobPanel />
+          <div className="home-side-panel">
+            <RecommenderPanel />
+            <PopularJobPanel />
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 }

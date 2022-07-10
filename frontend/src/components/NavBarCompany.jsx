@@ -9,14 +9,10 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from './Logout';
-import Filter from './component_Filter/Filter';
 // import FilterListIcon from '@mui/icons-material/FilterList';
 import { useNavigate } from 'react-router-dom';
 
@@ -60,8 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function NavBar(props) {
-  const type = props.type;
+export default function NavBarCompany() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
@@ -76,7 +71,7 @@ export default function NavBar(props) {
   };
 
   const navigateHome = () => {
-    type === 'student' ? navigate('/home') : navigate('/dashboard');
+    navigate('/dashboard');
   };
 
   const navigateProfile = () => {
@@ -89,27 +84,10 @@ export default function NavBar(props) {
     navigate('/settings');
   };
 
-  const navigateFollowedEmployers = () => {
-    setAnchorEl(null);
-    navigate('/favourites');
-  };
-
-  const navigateSavings = () => {
-    setAnchorEl(null);
-    navigate('/saved-jobs');
-  };
-
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu anchorEl={anchorEl} id={menuId} keepMounted open={isMenuOpen} onClose={handleMenuClose}>
       <MenuItem onClick={navigateProfile}>Profile</MenuItem>
-      {type === 'student' ? (
-        <>
-          <MenuItem onClick={navigateFollowedEmployers}>Followed Employers</MenuItem>
-          <MenuItem onClick={navigateSavings}>Saved Jobs</MenuItem>
-        </>
-      ) : null}
-
       <MenuItem onClick={navigateSettings}>Settings</MenuItem>
       <Logout />
     </Menu>
@@ -119,15 +97,6 @@ export default function NavBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#6096ba' }}>
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
             I-Student
           </Typography>
@@ -137,8 +106,6 @@ export default function NavBar(props) {
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
-          {type === 'student' ? <Filter /> : null}
-
           <Box sx={{ flexGrow: 1 }} />
           <Box>
             {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
