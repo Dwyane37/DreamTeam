@@ -41,6 +41,7 @@ def checkInfoCorrect(username, password):
             return errorMessage(1, "username or password is incorrect")
         return errorMessage(200, "ok")
     except Exception as e:
+        print(e)
         return errorMessage(1, e)
 
 def getUserId(username):
@@ -53,9 +54,8 @@ def checkOldPassword(id, old_password):
         user = User.query.get(id)
         if user.password != old_password:
             return errorMessage(1, "password is incorrect")
-        return errorMessage(2, "ok")
+        return errorMessage(200, "ok")
     except Exception as e:
-        print(e)
         return errorMessage(1, e)
 
 def changepasswd(id, new_password):
@@ -120,3 +120,15 @@ def changedetail(id,mobile,nickname,sex,country,update_time,description,tag,
         return errorMessage(200, "ok")
     except Exception as e:
         return errorMessage(1,e)
+
+def get_info(id):
+    try:
+        user = User.query.get(id)
+        res = {}
+        res['username'] = user.username
+        res['email'] = user.email
+        res['mobile'] = user.mobile
+        res['type'] = user.type
+        return res
+    except Exception as e:
+        return errorMessage(1, e)
