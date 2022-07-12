@@ -24,15 +24,16 @@ export default function JobCard(props) {
     setSave(!save);
   };
 
-  const viewMore = () => {
+  const viewMore = (e) => {
     // TODO view more details about the job
     console.log('view more');
+    console.log(e.currentTarget.id);
   };
 
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Card variant="outlined" className="job-card" onClick={viewMore}>
+    <Card id={props.jobID} variant="outlined" className="job-card" onClick={viewMore}>
       <CardContent>
         <Typography variant="h5" component="div">
           {props.title}

@@ -3,7 +3,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import { apiGet } from './API';
+import { apiGet } from '../API';
+import './LoginForm.css';
 
 function LoginForm() {
   const [username, setUsername] = React.useState('');
@@ -15,15 +16,17 @@ function LoginForm() {
     apiGet('user/login', { username, password })
       .then((body) => {
         console.log(body);
-        localStorage.setItem('token', body.errormessage);
-        navigate('/home');
+        localStorage.setItem('token', body.errormessage.token);
+        localStorage.setItem('id', body.errormessage.id);
+        // localStorage.setItem('type', body.errormessage.type);
+        // localStorage.getItem('type') === 0 ? navigate('/home') : navigate('/dashboard');
       })
       .catch((e) => alert(e));
   };
 
   return (
     <Box
-      className="login_registerForm"
+      className="login_Form"
       component="form"
       onSubmit={(e) => {
         login(e);

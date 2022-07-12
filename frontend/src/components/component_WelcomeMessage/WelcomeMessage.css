@@ -1,0 +1,12 @@
+.welcomeMessageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.welcomeMessage {
+  text-align: center;
+  color: #92ba92;
+}

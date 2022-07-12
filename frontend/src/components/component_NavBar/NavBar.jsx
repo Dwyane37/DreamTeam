@@ -15,8 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Logout from './Logout';
-import Filter from './component_Filter/Filter';
+import Logout from '../Logout';
+import Filter from '../component_Filter/Filter';
 // import FilterListIcon from '@mui/icons-material/FilterList';
 import { useNavigate } from 'react-router-dom';
 
@@ -104,10 +104,10 @@ export default function NavBar(props) {
     <Menu anchorEl={anchorEl} id={menuId} keepMounted open={isMenuOpen} onClose={handleMenuClose}>
       <MenuItem onClick={navigateProfile}>Profile</MenuItem>
       {type === 'student' ? (
-        <>
+        <div>
           <MenuItem onClick={navigateFollowedEmployers}>Followed Employers</MenuItem>
           <MenuItem onClick={navigateSavings}>Saved Jobs</MenuItem>
-        </>
+        </div>
       ) : null}
 
       <MenuItem onClick={navigateSettings}>Settings</MenuItem>

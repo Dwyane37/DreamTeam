@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 // import styles from './Style.module.css';
 import { useNavigate } from 'react-router-dom';
 import { apiPost } from '../API';
+import './RegisterForm.css';
 
 function RegisterForm(props) {
   const type = props.account;
@@ -27,7 +28,7 @@ function RegisterForm(props) {
 
   return (
     <Box
-      className="login_registerForm"
+      className="register_Form"
       component="form"
       onSubmit={(e) => {
         register(e);

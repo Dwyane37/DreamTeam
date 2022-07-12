@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/component_NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
 import JobPanel from '../components/component_JobPanel/JobPanel';
 import RecommenderPanel from '../components/componen_Recommender/RecommenderPanel';

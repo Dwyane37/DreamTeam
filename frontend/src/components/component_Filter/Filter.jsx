@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
+import { MenuItem } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import RegionFilter from './RegionFilter';
 import FieldFilter from './FieldFilter';
@@ -30,7 +31,7 @@ export default function Filter() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        getContentAnchorEl={null}
+        // getContentAnchorEl={null}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',

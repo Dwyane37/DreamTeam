@@ -7,8 +7,10 @@ import usePagination from './usePagination';
 export default function JobPanel() {
   const jobs = [
     {
+      jobID: 1,
       title: 'Web Developer',
       company: 'Google',
+      authorID: 123,
       region: {
         country: 'Australia',
         state: 'NSW',
@@ -22,8 +24,10 @@ export default function JobPanel() {
       ],
     },
     {
+      jobID: 2,
       title: 'Data Analysis',
       company: 'Microsoft',
+      authorID: 321,
       region: {
         country: 'Australia',
         state: 'NSW',
@@ -50,7 +54,14 @@ export default function JobPanel() {
   return (
     <div className="job-panel">
       {handleData.currentData().map((job, idx) => (
-        <JobCard key={idx} title={job.title} company={job.company} location={job.region} briefing={job.description} />
+        <JobCard
+          jobID={job.jobID}
+          key={idx}
+          title={job.title}
+          company={job.company}
+          location={job.region}
+          briefing={job.description}
+        />
       ))}
       <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
     </div>
