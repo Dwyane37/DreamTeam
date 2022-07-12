@@ -5,12 +5,14 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from interface.userApi import *
+from interface.intershipApi import *
 jwt = JWTManager()
 
 app = Flask(__name__, static_url_path='/')
 app.config.from_object(Config)
 app.config.from_object(Data)
 app.register_blueprint(user_opt, url_prefix="/user/")
+app.register_blueprint(internship_opt, url_prefix="/internship/")
 mail.init_app(app)
 jwt.init_app(app)
 db.init_app(app)
