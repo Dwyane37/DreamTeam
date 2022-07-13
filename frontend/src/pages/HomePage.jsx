@@ -22,7 +22,7 @@ export default function HomePage() {
   return (
     logedIn && (
       <div>
-        <NavBar type="student" />
+        <NavBar type={localStorage.getItem('type')} />
         <div className="home-content-container">
           <JobPanel />
           <div className="home-side-panel">

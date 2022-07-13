@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { apiGet } from '../API';
+import { apiCall } from '../API';
 import './Setting.css';
 
 export default function Settings() {
@@ -14,6 +14,7 @@ export default function Settings() {
   });
   const [matching, setMatching] = React.useState(null);
   const [empty, setEmpty] = React.useState(null);
+  const [accountInfo, setAccountInfo] = React.useState({});
 
   const changeHandler = (e) => {
     setPasswords({ ...passwords, [e.target.id]: e.target.value });
@@ -30,6 +31,14 @@ export default function Settings() {
       setMatching(null);
     }
   }, [passwords]);
+
+  React.useEffect(() => {
+    apiCall('user/getinfo', { token: localStorage.getItem('token') })
+      .then((info) => {
+        setAccountInfo({ ...info });
+      })
+      .catch((e) => alert(e));
+  }, []);
 
   const resetPassword = () => {
     if (matching && passwords.old_password !== '') {
@@ -54,19 +63,23 @@ export default function Settings() {
         <div className="settingContainer">
           <div className="settingItem">
             <label htmlFor="accountUserName">Username</label>
-            <TextField id="accountUserName" variant="outlined" />
+            <TextField id="accountUserName" variant="outlined" value={info.username} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountEmail">Email</label>
-            <TextField id="accountEmail" variant="outlined" />
+            <TextField id="accountEmail" variant="outlined" value={info.email} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
-            <TextField id="accountMobile" variant="outlined" />
+            <TextField id="accountMobile" variant="outlined" value={info.mobile ? info.mobile : null} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
-            <TextField id="accountType" variant="outlined" />
+            <TextField
+              id="accountType"
+              variant="outlined"
+              value={info.type === 0 ? 'Student Account' : 'Company Account'}
+            />
           </div>
         </div>
       </Box>

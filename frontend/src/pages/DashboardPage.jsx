@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export default function DashboardPage() {
   return (
     <div>
-      <NavBar type="company" />
+      <NavBar type={localStorage.getItem('type')} />
       <div>
         <h4>My Job Posts</h4>
         <Button variant="outlined">Add a Job Post</Button>

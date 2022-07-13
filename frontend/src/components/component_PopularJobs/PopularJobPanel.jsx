@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PopularJobCard from './PopularJobCard';
+import { apiGet } from '../API';
 
 export default function PopularJobPanel() {
   const jobs = [
@@ -34,6 +35,12 @@ export default function PopularJobPanel() {
       ],
     },
   ];
+
+  React.useEffect(() => {
+    apiGet('internship/gethotjobs', null)
+      .then((data) => console.log(data))
+      .catch((e) => alert(e));
+  }, []);
 
   return (
     <div>

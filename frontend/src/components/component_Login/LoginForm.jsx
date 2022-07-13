@@ -18,8 +18,8 @@ function LoginForm() {
         console.log(body);
         localStorage.setItem('token', body.errormessage.token);
         localStorage.setItem('id', body.errormessage.id);
-        // localStorage.setItem('type', body.errormessage.type);
-        // localStorage.getItem('type') === 0 ? navigate('/home') : navigate('/dashboard');
+        localStorage.setItem('type', body.errormessage.type);
+        localStorage.getItem('type') === '0' ? navigate('/home') : navigate('/dashboard');
       })
       .catch((e) => alert(e));
   };

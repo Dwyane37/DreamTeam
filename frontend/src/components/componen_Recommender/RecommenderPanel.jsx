@@ -2,7 +2,13 @@ import * as React from 'react';
 import RecommenderCard from './RecommenderCard';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import './RecommenderPanel.css';
+import { apiGet } from '../API';
 export default function RecommenderPanel() {
+  // React.useEffect(() => {
+  //   apiGet('internship/recommand', { token: localStorage.getItem('token') })
+  //     .then((data) => console.log(data))
+  //     .catch((e) => alert(e));
+  // }, []);
   const jobs = [
     {
       title: 'Web Developer',

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 export default function SettingsPage() {
   return (
     <>
-      <NavBar />
+      <NavBar type={localStorage.getItem('type')} />
       <Typography variant="h5">Settings</Typography>
       <Settings />
     </>

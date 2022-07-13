@@ -76,7 +76,7 @@ export default function NavBar(props) {
   };
 
   const navigateHome = () => {
-    type === 'student' ? navigate('/home') : navigate('/dashboard');
+    type === '0' ? navigate('/home') : navigate('/dashboard');
   };
 
   const navigateProfile = () => {
@@ -103,7 +103,7 @@ export default function NavBar(props) {
   const renderMenu = (
     <Menu anchorEl={anchorEl} id={menuId} keepMounted open={isMenuOpen} onClose={handleMenuClose}>
       <MenuItem onClick={navigateProfile}>Profile</MenuItem>
-      {type === 'student' ? (
+      {type === '0' ? (
         <div>
           <MenuItem onClick={navigateFollowedEmployers}>Followed Employers</MenuItem>
           <MenuItem onClick={navigateSavings}>Saved Jobs</MenuItem>
@@ -137,7 +137,7 @@ export default function NavBar(props) {
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
-          {type === 'student' ? <Filter /> : null}
+          {type === '0' ? <Filter /> : null}
 
           <Box sx={{ flexGrow: 1 }} />
           <Box>
