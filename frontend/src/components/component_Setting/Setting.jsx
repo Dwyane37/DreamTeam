@@ -35,7 +35,7 @@ export default function Settings() {
   React.useEffect(() => {
     apiCall('user/getinfo', { token: localStorage.getItem('token') })
       .then((info) => {
-        setAccountInfo({ ...info });
+        setAccountInfo({ ...info.data });
       })
       .catch((e) => alert(e));
   }, []);
@@ -71,11 +71,7 @@ export default function Settings() {
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
-            <TextField
-              id="accountMobile"
-              variant="outlined"
-              value={accountInfo.mobile ? accountInfo.mobile : undefined}
-            />
+            <TextField id="accountMobile" variant="outlined" value={accountInfo.mobile ? accountInfo.mobile : ''} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
