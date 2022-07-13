@@ -52,18 +52,30 @@ def recommand():
     dict = {}
     for i in recomm_lst:
         dict[repr(i.id)] = i.as_dict()
-    return dict
+    data = {}
+    data['data'] = dict
+    data['errortype'] = 200
+    return data
 
 @internship_opt.route("/getcurrentjobs", methods=['GET'])
 def getcurrentjobs():
     res = getCurrentJobs()
-    diec = {}
-    diec['data'] = res
-    return  diec
+    dict = {}
+    for i in res:
+        dict[repr(i.id)] = i.as_dict()
+    data = {}
+    data['data'] = dict
+    data['errortype'] = 200
+    return data
 
 @internship_opt.route("/gethotjobs", methods=['GET'])
 def gethotjobs():
     res = getHotJobs()
-    diec = {}
-    diec['data'] = res
-    return diec
+    dict = {}
+    for i in res:
+        dict[repr(i.id)] = i.as_dict()
+    data = {}
+    data['data'] = dict
+    data['errortype'] = 200
+    return data
+

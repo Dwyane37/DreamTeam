@@ -151,5 +151,8 @@ def getinfo():
     deco_token = jwt.decode(token, token_key, algorithms='HS256')
     id = deco_token['id']
     res = get_info(id)
-    return res
+    data = {}
+    data['data'] = res
+    data['errortype'] = 200
+    return data
 

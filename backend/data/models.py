@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = 'db_user'
-    id=Column(String(1000), primary_key=True,autoincrement=True)
+    id=Column(String(1000), primary_key=True)
     username = Column(String(255),nullable=False)
     password = Column(String(255),nullable=False)
     mobile = Column(Integer)
@@ -26,7 +26,7 @@ class User(db.Model):
 
 class Internship(db.Model):
     __tablename__ = 'db_internships'
-    id = Column(String(1000), primary_key=True, autoincrement=True)
+    id = Column(String(1000), primary_key=True)
     title = Column(String(255))
     user_id = Column(String(1000))
     content = Column(String(1000))
@@ -49,7 +49,7 @@ class Internship(db.Model):
 
 class Resume(db.Model):
     __tablename__ = 'db_resume'
-    id = Column(String(1000), primary_key=True, autoincrement=True)
+    id = Column(String(1000), primary_key=True)
     user_id = Column(String(1000))
     name = Column(String(255))
     sex = Column(Integer)
@@ -58,7 +58,7 @@ class Resume(db.Model):
     address = Column(String(255))
     email = Column(String(1000))
     aim = Column(String(255))
-    horor = Column(String(255))
+    honor = Column(String(255))
     education = Column(String(255))
     experience = Column(String(1000))
     skills = Column(String(1000))

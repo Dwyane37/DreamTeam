@@ -28,6 +28,7 @@ def registerNewAccount(inputs):
                        type=inputs.type)
         db.session.add(newUser)
         db.session.commit()
+
         return errorMessage(200, id)
     except Exception as e:
         return errorMessage(1, e)
