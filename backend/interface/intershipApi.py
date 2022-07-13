@@ -42,7 +42,7 @@ def view():
 
     return job.as_dict()
 
-@internship_opt.route("/recommand", methods=[''])
+@internship_opt.route("/recommand", methods=['GET'])
 def recommand():
     token = request.values.get('token')
     deco_token = jwt.decode(token, token_key, algorithms='HS256')
@@ -53,3 +53,17 @@ def recommand():
     for i in recomm_lst:
         dict[repr(i.id)] = i.as_dict()
     return dict
+
+@internship_opt.route("/getcurrentjobs", methods=['GET'])
+def getcurrentjobs():
+    res = getCurrentJobs()
+    diec = {}
+    diec['data'] = res
+    return  diec
+
+@internship_opt.route("/gethotjobs", methods=['GET'])
+def gethotjobs():
+    res = getHotJobs()
+    diec = {}
+    diec['data'] = res
+    return diec

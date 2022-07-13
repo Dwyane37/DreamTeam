@@ -32,6 +32,14 @@ def registerNewAccount(inputs):
     except Exception as e:
         return errorMessage(1, e)
 
+def getLoginusertype(id):
+    try:
+        user = User.query.get(id)
+        return user.type
+
+    except Exception as e:
+        print(e)
+
 def checkInfoCorrect(username, password):
     try:
         if User.query.filter_by(username=username).first() is None:

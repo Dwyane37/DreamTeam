@@ -66,6 +66,8 @@ def login():
     data = {}
     data['id'] = id
     data['token'] = token
+    type = getLoginusertype(id)
+    data['type'] = type
     message = errorMessage(200, data)
     deco = jwt.decode(token,
                       token_key, algorithms='HS256', options={"varify_signature": False})

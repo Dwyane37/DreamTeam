@@ -158,3 +158,21 @@ def get_recomm(descrip,soup,num):
         return [ans[i][0] for i in range(1,num)]
     else:
         return [ans[i][0] for i in range(1,len(ans))]
+
+def getCurrentJobs():
+    try:
+        res = Internship.query.order_by(desc(Internship.update_time)).all()
+        res = res[:10]
+        return res
+
+    except Exception as e:
+        print(e)
+
+def getHotJobs():
+    try:
+        res = Internship.query.order_by(Internship.view)
+        res = res[:10]
+        return res
+
+    except Exception as e:
+        print(e)
