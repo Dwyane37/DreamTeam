@@ -71,7 +71,11 @@ export default function Settings() {
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
-            <TextField id="accountMobile" variant="outlined" value={accountInfo.mobile ? accountInfo.mobile : null} />
+            <TextField
+              id="accountMobile"
+              variant="outlined"
+              value={accountInfo.mobile ? accountInfo.mobile : undefined}
+            />
           </div>
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
