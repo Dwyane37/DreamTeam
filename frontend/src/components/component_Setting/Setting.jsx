@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { apiCall } from '../API';
+import { apiCall, apiGet } from '../API';
 import './Setting.css';
 
 export default function Settings() {
@@ -63,22 +63,22 @@ export default function Settings() {
         <div className="settingContainer">
           <div className="settingItem">
             <label htmlFor="accountUserName">Username</label>
-            <TextField id="accountUserName" variant="outlined" value={info.username} />
+            <TextField id="accountUserName" variant="outlined" value={accountInfo.username} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountEmail">Email</label>
-            <TextField id="accountEmail" variant="outlined" value={info.email} />
+            <TextField id="accountEmail" variant="outlined" value={accountInfo.email} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
-            <TextField id="accountMobile" variant="outlined" value={info.mobile ? info.mobile : null} />
+            <TextField id="accountMobile" variant="outlined" value={accountInfo.mobile ? accountInfo.mobile : null} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
             <TextField
               id="accountType"
               variant="outlined"
-              value={info.type === 0 ? 'Student Account' : 'Company Account'}
+              value={accountInfo.type === 0 ? 'Student Account' : 'Company Account'}
             />
           </div>
         </div>
