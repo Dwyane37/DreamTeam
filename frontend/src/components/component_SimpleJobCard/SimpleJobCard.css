@@ -4,9 +4,9 @@
   margin: 10px 0;
 }
 
-.simple-card:hover {
+.simple-job-card:hover {
   transform: scale(1.02, 1.02);
-  border: 1px solid lightcoral;
+  border: 1px solid lightblue;
   transition: 0.2s;
   cursor: pointer;
 }

@@ -15,3 +15,42 @@ export const fields = [
   { id: 5, label: ' Medicine' },
   { id: 6, label: ' Engineering' },
 ];
+
+export const jobs = [
+  {
+    jobID: 1,
+    title: 'Web Developer',
+    company: 'Google',
+    authorID: 123,
+    region: {
+      country: 'Australia',
+      state: 'NSW',
+      city: 'Sydney',
+    },
+    field: 'Information Technology',
+    citizenship: ['Australian PR', 'Australian Citizen'],
+    description:
+      'Computer science offers a sought-after, rewarding career path for tech-savvy people interested in the latest computer advancements. IT professionals who understand computer science trends remain competitive for the best career opportunities including artificial intelligence, Edge and quantum computing, cybersecurity, bio informatics and robotics.',
+    meetings: [
+      { date: '2022-07-21', time: '8:00 - 9:00', link: 'zoom-link-1' },
+      { date: '2022-07-24', time: '8:00 - 9:00', link: 'zoom-link-2' },
+    ],
+  },
+  {
+    jobID: 2,
+    title: 'Data Analysis',
+    company: 'Microsoft',
+    authorID: 321,
+    region: {
+      country: 'Australia',
+      state: 'NSW',
+      city: 'North Sydney',
+    },
+    citizenship: ['Australian PR', 'Australian Citizen'],
+    description: 'This is a job description',
+    meetings: [
+      { date: '2022-07-22', time: '8:00 - 9:00', link: 'zoom-link-1' },
+      { date: '2022-07-24', time: '8:00 - 9:00', link: 'zoom-link-2' },
+    ],
+  },
+];

@@ -1,0 +1,45 @@
+.card-jobDetail {
+  width: 580px;
+  height: 800px;
+  padding: 1rem 2rem;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.job-detail-element {
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid lightblue;
+}
+
+.apply-button {
+  align-self: center;
+  margin-top: 3rem;
+}
+
+.jobAuthor {
+  text-decoration: underline;
+}
+
+.jobAuthor:hover {
+  color: darkblue;
+  transition: ease 0.2s;
+}
+
+.session-date,
+.session-time {
+  margin-right: 0.5rem;
+}
+
+.session-link {
+  text-decoration: underline;
+}
+
+.session-link:hover {
+  color: darkblue;
+}
+
+.job-citizenship {
+  margin: 0;
+}
