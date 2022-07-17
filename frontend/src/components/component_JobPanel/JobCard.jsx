@@ -42,7 +42,9 @@ export default function JobCard(props) {
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {location}
         </Typography>
-        <Typography variant="body2">{props.briefing}</Typography>
+        <Typography paragraph={true} noWrap={true}>
+          {props.briefing}
+        </Typography>
       </CardContent>
       <CardActions className="job-card-action">
         <Button size="small" onClick={handleApply}>
