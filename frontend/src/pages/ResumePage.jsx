@@ -158,11 +158,12 @@ function ResumePage() {
   });
   const [open, setOpen] = useState(false);
   const [type, setType] = useState('false');
+  const id = localStorage.getItem('id');
 
   useEffect(() => {
-    // apiGet('user/getResume?resumeId=' + 1, {}).then((res) => {
-    //   setResumeData(res.data.data);
-    // });
+    apiGet('user/getResume?resumeId=' + id, {}).then((res) => {
+      setResumeData(res.data.data);
+    });
   }, []);
 
   const handleClose = () => {
@@ -182,7 +183,7 @@ function ResumePage() {
   };
 
   const submit = () => {
-    apiPost('user/submitResume', resumeData).then((res) => {
+    apiPost('user/submitResume', { resumeid: id, resume: resumeData }).then((res) => {
       console.log('提交成功');
     });
   };
@@ -291,14 +292,14 @@ function ResumePage() {
           <div className="content">
             <img src="https://www.yh31.com/uploadfile/ql/202104152042540827.jpg" alt="" className="avatar" />
             <div className="info_wrap">
-              <div className="info_item">name: {resumeData.userInfo[0]?.name || 'n/a'}</div>
+              <div className="info_item">name: {resumeData.userInfo[0]?.name || '-'}</div>
 
               <div className="info_item">
                 {localStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
-                {resumeData.userInfo[0]?.organisation || 'n/a'}
+                {resumeData.userInfo[0]?.organisation || '-'}
               </div>
 
-              <div className="info_item">email: {resumeData.userInfo[0]?.email || 'n/a'}</div>
+              <div className="info_item">email: {resumeData.userInfo[0]?.email || '-'}</div>
             </div>
           </div>
         </div>
