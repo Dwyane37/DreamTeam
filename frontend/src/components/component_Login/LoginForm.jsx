@@ -48,9 +48,11 @@ function LoginForm() {
           setPassword(e.target.value);
         }}
       />
-      <Button type="submit" variant="outlined">
-        Login
-      </Button>
+      <div className="login-button">
+        <Button type="submit" variant="outlined">
+          Login
+        </Button>
+      </div>
     </Box>
   );
 }

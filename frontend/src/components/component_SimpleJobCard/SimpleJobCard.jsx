@@ -3,24 +3,19 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-import './RecommenderCard.css';
+import './SimpleJobCard.css';
 
-export default function RecommenderCard(props) {
-  const viewMore = () => {
-    // TODO view more details about the job
-    console.log('view more');
-  };
-
+export default function SimpleJobCard(props) {
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Card variant="outlined" className="recommender-card" onClick={viewMore}>
+    <Card variant="outlined" className="simple-job-card" onClick={props.hanldeClickOpen}>
       <CardContent>
         <Typography variant="h8" component="div">
           {props.title}
         </Typography>
-        <Typography className="recommender-card-subtext">{props.company}</Typography>
-        <Typography className="recommender-card-subtext" color="text.secondary">
+        <Typography className="simple-card-subtext">{props.company}</Typography>
+        <Typography className="simple-card-subtext" color="text.secondary">
           {location}
         </Typography>
       </CardContent>

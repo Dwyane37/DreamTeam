@@ -36,7 +36,7 @@ export default function ForgotPassword() {
     <div>
       <p onClick={handleClickOpen}>Forgotten Password</p>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Need help woth your password?</DialogTitle>
+        <DialogTitle>Need help with your password?</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Enter the email you use for I-Student, and we will send you a code to verify your account.

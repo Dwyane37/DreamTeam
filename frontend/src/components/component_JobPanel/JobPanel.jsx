@@ -3,44 +3,8 @@ import JobCard from './JobCard';
 import Pagination from '@mui/material/Pagination';
 import './JobPanel.css';
 import usePagination from './usePagination';
-
-export default function JobPanel() {
-  const jobs = [
-    {
-      jobID: 1,
-      title: 'Web Developer',
-      company: 'Google',
-      authorID: 123,
-      region: {
-        country: 'Australia',
-        state: 'NSW',
-        city: 'Sydney',
-      },
-      citizenship: ['Australian PR', 'Australian Citizen'],
-      description: 'This is a job description',
-      meetings: [
-        { date: '2022-07-21', link: 'url-link-1' },
-        { date: '2022-07-24', link: 'url-link-2' },
-      ],
-    },
-    {
-      jobID: 2,
-      title: 'Data Analysis',
-      company: 'Microsoft',
-      authorID: 321,
-      region: {
-        country: 'Australia',
-        state: 'NSW',
-        city: 'North Sydney',
-      },
-      citizenship: ['Australian PR', 'Australian Citizen'],
-      description: 'This is a job description',
-      meetings: [
-        { date: '2022-07-22', link: 'url-link-3' },
-        { date: '2022-07-24', link: 'url-link-4' },
-      ],
-    },
-  ];
+import { jobs } from '../assets';
+export default function JobPanel(props) {
   const [page, setPage] = React.useState(1);
   const PER_PAGE = 1;
   const count = Math.ceil(jobs.length / PER_PAGE);
@@ -51,19 +15,38 @@ export default function JobPanel() {
     handleData.jump(p);
   };
 
+  // const [open, setOpen] = React.useState(false);
+
+  // const handleClickOpen = (e) => {
+  //   setOpen(true);
+  //   console.log(e);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
   return (
-    <div className="job-panel">
-      {handleData.currentData().map((job, idx) => (
-        <JobCard
-          jobID={job.jobID}
-          key={idx}
-          title={job.title}
-          company={job.company}
-          location={job.region}
-          briefing={job.description}
-        />
-      ))}
-      <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
-    </div>
+    <>
+      <div className="job-panel">
+        {handleData.currentData().map((job, idx) => (
+          <JobCard
+            jobID={job.jobID}
+            key={idx}
+            title={job.title}
+            company={job.company}
+            location={job.region}
+            briefing={job.description}
+            hanldeClickOpen={props.openDialog}
+          />
+        ))}
+        <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
+      </div>
+      {/* <div>
+        <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="md">
+          <JobDetail handleClose={handleClose} />
+        </Dialog>
+      </div> */}
+    </>
   );
 }

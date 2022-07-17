@@ -12,8 +12,8 @@ function LoginPage() {
       <div className="login_registerMain">
         <h1>Login</h1>
         <LoginForm />
+        <ForgotPassword />
       </div>
-      <ForgotPassword />
     </div>
   );
 }

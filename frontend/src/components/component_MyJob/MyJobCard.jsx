@@ -5,6 +5,10 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+import './MyJob.css';
+import { IconButton } from '@mui/material';
+
 export default function MyJobCard(props) {
   const handleEdit = (e) => {
     console.log('edit');
@@ -26,13 +30,18 @@ export default function MyJobCard(props) {
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {location}
         </Typography>
-        <Typography variant="body2">{props.briefing}</Typography>
+        <Typography paragraph={true} noWrap={true}>
+          {props.briefing}
+        </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" onClick={handleEdit}>
+      <CardActions className="myjob-card-action">
+        <Button size="small" variant="outlined" onClick={handleEdit}>
           Edit
         </Button>
-        <DeleteIcon sx={{ color: '#A40606' }} onClick={handleDelete} />
+
+        <Button className="delete-button-text" size="small" color="error" variant="outlined" startIcon={<DeleteIcon />}>
+          Delete
+        </Button>
       </CardActions>
     </Card>
   );

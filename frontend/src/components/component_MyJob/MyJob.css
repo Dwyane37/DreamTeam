@@ -1,0 +1,4 @@
+.myjob-card-action {
+  display: flex;
+  justify-content: space-between;
+}

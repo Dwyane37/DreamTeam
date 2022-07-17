@@ -12,13 +12,14 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from '../Logout';
 import Filter from '../component_Filter/Filter';
 // import FilterListIcon from '@mui/icons-material/FilterList';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { apiGet } from '../API';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,11 +60,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
+// #########################
 export default function NavBar(props) {
   const type = props.type;
+  const setJobFunc = props.handleJobFetch;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const [keyword, setKeyword] = React.useState('');
+  const initFilter = {
+    country: null,
+    state: null,
+    city: null,
+    field: null,
+    citizenship: [],
+  };
+  const [filter, setFilter] = React.useState(initFilter);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -91,7 +102,7 @@ export default function NavBar(props) {
 
   const navigateFollowedEmployers = () => {
     setAnchorEl(null);
-    navigate('/favourites');
+    navigate('/follow');
   };
 
   const navigateSavings = () => {
@@ -115,6 +126,34 @@ export default function NavBar(props) {
     </Menu>
   );
 
+  const processCitizenshipArray = (arr) => {
+    const ids = arr.map((item) => item.id);
+    ids.sort();
+    return ids.join(',');
+  };
+  const handleSearch = () => {
+    console.log(keyword);
+    console.log(filter);
+    const attr = {
+      key: keyword,
+      location: filter.country.name,
+      state: filter.state.name,
+      city: filter.city.name,
+      field: filter.field.label,
+      type: processCitizenshipArray(filter.citizenship),
+    };
+    console.log(attr);
+    // apiGet('internship/search', attr)
+    //   .then((data) => setJobFunc(data))
+    //   .catch((e) => alert(e));
+    clear();
+  };
+
+  const clear = () => {
+    setKeyword('');
+    setFilter(initFilter);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#6096ba' }}>
@@ -135,9 +174,17 @@ export default function NavBar(props) {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
           </Search>
-          {type === '0' ? <Filter /> : null}
+          {type === '0' ? <Filter handleFilter={[filter, setFilter]} /> : null}
+          <Button style={{ color: 'white', marginLeft: '1rem' }} onClick={handleSearch}>
+            Search
+          </Button>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box>

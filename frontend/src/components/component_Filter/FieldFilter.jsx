@@ -1,16 +1,18 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { fields } from '../assets';
+export default function FieldFilter(props) {
+  const [filter, setFilter] = props.updateFilter;
 
-export default function FieldFilter() {
-  const fields = [
-    { label: 'Information Technology' },
-    { label: 'Law' },
-    { label: 'Science' },
-    { label: ' Statistics' },
-    { label: ' Medicine' },
-    { label: ' Engineering' },
-  ];
+  const handleUpdate = (e, value, reason) => {
+    if (reason === 'clear') {
+      setFilter((filter) => ({ ...filter, field: null }));
+    } else {
+      setFilter((filter) => ({ ...filter, field: value }));
+    }
+  };
+
   return (
     <>
       <h3>Field of Study</h3>
@@ -18,8 +20,13 @@ export default function FieldFilter() {
         disablePortal
         id="field_filter"
         options={fields}
+        isOptionEqualToValue={(option, value) => option.id === value?.id}
         getOptionLabel={(option) => option.label}
         sx={{ width: 300 }}
+        value={filter.field}
+        onChange={(e, value, reason) => {
+          handleUpdate(e, value, reason);
+        }}
         renderInput={(params) => <TextField {...params} label="Field" />}
       />
     </>

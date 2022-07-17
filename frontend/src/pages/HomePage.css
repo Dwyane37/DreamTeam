@@ -3,8 +3,17 @@
   justify-content: space-around;
   padding-top: 5rem;
 }
+.home-main-panel {
+  display: flex;
+  flex-direction: column;
+}
 
 .home-side-panel {
   display: flex;
   flex-direction: column;
+}
+
+.home-sort-button {
+  display: flex;
+  justify-content: flex-end;
 }

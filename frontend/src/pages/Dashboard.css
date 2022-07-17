@@ -1,0 +1,11 @@
+.dashboard-main {
+  margin: 2rem 4rem;
+  position: relative;
+}
+
+.add-job-button {
+  padding: 0.8rem;
+  position: absolute;
+  top: 1rem;
+  left: 90%;
+}
