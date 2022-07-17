@@ -191,6 +191,91 @@ function ResumePage() {
     setOpen(false);
   };
 
+  const student_resume = (
+    <div>
+      <div className="education resume_item">
+        <div className="header">
+          <span>Education</span>
+          <Button variant="contained" size="small" onClick={() => edit('education')}>
+            edit
+          </Button>
+        </div>
+        <div className="content">
+          <Education education={resumeData.education} />
+        </div>
+      </div>
+      <div className="work_experience resume_item">
+        <div className="header">
+          <span>Work Experience</span>
+          <Button variant="contained" size="small" onClick={() => edit('workExperience')}>
+            edit
+          </Button>
+        </div>
+        <div className="content">
+          <WorkExperience workExperience={resumeData.workExperience} />
+        </div>
+      </div>
+      <div className="project_experience resume_item">
+        <div className="header">
+          <span>Project Experience</span>
+          <Button variant="contained" size="small" onClick={() => edit('projectExperience')}>
+            edit
+          </Button>
+        </div>
+        <div className="content">
+          <ProjectExperience projectExperience={resumeData.projectExperience} />
+        </div>
+      </div>
+      <div className="skill resume_item">
+        <div className="header">
+          <span>Skills</span>
+          <Button variant="contained" size="small" onClick={() => edit('skills')}>
+            edit
+          </Button>
+        </div>
+        <div className="content">
+          <Skill skill={resumeData.skills} />
+        </div>
+      </div>
+      <div className="Awards resume_item">
+        <div className="header">
+          <span>awards</span>
+          <Button variant="contained" size="small" onClick={() => edit('awards')}>
+            edit
+          </Button>
+        </div>
+        <div className="content">
+          <Awards awards={resumeData.awards} />
+        </div>
+      </div>
+      <div className="project_display resume_item">
+        <div className="header">
+          <span>Project Display</span>
+          <Button variant="contained" size="small" onClick={() => edit('projectDisplay')}>
+            edit
+          </Button>
+        </div>
+        <div className="content">
+          <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
+        </div>
+      </div>
+    </div>
+  );
+
+  const hr_detail = (
+    <div className="resume_item">
+      <div className="header">
+        <span>Introduction</span>
+        <Button variant="contained" size="small" onClick={() => edit('projectDisplay')}>
+          edit
+        </Button>
+      </div>
+      <div className="content">
+        <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
+      </div>
+    </div>
+  );
+
   return (
     <>
       <NavBar type={localStorage.getItem('type')} />
@@ -202,81 +287,23 @@ function ResumePage() {
               edit
             </Button>
           </div>
+
           <div className="content">
             <img src="https://www.yh31.com/uploadfile/ql/202104152042540827.jpg" alt="" className="avatar" />
             <div className="info_wrap">
               <div className="info_item">name: {resumeData.userInfo[0]?.name || 'n/a'}</div>
-              <div className="info_item">Unversity: {resumeData.userInfo[0]?.university || 'n/a'}</div>
+
+              <div className="info_item">
+                {localStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
+                {resumeData.userInfo[0]?.organisation || 'n/a'}
+              </div>
+
               <div className="info_item">email: {resumeData.userInfo[0]?.email || 'n/a'}</div>
             </div>
           </div>
         </div>
-        <div className="education resume_item">
-          <div className="header">
-            <span>Education</span>
-            <Button variant="contained" size="small" onClick={() => edit('education')}>
-              edit
-            </Button>
-          </div>
-          <div className="content">
-            <Education education={resumeData.education} />
-          </div>
-        </div>
-        <div className="work_experience resume_item">
-          <div className="header">
-            <span>Work Experience</span>
-            <Button variant="contained" size="small" onClick={() => edit('workExperience')}>
-              edit
-            </Button>
-          </div>
-          <div className="content">
-            <WorkExperience workExperience={resumeData.workExperience} />
-          </div>
-        </div>
-        <div className="project_experience resume_item">
-          <div className="header">
-            <span>Project Experience</span>
-            <Button variant="contained" size="small" onClick={() => edit('projectExperience')}>
-              edit
-            </Button>
-          </div>
-          <div className="content">
-            <ProjectExperience projectExperience={resumeData.projectExperience} />
-          </div>
-        </div>
-        <div className="skill resume_item">
-          <div className="header">
-            <span>Skills</span>
-            <Button variant="contained" size="small" onClick={() => edit('skills')}>
-              edit
-            </Button>
-          </div>
-          <div className="content">
-            <Skill skill={resumeData.skills} />
-          </div>
-        </div>
-        <div className="Awards resume_item">
-          <div className="header">
-            <span>awards</span>
-            <Button variant="contained" size="small" onClick={() => edit('awards')}>
-              edit
-            </Button>
-          </div>
-          <div className="content">
-            <Awards awards={resumeData.awards} />
-          </div>
-        </div>
-        <div className="project_display resume_item">
-          <div className="header">
-            <span>Project Display</span>
-            <Button variant="contained" size="small" onClick={() => edit('projectDisplay')}>
-              edit
-            </Button>
-          </div>
-          <div className="content">
-            <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
-          </div>
-        </div>
+        {localStorage.getItem('type') === '0' ? student_resume : hr_detail}
+
         <div className="resume_footer">
           <Button className="save" variant="contained" size="small" color="success" onClick={() => submit()}>
             save
