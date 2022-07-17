@@ -4,13 +4,17 @@ import Button from '@mui/material/Button';
 import MyJobPanel from '../components/component_MyJob/MyJobPanel';
 import { useNavigate } from 'react-router-dom';
 
+import './Dashboard.css';
+
 export default function DashboardPage() {
   return (
     <div>
       <NavBar type={localStorage.getItem('type')} />
-      <div>
-        <h4>My Job Posts</h4>
-        <Button variant="outlined">Add a Job Post</Button>
+      <div className="dashboard-main">
+        <h3>My Job Posts</h3>
+        <Button className="add-job-button" variant="contained" color="success">
+          Add a Job Post
+        </Button>
         <MyJobPanel />
       </div>
     </div>
