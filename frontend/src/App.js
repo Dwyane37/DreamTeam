@@ -22,6 +22,7 @@ function App() {
           <Route path='/find_password' element={<FindPasswordPage />} />
           <Route path='/home' element={<HomePage />} />
           <Route path='/settings' element={<SettingsPage />} />
+          <Route path='/dashboard' element={<DashboardPage />} />
           <Route path='/profile' element={<ResumePage />} />
           <Route path='/follow' element={<FollowPage />} />
         </Routes>
