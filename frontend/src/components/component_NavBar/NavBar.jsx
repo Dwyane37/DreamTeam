@@ -32,8 +32,8 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
+    marginLeft: '30%',
+    width: '30%',
   },
 }));
 
@@ -167,9 +167,12 @@ export default function NavBar(props) {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
-            I-Student
-          </Typography>
+          <div style={{ border: '1px solid white', padding: '0.7rem 0.5rem', borderRadius: '10%' }}>
+            <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
+              I-Student
+            </Typography>
+          </div>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
