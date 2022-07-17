@@ -1,10 +1,15 @@
 import React from 'react';
 import NavBar from '../components/component_NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import JobPanel from '../components/component_JobPanel/JobPanel';
 import RecommenderPanel from '../components/componen_Recommender/RecommenderPanel';
 import PopularJobPanel from '../components/component_PopularJobs/PopularJobPanel';
 import './HomePage.css';
+=======
+import JobCard from '../components/JobCard';
+// import { RegionFilter } from '../components/Filter';
+>>>>>>> WuHanqiu-patch-1
 export default function HomePage() {
   const navigate = useNavigate();
   const [logedIn, setLogedIn] = React.useState(false);
@@ -20,6 +25,7 @@ export default function HomePage() {
 
   console.log(logedIn);
   return (
+<<<<<<< HEAD
     logedIn && (
       <div>
         <NavBar type={localStorage.getItem('type')} />
@@ -32,5 +38,12 @@ export default function HomePage() {
         </div>
       </div>
     )
+=======
+    <div>
+      <NavBar />
+      <JobCard />
+      {/* <RegionFilter /> */}
+    </div>
+>>>>>>> WuHanqiu-patch-1
   );
 }
