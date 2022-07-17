@@ -10,7 +10,7 @@ import Skill from '../components/resume_component/skill'
 import Awards from '../components/resume_component/awards'
 import ProjectDisplay from '../components/resume_component/project-display'
 import MyDialog from '../components/resume_component/my-dialog'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/component_NavBar/NavBar'
 import { apiGet, apiPost } from '../components/API'
 // import { getResume, submitResume } from '../../api/resume';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
-import NavBar from '../components/NavBar'
+import NavBar from '../components/component_NavBar/NavBar'
 import './FollowPage.css'
 
 const FollowPage = () => {
