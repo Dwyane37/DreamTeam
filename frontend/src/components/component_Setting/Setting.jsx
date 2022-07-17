@@ -2,19 +2,26 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+
 import Typography from '@mui/material/Typography';
 import { apiGet, apiCall } from '../API';
 import './Setting.css';
 export default function Settings() {
-  const [passwords, setPasswords] = React.useState({
+  const init_psw = {
     old_password: '',
     new_password: '',
     new_password_confirm: '',
-  });
+  };
+  const [success, setSuccess] = React.useState(false);
+  const [passwords, setPasswords] = React.useState(init_psw);
   const [matching, setMatching] = React.useState(null);
   const [empty, setEmpty] = React.useState(null);
   const [accountInfo, setAccountInfo] = React.useState({ username: '', emai: '', mobile: '', type: '' });
 
+  const clear = () => {
+    setPasswords(init_psw);
+  };
   const changeHandler = (e) => {
     setPasswords({ ...passwords, [e.target.id]: e.target.value });
   };
@@ -48,6 +55,8 @@ export default function Settings() {
       })
         .then((body) => {
           console.log(body);
+          clear();
+          setSuccess(true);
         })
         .catch((e) => alert(e));
     }
@@ -105,6 +114,7 @@ export default function Settings() {
                   setEmpty(false);
                 }
               }}
+              value={passwords.old_password}
               helperText={empty ? 'Current password is required' : null}
             />
           </div>
@@ -118,6 +128,7 @@ export default function Settings() {
               id="new_password"
               type="password"
               onChange={(e) => changeHandler(e)}
+              value={passwords.new_password}
             />
           </div>
           <div className="settingItem">
@@ -131,6 +142,7 @@ export default function Settings() {
               type="password"
               onChange={(e) => changeHandler(e)}
               helperText={matching === false ? 'Passwords do not match' : null}
+              value={passwords.new_password_confirm}
             />
           </div>
 
@@ -138,6 +150,16 @@ export default function Settings() {
             Reset Password
           </Button>
         </div>
+        {success && (
+          <Alert
+            onClose={() => {
+              setSuccess(false);
+            }}
+            severity="success"
+          >
+            You've successfully reset your password
+          </Alert>
+        )}
       </Box>
     </>
   );
