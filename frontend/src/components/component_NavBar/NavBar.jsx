@@ -102,7 +102,7 @@ export default function NavBar(props) {
 
   const navigateFollowedEmployers = () => {
     setAnchorEl(null);
-    navigate('/favourites');
+    navigate('/follow');
   };
 
   const navigateSavings = () => {
