@@ -1,7 +1,7 @@
 import uuid
 
 
-def getuuid():
+def getuuid2():
     uid = uuid.uuid4().int
     uid_str = str(uid)[:10]
     return int(uid_str)
