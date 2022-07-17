@@ -35,13 +35,13 @@ export default function MyJobCard(props) {
         </Typography>
       </CardContent>
       <CardActions className="myjob-card-action">
-        <Button size="small" onClick={handleEdit}>
+        <Button size="small" variant="outlined" onClick={handleEdit}>
           Edit
         </Button>
-        <IconButton className="delete-button" onClick={handleDelete}>
+
+        <Button className="delete-button-text" size="small" color="error" variant="outlined" startIcon={<DeleteIcon />}>
           Delete
-          <DeleteIcon sx={{ color: '#A40606' }} />
-        </IconButton>
+        </Button>
       </CardActions>
     </Card>
   );
