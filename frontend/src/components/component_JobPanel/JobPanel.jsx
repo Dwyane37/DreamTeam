@@ -3,7 +3,8 @@ import JobCard from './JobCard';
 import Pagination from '@mui/material/Pagination';
 import './JobPanel.css';
 import usePagination from './usePagination';
-
+import { Dialog } from '@mui/material';
+import JobDetail from '../compopnent_JobDetail/JobDetail';
 export default function JobPanel() {
   const jobs = [
     {
@@ -51,19 +52,38 @@ export default function JobPanel() {
     handleData.jump(p);
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = (e) => {
+    setOpen(true);
+    console.log(e);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <div className="job-panel">
-      {handleData.currentData().map((job, idx) => (
-        <JobCard
-          jobID={job.jobID}
-          key={idx}
-          title={job.title}
-          company={job.company}
-          location={job.region}
-          briefing={job.description}
-        />
-      ))}
-      <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
-    </div>
+    <>
+      <div className="job-panel">
+        {handleData.currentData().map((job, idx) => (
+          <JobCard
+            jobID={job.jobID}
+            key={idx}
+            title={job.title}
+            company={job.company}
+            location={job.region}
+            briefing={job.description}
+            hanldeClickOpen={handleClickOpen}
+          />
+        ))}
+        <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
+      </div>
+      <div>
+        <Dialog open={open} onClose={handleClose}>
+          <JobDetail />
+        </Dialog>
+      </div>
+    </>
   );
 }
