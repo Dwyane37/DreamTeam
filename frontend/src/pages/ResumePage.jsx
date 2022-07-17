@@ -158,9 +158,10 @@ function ResumePage() {
   });
   const [open, setOpen] = useState(false);
   const [type, setType] = useState('false');
+  const id = localStorage.getItem('id');
 
   useEffect(() => {
-    apiGet('user/getResume?resumeId=' + 1, {}).then((res) => {
+    apiGet('user/getResume?resumeId=' + id, {}).then((res) => {
       setResumeData(res.data.data);
     });
   }, []);
@@ -182,7 +183,7 @@ function ResumePage() {
   };
 
   const submit = () => {
-    apiPost('user/submitResume', resumeData).then((res) => {
+    apiPost('user/submitResume', { resumeid: id, resume: resumeData }).then((res) => {
       console.log('提交成功');
     });
   };
