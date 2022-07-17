@@ -7,7 +7,11 @@
   min-width: 250px;
   min-height: 230px;
   margin: 20px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   border-radius: 5px;
   padding: 2rem;
+}
+
+.login-button {
+  align-self: center;
 }
