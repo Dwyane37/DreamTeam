@@ -1,0 +1,36 @@
+.follow_list {
+  width: 800px;
+  margin: 0 auto;
+  padding: 10px 15px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.follow_list .follow_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.follow_list .follow_item:last-child {
+  border-bottom: none;
+}
+
+.follow_item .left {
+  display: flex;
+  align-items: center;
+}
+
+.left .avatar {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.left .info .company {
+  margin-top: 10px;
+  color: #999;
+}

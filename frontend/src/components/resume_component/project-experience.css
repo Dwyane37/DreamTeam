@@ -1,0 +1,39 @@
+.project_experience_wrap {
+  padding: 0 10px;
+}
+
+.project_experience_wrap .header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  padding-bottom: 10px;
+}
+
+.project_experience_wrap .header {
+  position: relative;
+}
+
+.project_experience_wrap .header .item {
+  margin: 0 10px;
+}
+
+.project_experience_wrap .header .company {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.project_experience_wrap .header .date {
+  position: absolute;
+  right: 0;
+
+  color: #666;
+  font-size: 14px;
+}
+
+.description {
+  margin: 0;
+  margin-bottom: 4px;
+  padding-left: 10px;
+}

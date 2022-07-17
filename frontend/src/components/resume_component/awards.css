@@ -1,0 +1,29 @@
+.awards_wrap {
+  padding: 0 10px;
+}
+
+.awards_wrap .header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  padding-bottom: 10px;
+}
+
+.awards_wrap .header {
+  position: relative;
+}
+
+.awards_wrap .header .item {
+  margin: 0 10px;
+}
+
+.awards_wrap .header .title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.description {
+  margin: 0;
+  padding-left: 6px;
+}

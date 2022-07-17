@@ -1,0 +1,29 @@
+.project_display_wrap {
+  padding: 0 10px;
+}
+
+.project_display_wrap .header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  padding-bottom: 10px;
+}
+
+.project_display_wrap .header {
+  position: relative;
+}
+
+.project_display_wrap .header .item {
+  margin: 0 10px;
+}
+
+.project_display_wrap .header .title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.description {
+  margin: 0;
+  padding-left: 6px;
+}

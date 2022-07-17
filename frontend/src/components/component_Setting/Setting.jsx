@@ -3,9 +3,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { apiCall, apiGet } from '../API';
+import { apiGet, apiCall } from '../API';
 import './Setting.css';
-
 export default function Settings() {
   const [passwords, setPasswords] = React.useState({
     old_password: '',
