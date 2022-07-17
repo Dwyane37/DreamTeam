@@ -160,9 +160,9 @@ function ResumePage() {
   const [type, setType] = useState('false');
 
   useEffect(() => {
-    apiGet('user/getResume?resumeId=' + 1, {}).then((res) => {
-      setResumeData(res.data.data);
-    });
+    // apiGet('user/getResume?resumeId=' + 1, {}).then((res) => {
+    //   setResumeData(res.data.data);
+    // });
   }, []);
 
   const handleClose = () => {
