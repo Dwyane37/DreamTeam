@@ -127,9 +127,12 @@ def searchResume(id):
         print(e)
 
 def getRecommJobs(resume):
-    field = resume.field
-    aim = resume.aim
-    address = resume.address
+    resumeedu = ResumeEducation.query.filter_by(user_id=id).first()
+    position = ResumeWorkExperience.query.filter_by(user_id=id).first()
+    resume = ResumeUser.query.filter_by(user_id=id).first()
+    field = resumeedu.major
+    aim = position.position
+    intro = resume.introduction
     res = Internship.query.all()
     list = []
     for e in res:
@@ -139,7 +142,7 @@ def getRecommJobs(resume):
             if e.city != "":
                 temp = temp + " " + e.city
         list.append(temp.lower())
-    descrip = field + " " + aim + " " + address + " "
+    descrip = field + " " + aim + " " + intro + " "
     descrip = descrip.lower()
     recomm_index = get_recomm(descrip,list,5)
     return_lst = [res[i-1] for i in recomm_index]
