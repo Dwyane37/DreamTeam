@@ -15,9 +15,13 @@ export default function Filter(props) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClear = () => {
+    setFilter({ country: null, state: null, city: null, field: null, citizenship: [] });
+  };
   const handleClose = () => {
     setAnchorEl(null);
-    setFilter({ country: null, state: null, city: null, field: null, citizenship: [] });
+    handleClear();
   };
 
   const handleApply = () => {
@@ -37,7 +41,7 @@ export default function Filter(props) {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        // onClose={handleClose}
+        onClose={handleApply}
         // getContentAnchorEl={null}
         anchorOrigin={{
           vertical: 'bottom',
@@ -58,8 +62,8 @@ export default function Filter(props) {
           <CitizenshipFilter updateFilter={[filter, setFilter]} />
         </div>
         {/* <button type="submit">Apply</button> */}
-        <div>
-          <Button onClick={handleClose}>Cancel</Button>
+        <div className="button-group">
+          <Button onClick={handleClear}>Clear</Button>
           <Button onClick={handleApply}>Apply</Button>
         </div>
       </Menu>

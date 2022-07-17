@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { citizenship } from '../assets';
-
+import './Filter.css';
 export default function CitizenshipFilter(props) {
   const [filter, setFilter] = props.updateFilter;
 
@@ -25,6 +25,7 @@ export default function CitizenshipFilter(props) {
         renderInput={(params) => <TextField {...params} label="Citizenship" />}
       /> */}
       <Autocomplete
+        className="citizenship_filter_box"
         multiple
         id="citizenship_filter"
         options={citizenship}
