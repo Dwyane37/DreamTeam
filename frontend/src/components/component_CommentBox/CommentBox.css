@@ -1,0 +1,29 @@
+.comment-box {
+  font-family: sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 0; */
+}
+.comment-text-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* .comment-text-box {
+  width: 100%;
+} */
+
+.leave-comment {
+  margin-top: 0.5rem;
+  align-self: flex-end;
+}

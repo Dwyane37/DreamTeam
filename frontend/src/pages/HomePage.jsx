@@ -64,7 +64,7 @@ export default function HomePage() {
           </div>
         </div>
         <div>
-          <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="md">
+          <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
             <JobDetail handleClose={handleClose} />
           </Dialog>
         </div>
