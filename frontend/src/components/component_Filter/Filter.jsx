@@ -1,20 +1,27 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import { MenuItem } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import RegionFilter from './RegionFilter';
 import FieldFilter from './FieldFilter';
 import CitizenshipFilter from './CitizenshipFilter';
 import './Filter.css';
+import { useEffect } from 'react';
 
-export default function Filter() {
+export default function Filter(props) {
+  const [filter, setFilter] = props.handleFilter;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+    setFilter({ country: null, state: null, city: null, field: null, citizenship: [] });
+  };
+
+  const handleApply = () => {
+    console.log(filter);
     setAnchorEl(null);
   };
 
@@ -30,7 +37,7 @@ export default function Filter() {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         // getContentAnchorEl={null}
         anchorOrigin={{
           vertical: 'bottom',
@@ -42,15 +49,19 @@ export default function Filter() {
         }}
       >
         <div className="filter_section">
-          <RegionFilter />
+          <RegionFilter updateFilter={[filter, setFilter]} />
         </div>
         <div className="filter_section">
-          <FieldFilter />
+          <FieldFilter updateFilter={[filter, setFilter]} />
         </div>
         <div className="filter_section">
-          <CitizenshipFilter />
+          <CitizenshipFilter updateFilter={[filter, setFilter]} />
         </div>
-        <Button>Search</Button>
+        {/* <button type="submit">Apply</button> */}
+        <div>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleApply}>Apply</Button>
+        </div>
       </Menu>
     </div>
   );
