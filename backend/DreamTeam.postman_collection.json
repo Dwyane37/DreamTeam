@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "ca28323a-6d95-49ea-b186-8c1c0be1d82b",
+		"name": "DreamTeam",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "注册",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"test\", \"password\": \"password\", \"email\": \"test@qq.com\", \"type\": \"student\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "提交简历",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"resumeid\": 2667557817,\r\n    \"resume\": {\r\n        \"userInfo\": [\r\n            {\r\n                \"name\": \"张三\",\r\n                \"university\": \"清华大学\",\r\n                \"email\": \"11221@qq.com\"\r\n            }\r\n        ],\r\n        \"education\": [\r\n            {\r\n                \"university\": \"清湖大学\",\r\n                \"start\": \"9/2022\",\r\n                \"end\": \"9/2222\",\r\n                \"faculty\": \"计算机\",\r\n                \"major\": \"数据结构\",\r\n                \"grades\": \"2.3\",\r\n                \"degree\": \"本科\"\r\n            },\r\n            {\r\n                \"university\": \"清湖大学\",\r\n                \"start\": \"9/2022\",\r\n                \"end\": \"9/2222\",\r\n                \"faculty\": \"计算机\",\r\n                \"major\": \"数据结构\",\r\n                \"grades\": \"2.3\",\r\n                \"degree\": \"本科\"\r\n            }\r\n        ],\r\n        \"workExperience\": [\r\n            {\r\n                \"company\": \"测试公司\",\r\n                \"position\": \"测试地址\",\r\n                \"start\": \"08/2022\",\r\n                \"end\": \"09/2022\",\r\n                \"description\": \"这是一条测试数据\"\r\n            }\r\n        ],\r\n        \"projectExperience\": [\r\n            {\r\n                \"name\": \"测试\",\r\n                \"start\": \"08/2022\",\r\n                \"end\": \"08/2022\",\r\n                \"description\": \"这是一条测试数据\"\r\n            }\r\n        ],\r\n        \"skills\": [\r\n            {\r\n                \"skill\": \"这是一条测试数据\"\r\n            }\r\n        ],\r\n        \"awards\": [\r\n            {\r\n                \"title\": \"测试\",\r\n                \"description\": \"这是一条测试数据\"\r\n            }\r\n        ],\r\n        \"projectDisplay\": [\r\n            {\r\n                \"name\": \"名字\",\r\n                \"link\": \"这是一条测试数据\"\r\n            }\r\n        ]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/submitResume",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"submitResume"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询简历",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/getResume?resumeId=2667557817",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"getResume"
+					],
+					"query": [
+						{
+							"key": "resumeId",
+							"value": "2667557817"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "关注",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/like?followingId=1&followerId=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"like"
+					],
+					"query": [
+						{
+							"key": "followingId",
+							"value": "1"
+						},
+						{
+							"key": "followerId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "关注列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/following?userId=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"following"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "粉丝列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/follower?userId=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"follower"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取消关注",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5500/user/dislike?followingId=1&followerId=2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5500",
+					"path": [
+						"user",
+						"dislike"
+					],
+					"query": [
+						{
+							"key": "followingId",
+							"value": "1"
+						},
+						{
+							"key": "followerId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
