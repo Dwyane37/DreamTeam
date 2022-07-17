@@ -2,40 +2,9 @@ import * as React from 'react';
 import MyJobCard from './MyJobCard';
 import Pagination from '@mui/material/Pagination';
 import usePagination from '../component_JobPanel/usePagination';
+import { jobs } from '../assets';
 
 export default function MyJobPanel() {
-  const jobs = [
-    {
-      title: 'Web Developer',
-      company: 'Google',
-      region: {
-        country: 'Australia',
-        state: 'NSW',
-        city: 'Sydney',
-      },
-      citizenship: ['Australian PR', 'Australian Citizen'],
-      description: 'This is a job description',
-      meetings: [
-        { date: '2022-07-21', link: 'url-link-1' },
-        { date: '2022-07-24', link: 'url-link-2' },
-      ],
-    },
-    {
-      title: 'Data Analysis',
-      company: 'Microsoft',
-      region: {
-        country: 'Australia',
-        state: 'NSW',
-        city: 'North Sydney',
-      },
-      citizenship: ['Australian PR', 'Australian Citizen'],
-      description: 'This is a job description',
-      meetings: [
-        { date: '2022-07-22', link: 'url-link-3' },
-        { date: '2022-07-24', link: 'url-link-4' },
-      ],
-    },
-  ];
   const [page, setPage] = React.useState(1);
   const PER_PAGE = 1;
   const count = Math.ceil(jobs.length / PER_PAGE);

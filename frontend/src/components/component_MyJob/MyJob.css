@@ -1,0 +1,9 @@
+.myjob-card-action {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button {
+  font-size: medium;
+  color: #a40606;
+}
