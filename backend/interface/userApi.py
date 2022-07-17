@@ -6,6 +6,7 @@ from flask import request, jsonify
 from flask_login import LoginManager
 from service.userService import *
 from data.models import *
+from utils.email import *
 import time
 # from flask_mail import *
 import json
@@ -38,7 +39,10 @@ def register():
     id = mesvalue.errormessage
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
-    message = errorMessage(200, token)
+    data = {}
+    data['id'] = id
+    data['token'] = token
+    message = errorMessage(200, data)
     deco = jwt.decode(token,
                       token_key, algorithms='HS256', options={"varify_signature": False})
     exptime = deco['exp']
@@ -61,7 +65,12 @@ def login():
     start_date = time.time() + 3600
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
-    message = errorMessage(200, token)
+    data = {}
+    data['id'] = id
+    data['token'] = token
+    type = getLoginusertype(id)
+    data['type'] = type
+    message = errorMessage(200, data)
     deco = jwt.decode(token,
                       token_key, algorithms='HS256', options={"varify_signature": False})
     exptime = deco['exp']
@@ -85,7 +94,10 @@ def changepassword():
     start_date = time.time() + 3600
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
-    message = errorMessage(200, token)
+    data = {}
+    data['id'] = id
+    data['token'] = token
+    message = errorMessage(200, data)
     # deco = jwt.decode(token,
     #                   token_key, algorithms='HS256', options={"varify_signature": False})
     exptime = deco['exp']
@@ -126,7 +138,10 @@ def resetpassword():
 
 @user_opt.route("/logout")
 def logout():
-    id = request.values.get('id')
+    token = request.values.get('token')
+    deco_token = jwt.decode(token, token_key, algorithms='HS256')
+    id = deco_token['id']
+    # id = request.values.get('id')
     message = logout_user(id)
     username = message.errormessage
     if username in login_users:
@@ -134,6 +149,16 @@ def logout():
     message = errorMessage(200, "ok")
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+@user_opt.route("/getinfo", methods=['GET'])
+def getinfo():
+    token = request.values.get('token')
+    deco_token = jwt.decode(token, token_key, algorithms='HS256')
+    id = deco_token['id']
+    res = get_info(id)
+    data = {}
+    data['data'] = res
+    data['errortype'] = 200
+    return data
 
 @user_opt.route("/submitResume", methods=['POST'])
 def change_resume():

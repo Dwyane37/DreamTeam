@@ -11,7 +11,7 @@ def checkRegistered(username, email):
     elif User.query.filter_by(email=email).first() is not None:
         return errorMessage(1, "This email is already registered")
 
-    return errorMessage(2, "ok")
+    return errorMessage(200, "ok")
 
 
 def registerNewAccount(inputs):
@@ -32,6 +32,14 @@ def registerNewAccount(inputs):
         return errorMessage(200, id)
     except Exception as e:
         return errorMessage(1, e)
+
+def getLoginusertype(id):
+    try:
+        user = User.query.get(id)
+        return user.type
+
+    except Exception as e:
+        print(e)
 
 def checkInfoCorrect(username, password):
     try:
@@ -54,7 +62,7 @@ def checkOldPassword(id, old_password):
         user = User.query.get(id)
         if user.password != old_password:
             return errorMessage(1, "password is incorrect")
-        return errorMessage(2, "ok")
+        return errorMessage(200, "ok")
     except Exception as e:
         print(e)
         return errorMessage(1, e)
@@ -104,7 +112,6 @@ def getuserfromid(id):
     except Exception as e:
         return errorMessage(1, e)
 
-
 def changedetail(id,mobile,nickname,sex,country,update_time,description,tag,
                  photo,email):
     try:
@@ -123,6 +130,17 @@ def changedetail(id,mobile,nickname,sex,country,update_time,description,tag,
     except Exception as e:
         return errorMessage(1,e)
 
+def get_info(id):
+    try:
+        user = User.query.get(id)
+        res = {}
+        res['username'] = user.username
+        res['email'] = user.email
+        res['mobile'] = user.mobile
+        res['type'] = user.type
+        return res
+    except Exception as e:
+        return errorMessage(1, e)
 
 def update_resume(user_id, resume):
 

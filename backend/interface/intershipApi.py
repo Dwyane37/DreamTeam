@@ -47,8 +47,7 @@ def recommand():
     token = request.values.get('token')
     deco_token = jwt.decode(token, token_key, algorithms='HS256')
     id = deco_token['id']
-    resume = searchResume(id)
-    recomm_lst = getRecommJobs(resume)
+    recomm_lst = getRecommJobs(id)
     dict = {}
     for i in recomm_lst:
         dict[repr(i.id)] = i.as_dict()

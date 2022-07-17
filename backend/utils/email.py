@@ -1,4 +1,4 @@
-
+from flask_mail import Message
 from flask_mail import Mail
 mail = Mail()
 #

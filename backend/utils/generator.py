@@ -1,10 +1,10 @@
 import uuid
 
 
-def getuuid2():
+def getuuid():
     uid = uuid.uuid4().int
     uid_str = str(uid)[:10]
-    return int(uid_str)
+    return uid_str
 
 
 def getTime(datetime):

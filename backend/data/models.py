@@ -4,7 +4,6 @@ from sqlalchemy.orm import class_mapper
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
     __tablename__ = 'db_user'
     id = Column(String(255), primary_key=True)
@@ -25,6 +24,29 @@ class User(db.Model):
         return dict((col.name, getattr(obj, col.name)) \
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
+class Internship(db.Model):
+    __tablename__ = 'db_internships'
+    id = Column(String(1000), primary_key=True)
+    title = Column(String(255))
+    user_id = Column(String(1000))
+    content = Column(String(1000))
+    type = Column(Integer)
+    create_time = Column(TIMESTAMP)
+    update_time = Column(TIMESTAMP)
+    deleted = Column(Integer)
+    view = Column(Integer)
+    location = Column(String(255))
+    field = Column(String(255))
+    state = Column(String(255))
+    city = Column(String(255))
+
+    def __repr__(self):
+        return '<Internship %r>' % self.id
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
 
 # 简历信息
 class ResumeUser(db.Model):
@@ -35,6 +57,7 @@ class ResumeUser(db.Model):
     email = Column(String(255))
     user_id = db.Column(String(255), db.ForeignKey('db_user.id'))
     users = db.relationship('User', backref='users')
+    introduction = Column(String(1000))
 
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
