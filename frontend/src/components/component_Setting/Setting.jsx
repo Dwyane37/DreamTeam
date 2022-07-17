@@ -14,7 +14,7 @@ export default function Settings() {
   });
   const [matching, setMatching] = React.useState(null);
   const [empty, setEmpty] = React.useState(null);
-  const [accountInfo, setAccountInfo] = React.useState({});
+  const [accountInfo, setAccountInfo] = React.useState({ username: '', emai: '', mobile: '', type: '' });
 
   const changeHandler = (e) => {
     setPasswords({ ...passwords, [e.target.id]: e.target.value });
@@ -63,15 +63,15 @@ export default function Settings() {
         <div className="settingContainer">
           <div className="settingItem">
             <label htmlFor="accountUserName">Username</label>
-            <TextField id="accountUserName" variant="outlined" value={accountInfo.username} />
+            <TextField id="accountUserName" variant="outlined" value={accountInfo.username || ''} disabled={true} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountEmail">Email</label>
-            <TextField id="accountEmail" variant="outlined" value={accountInfo.email} />
+            <TextField id="accountEmail" variant="outlined" value={accountInfo.email || ''} disabled={true} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
-            <TextField id="accountMobile" variant="outlined" value={accountInfo.mobile ? accountInfo.mobile : ''} />
+            <TextField id="accountMobile" variant="outlined" value={accountInfo.mobile || ''} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
@@ -79,6 +79,7 @@ export default function Settings() {
               id="accountType"
               variant="outlined"
               value={accountInfo.type === 0 ? 'Student Account' : 'Company Account'}
+              disabled={true}
             />
           </div>
         </div>

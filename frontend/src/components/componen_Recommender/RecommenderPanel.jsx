@@ -1,5 +1,5 @@
 import * as React from 'react';
-import RecommenderCard from './RecommenderCard';
+import SimpleJobCard from '../component_SimpleJobCard/SimpleJobCard';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import './RecommenderPanel.css';
 import { apiGet } from '../API';
@@ -54,7 +54,7 @@ export default function RecommenderPanel() {
         <span>Click to get more recommendations</span>
       </div>
       {jobs.map((job, idx) => (
-        <RecommenderCard key={idx} title={job.title} company={job.company} location={job.region} />
+        <SimpleJobCard key={idx} title={job.title} company={job.company} location={job.region} />
       ))}
     </div>
   );

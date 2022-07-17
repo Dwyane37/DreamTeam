@@ -1,12 +1,19 @@
 import React from 'react';
+import IconButton from '@mui/material/IconButton';
+import SortIcon from '@mui/icons-material/Sort';
 import NavBar from '../components/component_NavBar/NavBar';
 import { useNavigate } from 'react-router-dom';
 import JobPanel from '../components/component_JobPanel/JobPanel';
 import RecommenderPanel from '../components/componen_Recommender/RecommenderPanel';
 import PopularJobPanel from '../components/component_PopularJobs/PopularJobPanel';
+
 import './HomePage.css';
+import { apiCall, apiGet } from '../components/API';
 export default function HomePage() {
   const navigate = useNavigate();
+  const [jobs, getJobs] = React.useState([]);
+  const [hotJobs, getHotJobs] = React.useState([]);
+  const [recommend, getRecommend] = React.useState([]);
   const [logedIn, setLogedIn] = React.useState(false);
 
   React.useEffect(() => {
@@ -18,13 +25,26 @@ export default function HomePage() {
     }
   }, [logedIn]);
 
+  React.useEffect(() => {
+    apiGet('internship/gethotjobs', null)
+      .then((data) => console.log(data))
+      .catch((e) => alert(e));
+  }, []);
+
   console.log(logedIn);
   return (
     logedIn && (
       <div>
-        <NavBar type={localStorage.getItem('type')} />
+        <NavBar type={localStorage.getItem('type')} handleJobFetch={getJobs} />
         <div className="home-content-container">
-          <JobPanel />
+          <div className="home-main-panel">
+            <div className="home-sort-button">
+              <IconButton />
+              <SortIcon />
+            </div>
+            <JobPanel />
+          </div>
+
           <div className="home-side-panel">
             <RecommenderPanel />
             <PopularJobPanel />

@@ -8,6 +8,7 @@ import FindPasswordPage from './pages/FindPasswordPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
 import DashboardPage from './pages/DashboardPage';
+import SavedJobs from './pages/SavedJobs';
 function App() {
   return (
     <div>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/saved-jobs" element={<SavedJobs />} />
         </Routes>
       </Router>
     </div>
