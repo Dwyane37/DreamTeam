@@ -17,26 +17,7 @@ import { apiGet, apiPost } from '../components/API'
 function ResumePage() {
   const [resumeData, setResumeData] = useState({
     userInfo: [],
-    education: [
-      {
-        university: '清湖大学',
-        start: '9/2022',
-        end: '9/2222',
-        faculty: '计算机',
-        major: '数据结构',
-        grades: '2.3',
-        degree: '本科'
-      },
-      {
-        university: '清湖大学',
-        start: '9/2022',
-        end: '9/2222',
-        faculty: '计算机',
-        major: '数据结构',
-        grades: '2.3',
-        degree: '本科'
-      }
-    ],
+    education: [],
     workExperience: [],
     projectExperience: [],
     skills: [],
@@ -179,7 +160,7 @@ function ResumePage() {
   const [type, setType] = useState('false')
 
   useEffect(() => {
-    apiGet('/user/getResume?resumeId=' + 1, {}).then((res) => {
+    apiGet('user/getResume?resumeId=' + 1, {}).then((res) => {
       setResumeData(res.data.data)
     })
   }, [])
@@ -201,7 +182,7 @@ function ResumePage() {
   }
 
   const submit = () => {
-    apiPost('/user/submitResume', resumeData).then((res) => {
+    apiPost('user/submitResume', resumeData).then((res) => {
       console.log('提交成功')
     })
   }

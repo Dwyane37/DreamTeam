@@ -5,7 +5,7 @@ function Education(props) {
   const { education } = props
   return (
     <div className='education_wrap'>
-      {education.length &&
+      {!!education.length &&
         education.map((item, index) => (
           <div className='education_item' key={index}>
             <div className='header'>
