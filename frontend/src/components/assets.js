@@ -53,4 +53,22 @@ export const jobs = [
       { date: '2022-07-24', time: '8:00 - 9:00', link: 'zoom-link-2' },
     ],
   },
+  {
+    jobID: 3,
+    title: 'Pharmacy Assistance',
+    company: 'Chemist Warehouse',
+    authorID: 123,
+    region: {
+      country: 'Australia',
+      state: 'NSW',
+      city: 'Sydney',
+    },
+    field: 'Medicine',
+    citizenship: ['Australian PR', 'Australian Citizen'],
+    description: 'random texts',
+    meetings: [
+      { date: '2022-07-21', time: '8:00 - 9:00', link: 'zoom-link-1' },
+      { date: '2022-07-24', time: '8:00 - 9:00', link: 'zoom-link-2' },
+    ],
+  },
 ];

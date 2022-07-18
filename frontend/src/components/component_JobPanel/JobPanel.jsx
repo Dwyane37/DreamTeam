@@ -6,7 +6,7 @@ import usePagination from './usePagination';
 import { jobs } from '../assets';
 export default function JobPanel(props) {
   const [page, setPage] = React.useState(1);
-  const PER_PAGE = 1;
+  const PER_PAGE = 2;
   const count = Math.ceil(jobs.length / PER_PAGE);
   const handleData = usePagination(jobs, PER_PAGE);
 
