@@ -16,7 +16,6 @@ export default function HomePage() {
     <div>
       <NavBar />
       <JobCard />
-      <AddJob />
     </div>
   );
 }
