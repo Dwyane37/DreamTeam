@@ -1,7 +1,10 @@
 import React from 'react';
-import RegisterForm from '../components/RegisterForm';
-import LoginNav from '../components/LoginNav';
-import AccountType from '../components/AccountType';
+import RegisterForm from '../components/component_Register/RegisterForm';
+import LoginNav from '../components/component_NavBar/LoginNav';
+import AccountType from '../components/component_Register/AccountType';
+
+import './LoginRegisterPage.css';
+
 function RegisterPage() {
   const [accType, setAccType] = React.useState('');
   const updateState = (state) => {
@@ -20,9 +23,9 @@ function RegisterPage() {
       ) : (
         <>
           <h1>Select your account type</h1>
-          <div>
-            <AccountType typename="student" colour="orange" handler={updateState} />
-            <AccountType typename="company" handler={updateState} />
+          <div className="selectAccountType">
+            <AccountType typename="student" colour="#5B9279" handler={updateState} />
+            <AccountType typename="company" colour="#91785D" handler={updateState} />
           </div>
         </>
       )}

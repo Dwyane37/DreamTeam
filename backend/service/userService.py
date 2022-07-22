@@ -11,7 +11,8 @@ def checkRegistered(username, email):
     elif User.query.filter_by(email=email).first() is not None:
         return errorMessage(1, "This email is already registered")
 
-    return errorMessage(2, "ok")
+    return errorMessage(200, "ok")
+
 
 def registerNewAccount(inputs):
     try:
@@ -31,6 +32,14 @@ def registerNewAccount(inputs):
         return errorMessage(200, id)
     except Exception as e:
         return errorMessage(1, e)
+
+def getLoginusertype(id):
+    try:
+        user = User.query.get(id)
+        return user.type
+
+    except Exception as e:
+        print(e)
 
 def checkInfoCorrect(username, password):
     try:
@@ -53,7 +62,7 @@ def checkOldPassword(id, old_password):
         user = User.query.get(id)
         if user.password != old_password:
             return errorMessage(1, "password is incorrect")
-        return errorMessage(2, "ok")
+        return errorMessage(200, "ok")
     except Exception as e:
         print(e)
         return errorMessage(1, e)
@@ -120,3 +129,159 @@ def changedetail(id,mobile,nickname,sex,country,update_time,description,tag,
         return errorMessage(200, "ok")
     except Exception as e:
         return errorMessage(1,e)
+
+def get_info(id):
+    try:
+        user = User.query.get(id)
+        res = {}
+        res['username'] = user.username
+        res['email'] = user.email
+        res['mobile'] = user.mobile
+        res['type'] = user.type
+        return res
+    except Exception as e:
+        return errorMessage(1, e)
+
+def update_resume(user_id, resume):
+
+    # db.session.commit()
+    try:
+        # 删除原有数据
+        ResumeUser.query.filter_by(user_id=user_id).delete()
+        ResumeEducation.query.filter_by(user_id=user_id).delete()
+        ResumeWorkExperience.query.filter_by(user_id=user_id).delete()
+        ResumeProjectExperience.query.filter_by(user_id=user_id).delete()
+        ResumeSkill.query.filter_by(user_id=user_id).delete()
+        ResumeAward.query.filter_by(user_id=user_id).delete()
+        ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
+
+        # 插入新数据
+        for user_info in resume["userInfo"]:
+            db.session.add(ResumeUser(
+                name=user_info["name"],
+                university=user_info["university"],
+                email=user_info["email"],
+                user_id=user_id
+            ))
+
+        for education in resume["education"]:
+            db.session.add(ResumeEducation(
+                university=education["university"],
+                start=education["start"],
+                end=education["end"],
+                faculty=education["faculty"],
+                major=education["major"],
+                grades=education["grades"],
+                degree=education["degree"],
+                user_id=user_id
+            ))
+
+        for work in resume["workExperience"]:
+            db.session.add(ResumeWorkExperience(
+                company=work["company"],
+                position=work["position"],
+                start=work["start"],
+                end=work["end"],
+                description=work["description"],
+                user_id=user_id
+            ))
+
+        for project in resume["projectExperience"]:
+            db.session.add(ResumeProjectExperience(
+                name=project["name"],
+                start=project["start"],
+                end=project["end"],
+                description=project["description"],
+                user_id=user_id
+            ))
+
+        for skill in resume["skills"]:
+            db.session.add(ResumeSkill(
+                skill=skill["skill"],
+                user_id=user_id
+            ))
+
+        for award in resume["awards"]:
+            db.session.add(ResumeAward(
+                title=award["title"],
+                description=award["description"],
+                user_id=user_id
+            ))
+
+        for project in resume["projectDisplay"]:
+            db.session.add(ResumeProjectDisplay(
+                name=project["name"],
+                link=project["link"],
+                user_id=user_id
+            ))
+        db.session.commit()
+        return {"code": 0, "message": "ok"}
+    except Exception as e:
+        return {"code": 1, "message": str(e)}
+
+
+def query_resume(user_id):
+    try:
+        user = User.query.filter_by(id=user_id).first()
+        body = {
+            "userInfo": [x.to_dict() for x in user.users],
+            "education": [x.to_dict() for x in user.educations],
+            "workExperience": [x.to_dict() for x in user.works],
+            "projectExperience": [x.to_dict() for x in user.projects],
+            "skills": [x.to_dict() for x in user.skills],
+            "awards": [x.to_dict() for x in user.awards],
+            "projectDisplay": [x.to_dict() for x in user.displays]
+        }
+        return body
+    except Exception as e:
+        return {"code": 1, "message": str(e)}
+
+
+# 关注
+def user_like(following_id, follower_id):
+    count = Follow.query.filter_by(following_id=following_id, follower_id=follower_id).count()
+    if count == 0:
+        db.session.add(Follow(following_id=following_id, follower_id=follower_id))
+        db.session.commit()
+
+    return {"code": 0, "message": "ok"}
+
+
+# 取消关注
+def user_dislike(following_id, follower_id):
+    count = Follow.query.filter_by(following_id=following_id, follower_id=follower_id).count()
+    if count != 0:
+        Follow.query.filter_by(following_id=following_id, follower_id=follower_id).delete()
+        db.session.commit()
+
+    return {"code": 0, "message": "ok"}
+
+
+# 查询关注列表
+def query_following(user_id):
+    following_ids = [follow.following_id for follow in Follow.query.filter_by(follower_id=user_id).all()]
+    users = [User.query.filter_by(id=following_id).first() for following_id in following_ids]
+    data = [{
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "type": user.type
+        # TODO:
+    } for user in users if user is not None]
+    return {"code": 0, "message": "ok", "data": data}
+
+
+# 查询粉丝列表
+def query_follower(user_id):
+    # print(user_id)
+    # data = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
+    follower_ids = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
+    users = [User.query.filter_by(id=follower_id).first() for follower_id in follower_ids]
+    data = [{
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "type": user.type
+    # TODO:
+    } for user in users if user is not None]
+    return {"code": 0, "message": "ok", "data": data}

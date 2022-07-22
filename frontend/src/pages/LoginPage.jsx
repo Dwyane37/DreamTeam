@@ -1,16 +1,19 @@
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/component_Login/LoginForm';
 import React from 'react';
-import LoginNav from '../components/LoginNav';
-import ForgotPassword from '../components/ForgotPassword';
-function LoginPage () {
+import LoginNav from '../components/component_NavBar/LoginNav';
+import ForgotPassword from '../components/component_ForgottenPassword/ForgotPassword';
+
+import './LoginRegisterPage.css';
+
+function LoginPage() {
   return (
     <div className="login_registerPage">
       <LoginNav />
       <div className="login_registerMain">
         <h1>Login</h1>
         <LoginForm />
+        <ForgotPassword />
       </div>
-      <ForgotPassword />
     </div>
   );
 }

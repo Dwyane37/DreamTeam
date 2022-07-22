@@ -1,0 +1,43 @@
+.my_dialog {
+  padding: 30px 0;
+}
+
+.form {
+  border-bottom: 1px solid #ddd;
+  padding: 20px 100px;
+}
+
+.opearte {
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.opearte .add {
+  margin-right: 20px;
+}
+
+.form:last-child {
+  border-bottom: none;
+}
+
+.form_item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form_item .label {
+  width: 120px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: right;
+  margin-right: 40px;
+}
+
+.footer .cancel {
+margin-right: 20px;
+}

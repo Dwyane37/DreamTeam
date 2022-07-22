@@ -1,0 +1,41 @@
+.education_wrap {
+  padding: 0 10px;
+}
+
+.education_wrap .header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.education_wrap .header {
+  position: relative;
+}
+
+.education_wrap .header .item {
+  margin: 0 10px;
+}
+
+.education_wrap .header .university {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.education_wrap .header .date {
+  position: absolute;
+  right: 0;
+
+  color: #666;
+  font-size: 14px;
+}
+
+.major,
+.grades {
+  margin: 0;
+  margin-bottom: 4px;
+  padding-left: 10px;
+}

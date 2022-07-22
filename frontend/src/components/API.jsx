@@ -35,6 +35,7 @@ export const apiGet = async (path, paramDic) => {
       Accept: 'application/json',
     },
   };
+
   const params = objToQueryString(paramDic);
   const res = await fetch(`http://127.0.0.1:5500/${path}?${params}`, init);
   // await console.log(res);

@@ -1,0 +1,9 @@
+.job-panel {
+  border-radius: 5px;
+  width: 50vw;
+  max-width: 800px;
+  min-width: 275px;
+  height: 100vw;
+  display: flex;
+  flex-direction: column;
+}
