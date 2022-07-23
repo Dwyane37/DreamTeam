@@ -12,6 +12,7 @@ import ProjectDisplay from '../components/resume_component/project-display';
 import MyDialog from '../components/resume_component/my-dialog';
 import NavBar from '../components/component_NavBar/NavBar';
 import { apiGet, apiPost } from '../components/API';
+import { useLocation } from 'react-router-dom';
 // import { getResume, submitResume } from '../../api/resume';
 
 function ResumePage({ socket }) {
@@ -158,10 +159,12 @@ function ResumePage({ socket }) {
   });
   const [open, setOpen] = useState(false);
   const [type, setType] = useState('false');
-  const id = sessionStorage.getItem('id');
+  const id = localStorage.getItem('id');
+  const { state } = useLocation();
+  const resumeId = state?.followId || id;
 
   useEffect(() => {
-    apiGet('user/getResume?resumeId=' + id, {}).then((res) => {
+    apiGet('user/getResume?resumeId=' + resumeId, {}).then((res) => {
       setResumeData(res.data.data);
     });
   }, []);
@@ -175,7 +178,16 @@ function ResumePage({ socket }) {
     setType(type);
   };
 
+  const deleteItem = (index) => {
+    const tempData = { ...resumeData };
+    tempData[type].splice(index - 1, 1);
+    console.log(tempData);
+    setResumeData({ ...tempData });
+    console.log(tempData);
+  };
+
   const save = (data) => {
+    console.log(data);
     const temp = { ...resumeData };
     temp[type] = data;
     setResumeData({ ...temp });
@@ -190,6 +202,18 @@ function ResumePage({ socket }) {
 
   const cancel = () => {
     setOpen(false);
+  };
+
+  const handleFollow = () => {
+    if (state.isFollow) {
+      apiGet('user/following', { userId: id }).then((res) => {
+        alert('follow success');
+      });
+    } else {
+      apiGet('user/following', { userId: id }).then((res) => {
+        alert('unFollow success');
+      });
+    }
   };
 
   const student_resume = (
@@ -279,11 +303,17 @@ function ResumePage({ socket }) {
 
   return (
     <>
-      <NavBar type={sessionStorage.getItem('type')} socket={socket} />
+      <NavBar type={localStorage.getItem('type')} />
       <div className="resume">
         <div className="user_info resume_item">
           <div className="header">
-            <span></span>
+            <div>
+              {state?.followId && (
+                <Button variant="contained" size="small" onClick={() => handleFollow()}>
+                  {state?.isFollow ? 'UnFollow' : 'follow'}
+                </Button>
+              )}
+            </div>
             <Button variant="contained" size="small" onClick={() => edit('userInfo')}>
               edit
             </Button>
@@ -292,14 +322,14 @@ function ResumePage({ socket }) {
           <div className="content">
             <img src="https://www.yh31.com/uploadfile/ql/202104152042540827.jpg" alt="" className="avatar" />
             <div className="info_wrap">
-              <div className="info_item">name: {resumeData.userInfo[0]?.name || '-'}</div>
+              <div className="info_item">name: {resumeData.userInfo[0]?.name || 'n/a'}</div>
 
               <div className="info_item">
-                {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
-                {resumeData.userInfo[0]?.organisation || '-'}
+                {localStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
+                {resumeData.userInfo[0]?.unversity || 'n/a'}
               </div>
 
-              <div className="info_item">email: {resumeData.userInfo[0]?.email || '-'}</div>
+              <div className="info_item">email: {resumeData.userInfo[0]?.email || 'n/a'}</div>
             </div>
           </div>
         </div>
@@ -312,7 +342,14 @@ function ResumePage({ socket }) {
         </div>
       </div>
       <Dialog open={open} onClose={handleClose} scroll="paper" fullWidth maxWidth="md">
-        <MyDialog config={dialogConfig[type]} save={save} cancel={cancel} data={resumeData[type]}></MyDialog>
+        <MyDialog
+          config={dialogConfig[type]}
+          save={save}
+          cancel={cancel}
+          deleteItem={deleteItem}
+          data={resumeData[type]}
+          type={type}
+        ></MyDialog>
       </Dialog>
     </>
   );

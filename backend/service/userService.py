@@ -144,7 +144,7 @@ def get_info(id):
 
 def update_resume(user_id, resume):
 
-    db.session.commit()
+    # db.session.commit()
     try:
         # 删除原有数据
         ResumeUser.query.filter_by(user_id=user_id).delete()
@@ -259,13 +259,29 @@ def user_dislike(following_id, follower_id):
 
 # 查询关注列表
 def query_following(user_id):
-    print(user_id)
-    data = [follow.following_id for follow in Follow.query.filter_by(follower_id=user_id).all()]
+    following_ids = [follow.following_id for follow in Follow.query.filter_by(follower_id=user_id).all()]
+    users = [User.query.filter_by(id=following_id).first() for following_id in following_ids]
+    data = [{
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "type": user.type
+        # TODO:
+    } for user in users if user is not None]
     return {"code": 0, "message": "ok", "data": data}
 
 
 # 查询粉丝列表
 def query_follower(user_id):
-    print(user_id)
-    data = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
+    # print(user_id)
+    # data = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
+    follower_ids = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
+    users = [User.query.filter_by(id=follower_id).first() for follower_id in follower_ids]
+    data = [{
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "type": user.type
+    # TODO:
+    } for user in users if user is not None]
     return {"code": 0, "message": "ok", "data": data}
