@@ -14,10 +14,11 @@ export default function DashboardPage({ socket }) {
   }
   React.useEffect(() => {
     if (!sessionStorage.getItem('token')) {
-      alert('Your are not logged in');
-      navigate('/login');
-    } else {
+      //alert('Your are not logged in');
+      //navigate('/login');
       setLogedIn(true);
+    } else {
+      //setLogedIn(true);
     }
     socket?.emit('newUser', sessionStorage.getItem('id'));
   }, [logedIn]);

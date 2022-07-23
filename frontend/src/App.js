@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
 import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
+import ViewJobPage from './pages/ViewJobPage';
 import DashboardPage from './pages/DashboardPage';
 import SavedJobs from './pages/SavedJobs';
 import ResumePage from './pages/ResumePage';
@@ -32,8 +33,9 @@ function App() {
           <Route path="/find_password" element={<FindPasswordPage />} />
           <Route path="/home" element={<HomePage socket={socket} />} />
           <Route path="/settings" element={<SettingsPage socket={socket} />} />
-          <Route path="/addjob" element={<AddJobPage socket={socket} />} />
-          <Route path="/editjob" element={<EditJobPage socket={socket} />} />
+          <Route path="/addjob" element={<AddJobPage />} />
+          <Route path="/editjob" element={<EditJobPage />} />
+          <Route path="/viewjob" element={<ViewJobPage />} />
           <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
           <Route path="/saved-jobs" element={<SavedJobs socket={socket} />} />
           <Route path="/" element={<WelcomePage />} />
