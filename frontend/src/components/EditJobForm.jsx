@@ -19,7 +19,7 @@ import Select from '@mui/material/Select';
 //import Input from '@mui/material/Input';
 //import JobInformationInp from '../components/JobInformationInp';
 
-export default function AddJobForm () {
+export default function EditJobForm () {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState(0);
   const [title, setTitle] = React.useState('');
@@ -29,7 +29,6 @@ export default function AddJobForm () {
   const [description, setDescription] = React.useState('');
   const [link, setLink] = React.useState('');
   const [datetime, setDatetime] = React.useState(new Date('2022-07-13T12:00:00'));
-  //const [aaaa, setaaaa] = React.useState(new Date(datetime));
 
   const post = (e) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ export default function AddJobForm () {
     }).then((body) => {
       console.log(body)
       localStorage.setItem('token', body.errormessage);
-      navigate('/dashboard')
+      navigate('/login')
     }).catch(e => alert(e))
   };
 
@@ -224,7 +223,7 @@ export default function AddJobForm () {
 
   return (
     <Box
-      className="AddJobForm"
+      className="EditJobForm"
       component="form"
       onSubmit={(e) => {
         post(e);

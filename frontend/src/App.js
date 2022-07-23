@@ -8,6 +8,7 @@ import FindPasswordPage from './pages/FindPasswordPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
 import AddJobPage from './pages/AddJobPage';
+import EditJobPage from './pages/EditJobPage';
 import DashboardPage from './pages/DashboardPage';
 import SavedJobs from './pages/SavedJobs';
 import ResumePage from './pages/ResumePage';
@@ -25,6 +26,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/addjob" element={<AddJobPage />} />
+          <Route path="/editjob" element={<EditJobPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/saved-jobs" element={<SavedJobs />} />
           <Route path="/" element={<WelcomePage />} />
