@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 import { apiGet } from '../API';
+import { ValidateEmail } from '../assets';
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ export default function ForgotPassword() {
   const handleSend = () => {
     apiGet('/user/forget', { email })
       .then((body) => {
-        localStorage.setItem('code', body.errormessage);
-        localStorage.setItem('email', email);
+        sessionStorage.setItem('code', body.errormessage);
+        sessionStorage.setItem('email', email);
         navigate('/find_password');
       })
       .catch((e) => alert(e));
@@ -52,11 +53,14 @@ export default function ForgotPassword() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            helperText={ValidateEmail(email) ? null : ' Incorrect email format'}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSend}>Send</Button>
+          <Button disabled={!email || !ValidateEmail(email)} onClick={handleSend}>
+            Send
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

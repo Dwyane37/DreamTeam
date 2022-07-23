@@ -13,30 +13,32 @@ import DashboardPage from './pages/DashboardPage';
 import SavedJobs from './pages/SavedJobs';
 import ResumePage from './pages/ResumePage';
 import FollowPage from './pages/FollowPage';
+import { io } from 'socket.io-client';
 
 function App() {
+  const [socket, setSocket] = React.useState(null);
+
+  React.useEffect(() => {
+    setSocket(io('http://localhost:5005'));
+  }, []);
+
   return (
     <div>
       <Router>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage socket={socket} />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/find_password" element={<FindPasswordPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/addjob" element={<AddJobPage />} />
-          <Route path="/editjob" element={<EditJobPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/saved-jobs" element={<SavedJobs />} />
+          <Route path="/home" element={<HomePage socket={socket} />} />
+          <Route path="/settings" element={<SettingsPage socket={socket} />} />
+          <Route path="/addjob" element={<AddJobPage socket={socket} />} />
+          <Route path="/editjob" element={<EditJobPage socket={socket} />} />
+          <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
+          <Route path="/saved-jobs" element={<SavedJobs socket={socket} />} />
           <Route path="/" element={<WelcomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/find_password" element={<FindPasswordPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/profile" element={<ResumePage />} />
-          <Route path="/follow" element={<FollowPage />} />
+          <Route path="/profile" element={<ResumePage socket={socket} />} />
+          <Route path="/follow" element={<FollowPage socket={socket} />} />
         </Routes>
       </Router>
     </div>

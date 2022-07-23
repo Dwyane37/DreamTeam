@@ -1,72 +1,30 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
+import { Search, SearchIconWrapper, StyledInputBase } from './Search';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
+import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import Logout from '../Logout';
 import Filter from '../component_Filter/Filter';
-// import FilterListIcon from '@mui/icons-material/FilterList';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { apiGet } from '../API';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: '30%',
-    width: '30%',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
 // #########################
 export default function NavBar(props) {
   const type = props.type;
-  const setJobFunc = props.handleJobFetch;
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const [keyword, setKeyword] = React.useState('');
+  const setJobFunc = props.handleJobFetch;
+
   const initFilter = {
     country: null,
     state: null,
@@ -76,43 +34,56 @@ export default function NavBar(props) {
   };
   const [filter, setFilter] = React.useState(initFilter);
 
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
   const navigateHome = () => {
     type === '0' ? navigate('/home') : navigate('/dashboard');
   };
 
   const navigateProfile = () => {
-    setAnchorEl(null);
+    setanchorEl(null);
     navigate('/profile');
   };
 
   const navigateSettings = () => {
-    setAnchorEl(null);
+    setanchorEl(null);
     navigate('/settings');
   };
 
   const navigateFollowedEmployers = () => {
-    setAnchorEl(null);
+    setanchorEl(null);
     navigate('/follow');
   };
 
   const navigateSavings = () => {
-    setAnchorEl(null);
+    setanchorEl(null);
     navigate('/saved-jobs');
   };
 
-  const menuId = 'primary-search-account-menu';
+  // Menu
+  const [anchorEl, setanchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const handleProfileMenuOpen = (event) => {
+    setanchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setanchorEl(null);
+  };
+  const menuId = 'account-menu';
   const renderMenu = (
-    <Menu anchorEl={anchorEl} id={menuId} keepMounted open={isMenuOpen} onClose={handleMenuClose}>
+    <Menu
+      anchorEl={anchorEl}
+      id={menuId}
+      keepMounted
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+      // anchorOrigin={{
+      //   vertical: 'top',
+      //   horizontal: 'right',
+      // }}
+      // transformOrigin={{
+      //   vertical: 'top',
+      //   horizontal: 'right',
+      // }}
+    >
       <MenuItem onClick={navigateProfile}>Profile</MenuItem>
       {type === '0' ? (
         <div>
@@ -122,9 +93,54 @@ export default function NavBar(props) {
       ) : null}
 
       <MenuItem onClick={navigateSettings}>Settings</MenuItem>
-      <Logout />
+      <Logout socket={props.socket} />
     </Menu>
   );
+
+  // notification display
+  const [anchorElNotify, setAnchorElNotify] = React.useState(null);
+
+  const isNotifyOpen = Boolean(anchorElNotify);
+
+  const handleNotificationOpen = (event) => {
+    setAnchorElNotify(event.currentTarget);
+  };
+
+  const handleNotificationClose = () => {
+    setAnchorElNotify(null);
+  };
+  const [notifications, setNotifications] = React.useState([]);
+
+  const notificationId = 'notifications';
+  const renderNotification = (
+    <Menu
+      anchorEl={anchorElNotify}
+      id={notificationId}
+      keepMounted
+      open={isNotifyOpen}
+      onClose={handleNotificationClose}
+    >
+      {notifications.map((notification, idx) => (
+        <Paper key={idx}>{notification}</Paper>
+      ))}
+      <Button variant="contained">Mark As Read</Button>
+    </Menu>
+  );
+
+  React.useEffect(() => {
+    setNotifications(['notification 1', 'notification 2']);
+    console.log(notifications);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(props.socket);
+    props.socket?.on('getApplication', (data) => {
+      console.log(data.msg);
+      setNotifications((prev) => [...prev, data.msg]);
+    });
+  }, [props.socket]);
+
+  // Search
 
   const processCitizenshipArray = (arr) => {
     const ids = arr.map((item) => item.id);
@@ -142,7 +158,6 @@ export default function NavBar(props) {
       field: filter.field.label,
       type: processCitizenshipArray(filter.citizenship),
     };
-    console.log(attr);
     // apiGet('internship/search', attr)
     //   .then((data) => setJobFunc(data))
     //   .catch((e) => alert(e));
@@ -158,15 +173,6 @@ export default function NavBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#6096ba' }}>
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <div style={{ border: '1px solid white', padding: '0.7rem 0.5rem', borderRadius: '10%' }}>
             <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
               I-Student
@@ -196,11 +202,19 @@ export default function NavBar(props) {
                 <MailIcon />
               </Badge>
             </IconButton> */}
-            <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="error">
+            <IconButton
+              size="large"
+              edge="start"
+              aria-label="notifications"
+              color="inherit"
+              aria-controls={notificationId}
+              onClick={handleNotificationOpen}
+            >
+              <Badge badgeContent={notifications.length} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+
             <IconButton
               size="large"
               edge="end"
@@ -216,6 +230,7 @@ export default function NavBar(props) {
         </Toolbar>
       </AppBar>
       {renderMenu}
+      {renderNotification}
     </Box>
   );
 }

@@ -31,7 +31,7 @@ export default function FindPassword() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    apiCall('user/resetpassword', { email: localStorage.getItem('email'), password: passwords['new_password'] })
+    apiCall('user/resetpassword', { email: sessionStorage.getItem('email'), password: passwords['new_password'] })
       .then((body) => {
         console.log(body);
         setResetSuccess(true);

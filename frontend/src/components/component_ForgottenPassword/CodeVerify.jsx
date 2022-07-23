@@ -9,7 +9,7 @@ export default function CodeVerify(props) {
   const [codeCorrect, setCodeCorrect] = props.verifyResult;
 
   const handleSubmit = (e) => {
-    if (code === localStorage.getItem('code')) {
+    if (code === sessionStorage.getItem('code')) {
       setCodeCorrect(true);
     } else {
       setCodeCorrect(false);

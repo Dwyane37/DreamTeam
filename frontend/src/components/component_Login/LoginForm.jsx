@@ -16,10 +16,10 @@ function LoginForm() {
     apiGet('user/login', { username, password })
       .then((body) => {
         console.log(body);
-        localStorage.setItem('token', body.errormessage.token);
-        localStorage.setItem('id', body.errormessage.id);
-        localStorage.setItem('type', body.errormessage.type);
-        localStorage.getItem('type') === '0' ? navigate('/home') : navigate('/dashboard');
+        sessionStorage.setItem('token', body.errormessage.token);
+        sessionStorage.setItem('id', body.errormessage.id);
+        sessionStorage.setItem('type', body.errormessage.type);
+        sessionStorage.getItem('type') === '0' ? navigate('/home') : navigate('/dashboard');
       })
       .catch((e) => alert(e));
   };

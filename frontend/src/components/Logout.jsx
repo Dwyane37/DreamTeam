@@ -7,7 +7,7 @@ import { apiCall } from '../components/API';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
-export default function Logout() {
+export default function Logout({ socket }) {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -20,12 +20,13 @@ export default function Logout() {
   };
 
   const handleLogOut = () => {
-    // id = localStorage.getItem('id') ? localStorage.getItem('id') : 1
-    apiCall('user/logout', { token: localStorage.getItem('token') })
+    // id = sessionStorage.getItem('id') ? sessionStorage.getItem('id') : 1
+    apiCall('user/logout', { token: sessionStorage.getItem('token') })
       .then((body) => {
         setOpen(false);
+        socket.disconnect();
         navigate('/');
-        localStorage.clear();
+        sessionStorage.clear();
       })
       .catch((e) => alert(e));
   };

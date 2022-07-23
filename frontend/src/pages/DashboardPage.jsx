@@ -6,22 +6,33 @@ import { useNavigate } from 'react-router-dom';
 
 import './Dashboard.css';
 
-
-export default function DashboardPage() {
+export default function DashboardPage({ socket }) {
   const navigate = useNavigate();
+  const [logedIn, setLogedIn] = React.useState(false);
   function AddJob() {
     navigate('/addjob');
   }
+  React.useEffect(() => {
+    if (!sessionStorage.getItem('token')) {
+      alert('Your are not logged in');
+      navigate('/login');
+    } else {
+      setLogedIn(true);
+    }
+    socket?.emit('newUser', sessionStorage.getItem('id'));
+  }, [logedIn]);
   return (
-    <div>
-      <NavBar type={localStorage.getItem('type')} />
-      <div className="dashboard-main">
-        <h3>My Job Posts</h3>
-        <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>
-          Add a Job Post
-        </Button>
-        <MyJobPanel />
+    logedIn && (
+      <div>
+        <NavBar type={sessionStorage.getItem('type')} socket={socket} />
+        <div className="dashboard-main">
+          <h3>My Job Posts</h3>
+          <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>
+            Add a Job Post
+          </Button>
+          <MyJobPanel />
+        </div>
       </div>
-    </div>
+    )
   );
 }
