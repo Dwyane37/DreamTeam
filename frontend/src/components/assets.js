@@ -21,7 +21,7 @@ export const jobs = [
     jobID: 1,
     title: 'Web Developer',
     company: 'Google',
-    authorID: 123,
+    authorID: 91272343673357427676270600691321,
     region: {
       country: 'Australia',
       state: 'NSW',
@@ -40,7 +40,7 @@ export const jobs = [
     jobID: 2,
     title: 'Data Analysis',
     company: 'Microsoft',
-    authorID: 321,
+    authorID: 91272343673357427676270600691321,
     region: {
       country: 'Australia',
       state: 'NSW',
@@ -57,7 +57,7 @@ export const jobs = [
     jobID: 3,
     title: 'Pharmacy Assistance',
     company: 'Chemist Warehouse',
-    authorID: 123,
+    authorID: 91272343673357427676270600691321,
     region: {
       country: 'Australia',
       state: 'NSW',
@@ -72,3 +72,16 @@ export const jobs = [
     ],
   },
 ];
+
+export function ValidateEmail(mail) {
+  if (mail) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+      return true;
+    } else {
+      // alert('You have entered an invalid email address!');
+      return false;
+    }
+  } else {
+    return true;
+  }
+}

@@ -16,6 +16,11 @@ export default function JobCard(props) {
     // TODO Apply for the job
     e.stopPropagation();
     console.log('apply');
+    props.socket.emit('applyJob', {
+      senderName: sessionStorage.getItem('id'),
+      receiverName: '91272343673357427676270600691321',
+      jobID: 123,
+    });
   };
 
   const handleSave = (e) => {

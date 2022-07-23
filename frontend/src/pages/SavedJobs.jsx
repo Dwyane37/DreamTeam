@@ -6,7 +6,7 @@ import JobPanel from '../components/component_JobPanel/JobPanel';
 import { Dialog } from '@mui/material';
 import JobDetail from '../components/compopnent_JobDetail/JobDetail';
 import NavBar from '../components/component_NavBar/NavBar';
-export default function SavedJobs() {
+export default function SavedJobs({ socket }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = (e) => {
@@ -19,7 +19,7 @@ export default function SavedJobs() {
   };
   return (
     <div>
-      <NavBar type={localStorage.getItem('type')} />
+      <NavBar type={sessionStorage.getItem('type')} socket={socket} />
       <div className="container-savedJob">
         <Typography component="h1" variant="h4" align="center">
           My Saved Jobs

@@ -6,7 +6,7 @@ import { apiGet } from '../API';
 import { jobs } from '../assets';
 export default function RecommenderPanel(props) {
   // React.useEffect(() => {
-  //   apiGet('internship/recommand', { token: localStorage.getItem('token') })
+  //   apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
   //     .then((data) => console.log(data))
   //     .catch((e) => alert(e));
   // }, []);

@@ -39,7 +39,7 @@ export default function Settings() {
   }, [passwords]);
 
   React.useEffect(() => {
-    apiCall('user/getinfo', { token: localStorage.getItem('token') })
+    apiCall('user/getinfo', { token: sessionStorage.getItem('token') })
       .then((info) => {
         setAccountInfo({ ...info.data });
       })
@@ -49,7 +49,7 @@ export default function Settings() {
   const resetPassword = () => {
     if (matching && passwords.old_password !== '') {
       apiGet('user/changepassword', {
-        token: localStorage.getItem('token'),
+        token: sessionStorage.getItem('token'),
         old_password: passwords.old_password,
         new_password: passwords.new_password,
       })

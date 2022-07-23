@@ -4,6 +4,7 @@ import Pagination from '@mui/material/Pagination';
 import './JobPanel.css';
 import usePagination from './usePagination';
 import { jobs } from '../assets';
+
 export default function JobPanel(props) {
   const [page, setPage] = React.useState(1);
   const PER_PAGE = 2;
@@ -38,15 +39,11 @@ export default function JobPanel(props) {
             location={job.region}
             briefing={job.description}
             hanldeClickOpen={props.openDialog}
+            socket={props.socket}
           />
         ))}
         <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
       </div>
-      {/* <div>
-        <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="md">
-          <JobDetail handleClose={handleClose} />
-        </Dialog>
-      </div> */}
     </>
   );
 }

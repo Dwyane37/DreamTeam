@@ -5,7 +5,7 @@ import ForgotPassword from '../components/component_ForgottenPassword/ForgotPass
 
 import './LoginRegisterPage.css';
 
-function LoginPage() {
+function LoginPage({ socket }) {
   return (
     <div className="login_registerPage">
       <LoginNav />

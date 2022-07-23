@@ -11,7 +11,8 @@ import PopularJobPanel from '../components/component_PopularJobs/PopularJobPanel
 
 import './HomePage.css';
 import { apiCall, apiGet } from '../components/API';
-export default function HomePage() {
+
+export default function HomePage({ socket }) {
   const navigate = useNavigate();
   const [jobs, getJobs] = React.useState([]);
   const [hotJobs, getHotJobs] = React.useState([]);
@@ -19,19 +20,14 @@ export default function HomePage() {
   const [logedIn, setLogedIn] = React.useState(false);
 
   React.useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (!sessionStorage.getItem('token')) {
       alert('Your are not logged in');
       navigate('/login');
     } else {
       setLogedIn(true);
     }
+    socket?.emit('newUser', sessionStorage.getItem('id'));
   }, [logedIn]);
-
-  React.useEffect(() => {
-    apiGet('internship/gethotjobs', null)
-      .then((data) => console.log(data))
-      .catch((e) => alert(e));
-  }, []);
 
   const [open, setOpen] = React.useState(false);
 
@@ -44,18 +40,17 @@ export default function HomePage() {
     setOpen(false);
   };
 
-  console.log(logedIn);
   return (
     logedIn && (
       <div>
-        <NavBar type={localStorage.getItem('type')} handleJobFetch={getJobs} />
+        <NavBar type={sessionStorage.getItem('type')} handleJobFetch={getJobs} socket={socket} />
         <div className="home-content-container">
           <div className="home-main-panel">
             <div className="home-sort-button">
               <IconButton />
               <SortIcon />
             </div>
-            <JobPanel openDialog={handleClickOpen} />
+            <JobPanel openDialog={handleClickOpen} socket={socket} />
           </div>
 
           <div className="home-side-panel">

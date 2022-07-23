@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import NavBar from '../components/component_NavBar/NavBar';
 import './FollowPage.css';
 
-const FollowPage = () => {
+const FollowPage = ({ socket }) => {
   const [followList, setFollowList] = useState([
     {
       avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
@@ -30,7 +30,7 @@ const FollowPage = () => {
 
   return (
     <div className="follow">
-      <NavBar type={localStorage.getItem('type')} />
+      <NavBar type={sessionStorage.getItem('type')} socket={socket} />
       <div className="follow_list">
         {followList.length &&
           followList.map((item) => (

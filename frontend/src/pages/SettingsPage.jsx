@@ -3,10 +3,10 @@ import Settings from '../components/component_Setting/Setting';
 import NavBar from '../components/component_NavBar/NavBar';
 import Typography from '@mui/material/Typography';
 
-export default function SettingsPage() {
+export default function SettingsPage({ socket }) {
   return (
     <>
-      <NavBar type={localStorage.getItem('type')} />
+      <NavBar type={sessionStorage.getItem('type')} socket={socket} />
       <Typography variant="h5">Settings</Typography>
       <Settings />
     </>

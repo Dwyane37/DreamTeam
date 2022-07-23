@@ -14,7 +14,7 @@ import NavBar from '../components/component_NavBar/NavBar';
 import { apiGet, apiPost } from '../components/API';
 // import { getResume, submitResume } from '../../api/resume';
 
-function ResumePage() {
+function ResumePage({ socket }) {
   const [resumeData, setResumeData] = useState({
     userInfo: [],
     education: [],
@@ -158,7 +158,7 @@ function ResumePage() {
   });
   const [open, setOpen] = useState(false);
   const [type, setType] = useState('false');
-  const id = localStorage.getItem('id');
+  const id = sessionStorage.getItem('id');
 
   useEffect(() => {
     apiGet('user/getResume?resumeId=' + id, {}).then((res) => {
@@ -279,7 +279,7 @@ function ResumePage() {
 
   return (
     <>
-      <NavBar type={localStorage.getItem('type')} />
+      <NavBar type={sessionStorage.getItem('type')} socket={socket} />
       <div className="resume">
         <div className="user_info resume_item">
           <div className="header">
@@ -295,7 +295,7 @@ function ResumePage() {
               <div className="info_item">name: {resumeData.userInfo[0]?.name || '-'}</div>
 
               <div className="info_item">
-                {localStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
+                {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
                 {resumeData.userInfo[0]?.organisation || '-'}
               </div>
 
@@ -303,7 +303,7 @@ function ResumePage() {
             </div>
           </div>
         </div>
-        {localStorage.getItem('type') === '0' ? student_resume : hr_detail}
+        {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
 
         <div className="resume_footer">
           <Button className="save" variant="contained" size="small" color="success" onClick={() => submit()}>
