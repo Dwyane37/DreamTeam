@@ -41,20 +41,24 @@ export default function AddJobForm() {
 
   const post = (e) => {
     e.preventDefault();
-    // apiPost('internship/add_internship', {
-    //   title: title,
-    //   field: field,
-    //   location: location,
-    //   working_right: right,
-    //   description: description,
-    //   meeting: sessions,
-    // })
-    //   .then((body) => {
-    //     console.log(body);
-    //     localStorage.setItem('token', body.errormessage);
-    //     navigate('/dashboard');
-    //   })
-    //   .catch((e) => alert(e));
+    const attr = {
+      title: title,
+      location: filter.country?.name || '', //e.g. "Australie"
+      state: filter.state?.name || '', // e.g. "New Southe Wales"
+      city: filter.city?.name || '', // e.g. Sydney
+      field: filter.field?.label || '', //e.g. Science
+      working_right: right || 0, //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
+      description: description, //e.g. text text text
+      meeting: sessions, //e.g. [{datetime: , link: }, {datetime: , link: }]
+    };
+
+    apiPost('internship/add_internship', attr)
+      .then((body) => {
+        console.log(body);
+        sessionStorage.setItem('token', body.errormessage);
+        navigate('/dashboard');
+      })
+      .catch((e) => alert(e));
   };
 
   const handleChange = (newValue) => {
