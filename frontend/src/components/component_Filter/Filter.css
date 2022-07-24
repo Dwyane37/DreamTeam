@@ -4,8 +4,10 @@
 
 .region_filter_box {
   min-width: 200px;
+  max-width: 300px;
   flex: 1;
   margin: 0.5rem;
+  margin-left: 0;
 }
 
 .region_filter_container {
@@ -14,6 +16,14 @@
 }
 
 .citizenship_filter_box {
+  margin: 0;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.field_filter_box {
+  margin: 0;
+  min-width: 200px;
   max-width: 300px;
 }
 

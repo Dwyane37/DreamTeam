@@ -18,6 +18,7 @@ export default function FieldFilter(props) {
       <p>Field of Study</p>
       <Autocomplete
         disablePortal
+        className="field_filter_box"
         id="field_filter"
         options={fields}
         isOptionEqualToValue={(option, value) => option.id === value?.id}
