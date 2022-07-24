@@ -26,3 +26,14 @@
   border-radius: 20px;
   padding: 2rem;
 }
+
+.createSession {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  margin: 3rem;
+  justify-content: space-between;
+  border: 1px solid darkcyan;
+  border-radius: 5%;
+  padding: 1rem 1.5rem;
+}
