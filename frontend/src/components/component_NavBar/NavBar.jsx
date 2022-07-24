@@ -145,7 +145,7 @@ export default function NavBar(props) {
     if (arr) {
       const ids = arr.map((item) => item.id);
       ids.sort();
-      return ids.join(',');
+      return parseInt(ids.join(''));
     }
     return '';
   };
@@ -158,6 +158,7 @@ export default function NavBar(props) {
       field: filter.field?.label,
       right: processCitizenshipArray(filter.citizenship),
     };
+    console.log(attr);
     apiGet('internship/search', attr)
       .then((data) => setJobFunc(data))
       .catch((e) => alert(e));
