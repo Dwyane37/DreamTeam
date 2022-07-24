@@ -39,6 +39,7 @@
   padding: 2rem;
   align-items: center;
 }
+
 .createSession {
   display: flex;
   flex-direction: column;

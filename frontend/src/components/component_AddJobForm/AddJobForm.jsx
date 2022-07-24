@@ -43,9 +43,9 @@ export default function AddJobForm() {
     e.preventDefault();
     apiPost('internship/add_internship', {
       title: title,
-      field: field,
-      location: location,
-      working_right: right,
+      //field: field,
+      //location: location,
+      //working_right: right,
       description: description,
       meeting: [{ link: link, datetime: datetime }],
     })
