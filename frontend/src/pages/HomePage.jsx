@@ -30,9 +30,9 @@ export default function HomePage({ socket }) {
   }, [logedIn]);
 
   React.useEffect(() => {
-    apiGet('internship/gethotjobs', null)
-      .then((data) => getHotJobs(data))
-      .catch((e) => alert(e));
+    // apiGet('internship/gethotjobs', null)
+    //   .then((data) => getHotJobs(data))
+    //   .catch((e) => alert(e));
     // apiCall('internship/home', null)
     //   .then((data) => getJobs(data))
     //   .catch((e) => alert(e));
