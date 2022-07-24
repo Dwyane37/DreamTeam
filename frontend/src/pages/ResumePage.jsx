@@ -160,7 +160,7 @@ function ResumePage({ socket }) {
   });
   const [open, setOpen] = useState(false);
   const [type, setType] = useState('false');
-  const id = localStorage.getItem('id');
+  const id = sessionStorage.getItem('id');
   const { state } = useLocation();
   // const resumeId = state?.followId || id;
   const params = useParams();
@@ -306,7 +306,7 @@ function ResumePage({ socket }) {
 
   return (
     <>
-      <NavBar type={localStorage.getItem('type')} />
+      <NavBar type={sessionStorage.getItem('type')} />
       <div className="resume">
         <div className="user_info resume_item">
           <div className="header">
@@ -328,7 +328,7 @@ function ResumePage({ socket }) {
               <div className="info_item">name: {resumeData.userInfo[0]?.name || 'n/a'}</div>
 
               <div className="info_item">
-                {localStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
+                {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
                 {resumeData.userInfo[0]?.unversity || 'n/a'}
               </div>
 

@@ -44,8 +44,6 @@ export default function EditJobForm() {
     })
       .then((body) => {
         console.log(body);
-        localStorage.setItem('token', body.errormessage);
-        navigate('/login');
       })
       .catch((e) => alert(e));
   };

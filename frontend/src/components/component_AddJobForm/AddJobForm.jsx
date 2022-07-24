@@ -66,8 +66,6 @@ export default function AddJobForm() {
     apiPost('internship/add_internship', attr)
       .then((body) => {
         console.log(body);
-        sessionStorage.setItem('token', body.errormessage);
-        navigate('/dashboard');
       })
       .catch((e) => alert(e));
   };

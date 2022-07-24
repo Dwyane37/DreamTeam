@@ -34,7 +34,7 @@ const FollowPage = ({ socket }) => {
   ]);
   const navigate = useNavigate();
 
-  const id = localStorage.getItem('id');
+  const id = sessionStorage.getItem('id');
 
   useEffect(() => {
     apiGet('user/following', { userId: id }).then((res) => {
@@ -64,7 +64,7 @@ const FollowPage = ({ socket }) => {
 
   return (
     <div className="follow">
-      <NavBar type={localStorage.getItem('type')} />
+      <NavBar type={sessionStorage.getItem('type')} />
       <div className="follow_list">
         {followList.length > 0 ? (
           followList.map((item, index) => (
