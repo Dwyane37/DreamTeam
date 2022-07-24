@@ -59,8 +59,9 @@ export default function AddJobForm() {
       field: filter.field?.label || '', //e.g. Science
       working_right: right || 0, //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
       description: description, //e.g. text text text
-      meeting: sessions, //e.g. [{datetime: , link: }, {datetime: , link: }]
+      meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
     };
+    console.log(attr);
 
     apiPost('internship/add_internship', attr)
       .then((body) => {
@@ -85,7 +86,7 @@ export default function AddJobForm() {
   };
 
   const Create = () => {
-    setSessions([...sessions, { datetime: datetime, link: link }]);
+    setSessions([...sessions, { datetime: datetime.toISOString(), link: link }]);
     clear();
     setOpen(false);
   };
