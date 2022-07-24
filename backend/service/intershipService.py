@@ -19,84 +19,108 @@ def search_intership(key, field, location, type, city, state):
         type = 0
     elif type == 'pr':
         type = 1
-
-    if field == '' and location == '' and type == '':
-        res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key))).all()
-    elif field == '' and location == '' and type != '':
-        res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+    print(key, field,location,type,city,state)
+    if field == "" and location == "" and type == "":
+        print("1")
+        res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key))).all()
+    elif field == "" and location == "" and type != "":
+        print("2")
+        res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                       Internship.type == type).all()
-    elif field == '' and location != '' and type == '':
-        if state != '' and city != '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+    elif field == "" and location != "" and type == "":
+        print("3")
+        if state != "" and city != "":
+            print("4")
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.state == state,
                                           Internship.city == city).all()
-        elif state != '' and city == '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+        elif state != "" and city == "":
+            print("5")
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.state == state).all()
         else:
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+            print("6")
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location).all()
 
-    elif field != '' and location == '' and type == '':
-        res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+    elif field != "" and location == "" and type == "":
+        print("7")
+        res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                       Internship.field == field).all()
-    elif field != '' and location != '' and type == '':
-        if state != '' and city != '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+    elif field != "" and location != "" and type == "":
+        if state != "" and city != "":
+            print("8")
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.field == field,
                                           Internship.state == state,
                                           Internship.city == city).all()
-        elif state != '' and city == '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+        elif state != "" and city == "":
+            print("9")
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.field == field,
                                           Internship.state == state).all()
         else:
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+            print("10")
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.field == field,
                                           Internship.location == location).all()
 
-    elif field != '' and location == '' and type != '':
-        res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+    elif field != "" and location == "" and type != "":
+        print("11")
+        res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                       Internship.field == field,
                                       Internship.type == type).all()
-    elif field == '' and location != '' and type != '':
-        if state != '' and city != '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+    elif field == "" and location != "" and type != "":
+        if state != "" and city != "":
+            print("12")
+
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
-                                          Internship.type == type,
+                                          Internship.type.like('%{type}%'.format(type=type)),
                                           Internship.state == state,
                                           Internship.city == city).all()
-        elif state != '' and city == '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+        elif state != "" and city == "":
+            print("13")
+
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
-                                          Internship.type == type,
+                                          Internship.type.like('%{type}%'.format(type=type)),
                                           Internship.state == state).all()
         else:
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
-                                          Internship.type == type,
+            print("14")
+
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+                                          Internship.type.like('%{type}%'.format(type=type)),
                                           Internship.location == location).all()
 
     else:
-        if state != '' and city != '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+        if state != "" and city != "":
+            print(state,city)
+            print("15")
+
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
-                                          Internship.type == type,
+                                          Internship.type.like('%{type}%'.format(type=type)),
                                           Internship.state == state,
                                           Internship.field == field,
                                           Internship.city == city).all()
-        elif state != '' and city == '':
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+        elif state != "" and city == "":
+            print("16")
+
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
-                                          Internship.type == type,
+                                          Internship.type.like('%{type}%'.format(type=type)),
                                           Internship.field == field,
                                           Internship.state == state).all()
         else:
-            res = db.session.query.filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
-                                          Internship.type == type,
+            print("17")
+
+            res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
+                                          Internship.type.like('%{type}%'.format(type=type)),
                                           Internship.field == field,
                                           Internship.location == location).all()
 
@@ -177,5 +201,31 @@ def getHotJobs():
         res = res[:10]
         return res
 
+    except Exception as e:
+        print(e)
+
+def get_wish_list(id):
+    # Movie.query.join(Wishlist).filter()
+    res = db.session.query(Internship.title, Collection.internship_id, Internship.user_id,
+                           Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
+        Collection.user_id == id,Collection.deleted==0).all()
+    return res
+
+def delete_wishlist(id):
+    try:
+        wishlist = Collection.query.get(id)
+        wishlist.deleted = 1
+        db.session.commit()
+    except Exception as e:
+        print(e)
+
+def add_wishlist(id, internship_id):
+    try:
+        wish = Collection(id=getuuid(),
+                 user_id=id,
+                 internship_id=internship_id,
+                 deleted=0)
+        db.session.add(wish)
+        db.session.commit()
     except Exception as e:
         print(e)

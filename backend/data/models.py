@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, TIMESTAMP, TEXT, FLOAT
+from sqlalchemy import Column, String, Integer, TIMESTAMP, TEXT, FLOAT, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import class_mapper
 
@@ -30,7 +30,7 @@ class Internship(db.Model):
     title = Column(String(255))
     user_id = Column(String(1000))
     content = Column(String(1000))
-    type = Column(Integer)
+    type = Column(String(128))
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
     deleted = Column(Integer)
@@ -150,3 +150,35 @@ class Follow(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     following_id = Column(String(255))
     follower_id = Column(String(255))
+
+class Review(db.Model):
+    __tablename__ = 'db_review'
+    id = Column(String(1000), primary_key=True)
+    user_id = Column(String(1000), ForeignKey(User.id))
+    internship_id = Column(String(1000), ForeignKey(Internship.id))
+    content = Column(String(1000))
+    deleted = Column(Integer)
+    create_time = Column(TIMESTAMP)
+    update_time = Column(TIMESTAMP)
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
+    def __repr__(self):
+        return '<Review %r>' % self.id
+
+
+class Collection(db.Model):
+    __tablename__ = 'db_collection'
+    id = Column(String(1000), primary_key=True )
+    user_id =Column(String(1000))
+    internship_id = Column(String(1000))
+    deleted = Column(Integer)
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
+    def __repr__(self):
+        return '<Collection %r>' % self.id
