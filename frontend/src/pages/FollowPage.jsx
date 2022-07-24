@@ -43,7 +43,7 @@ const FollowPage = ({ socket }) => {
   }, []);
 
   const toProfile = (followId) => {
-    navigate('/profile', {
+    navigate(`/profile/${followId}`, {
       replace: false,
       state: { followId, isFollow: true },
     });

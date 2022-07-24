@@ -161,7 +161,9 @@ function ResumePage({ socket }) {
   const [type, setType] = useState('false');
   const id = localStorage.getItem('id');
   const { state } = useLocation();
-  const resumeId = state?.followId || id;
+  // const resumeId = state?.followId || id;
+  const params = useParams();
+  const uresumeId = params.userId;
 
   useEffect(() => {
     apiGet('user/getResume?resumeId=' + resumeId, {}).then((res) => {
