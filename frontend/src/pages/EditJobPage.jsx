@@ -1,4 +1,4 @@
-import EditJobForm from '../components/EditJobForm';
+import EditJobForm from '../components/component_EditJobForm/EditJobForm';
 import React from 'react';
 
 function EditJobPage() {

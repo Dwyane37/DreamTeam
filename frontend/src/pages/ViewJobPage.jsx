@@ -1,4 +1,4 @@
-import ViewJobForm from '../components/ViewJobForm';
+import ViewJobForm from '../components/component_ViewJobForm/ViewJobForm';
 import React from 'react';
 
 function ViewJobPage() {

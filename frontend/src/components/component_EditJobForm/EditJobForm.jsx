@@ -3,19 +3,25 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import { apiPost } from './API';
+import { apiPost } from '../API';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
+import Stack from '@mui/material/Stack';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+// import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 //import Input from '@mui/material/Input';
 //import JobInformationInp from '../components/JobInformationInp';
 
-export default function ViewJobForm() {
+export default function EditJobForm() {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState(0);
   const [title, setTitle] = React.useState('');
@@ -169,8 +175,31 @@ export default function ViewJobForm() {
     },
   }));
 
+  const JobSmallButton = styled(Button)({
+    textTransform: 'none',
+    width: '7vw',
+  });
+
+  const JobBigButton = styled(Button)({
+    textTransform: 'none',
+    width: '35vw',
+    //margin: '10px',
+  });
+
+  const handleChange = (newValue) => {
+    setDatetime(newValue);
+  };
+
+  const createSession = () => {
+    setStatus(1);
+  };
+
   const Create = () => {
     setStatus(2);
+  };
+
+  const Cancel = () => {
+    setStatus(0);
   };
 
   //const ttt = (event) => {
@@ -179,7 +208,7 @@ export default function ViewJobForm() {
 
   return (
     <Box
-      className="ViewJobForm"
+      className="EditJobForm"
       component="form"
       onSubmit={(e) => {
         post(e);
@@ -195,7 +224,6 @@ export default function ViewJobForm() {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
-            InputProps={{ readOnly: true }}
           />
         </FormControl>
         <FormControl variant="standard">
@@ -207,7 +235,6 @@ export default function ViewJobForm() {
             onChange={(e) => {
               setField(e.target.value);
             }}
-            InputProps={{ readOnly: true }}
           />
         </FormControl>
         <FormControl variant="standard">
@@ -219,7 +246,6 @@ export default function ViewJobForm() {
             onChange={(e) => {
               setLocation(e.target.value);
             }}
-            InputProps={{ readOnly: true }}
           />
         </FormControl>
         <FormControl variant="standard">
@@ -232,7 +258,6 @@ export default function ViewJobForm() {
             onChange={(e) => {
               setRight(e.target.value);
             }}
-            readOnly
           >
             <MenuItem value={'international student'}>International student</MenuItem>
             <MenuItem value={'PR'}>PR</MenuItem>
@@ -249,10 +274,14 @@ export default function ViewJobForm() {
             }}
             multiline
             rows={3}
-            InputProps={{ readOnly: true }}
           />
         </FormControl>
       </Box>
+      {status === 0 && (
+        <JobBigButton variant="outlined" onClick={createSession}>
+          Create an Info Session
+        </JobBigButton>
+      )}
       {status === 2 && (
         <Box className="SessionInfo">
           <FormControl variant="standard">
@@ -260,6 +289,50 @@ export default function ViewJobForm() {
             <SessionInfo defaultValue={datetime} id="Job_session_time" readOnly multiline />
             <SessionInfo defaultValue={link} id="Job_session_link" readOnly multiline />
           </FormControl>
+          <ButtonGroup variant="text" aria-label="text button group">
+            <Button onClick={createSession}>Edit</Button>
+            <Button color="error" onClick={Cancel}>
+              Delete
+            </Button>
+          </ButtonGroup>
+        </Box>
+      )}
+      {status === 1 && (
+        <>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDateTimePicker
+              label="Choose date"
+              inputFormat="MM/dd/yyyy"
+              value={datetime}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+          <FormControl variant="standard">
+            <TextField
+              label="Add a link"
+              id="Job_link_input"
+              value={link}
+              onChange={(e) => {
+                setLink(e.target.value);
+              }}
+            />
+          </FormControl>
+          <Stack spacing={6} direction="row">
+            <JobSmallButton variant="outlined" color="error" onClick={Cancel}>
+              Cancel
+            </JobSmallButton>
+            <JobSmallButton variant="outlined" onClick={Create}>
+              Create
+            </JobSmallButton>
+          </Stack>
+        </>
+      )}
+      {status !== 1 && (
+        <Box className="PostForm">
+          <JobSmallButton type="submit" variant="outlined">
+            Post
+          </JobSmallButton>
         </Box>
       )}
     </Box>
