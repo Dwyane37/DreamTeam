@@ -19,7 +19,10 @@ def initpage():
     for i in data:
         dict[repr(i.id)] = i.as_dict()
     # message = Message(200,"ok", dict)
-    return dict
+    data = {}
+    data['data'] = dict
+    data['errortype'] = 200
+    return data
 
 @internship_opt.route("/search", methods=['GET'])
 def searchInternship():
@@ -92,7 +95,10 @@ def getwishlist():
     dict = {}
     for i in res:
         dict[repr(i.id)] = i.as_dict()
-    return dict
+    data = {}
+    data['data'] = dict
+    data['errortype'] = 200
+    return data
 
 @internship_opt.route("/add", methods=['GET'])
 def add():
@@ -122,5 +128,6 @@ def getuserwishlist():
         print(i)
     data = {}
     data['data'] = res
+    data['errortype'] = 200
     return data
 
