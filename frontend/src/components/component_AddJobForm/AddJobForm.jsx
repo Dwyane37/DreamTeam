@@ -47,7 +47,7 @@ export default function AddJobForm() {
     //   location: location,
     //   working_right: right,
     //   description: description,
-    //   meeting: [{ link: link, datetime: datetime }],
+    //   meeting: sessions,
     // })
     //   .then((body) => {
     //     console.log(body);
