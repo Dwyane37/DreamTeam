@@ -150,19 +150,24 @@ export default function NavBar(props) {
     return '';
   };
   const handleSearch = () => {
-    const attr = {
-      key: keyword,
-      location: filter.country?.name,
-      state: filter.state?.name,
-      city: filter.city?.name,
-      field: filter.field?.label,
-      right: processCitizenshipArray(filter.citizenship),
-    };
-    console.log(attr);
-    apiGet('internship/search', attr)
-      .then((data) => setJobFunc(data))
-      .catch((e) => alert(e));
-    clear();
+    if (!keyword) {
+      alert('Cannot leave search box empty');
+    } else {
+      const right = processCitizenshipArray(filter.citizenship);
+      const attr = {
+        key: keyword,
+        location: filter.country?.name || '',
+        state: filter.state?.name || '',
+        city: filter.city?.name || '',
+        field: filter.field?.label || '',
+        right: right || 0,
+      };
+      console.log(attr);
+      apiGet('internship/search', attr)
+        .then((data) => setJobFunc(data))
+        .catch((e) => alert(e));
+      clear();
+    }
   };
 
   const clear = () => {
