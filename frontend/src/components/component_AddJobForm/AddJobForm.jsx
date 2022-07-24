@@ -37,6 +37,7 @@ export default function AddJobForm() {
   const [link, setLink] = React.useState('');
   const [datetime, setDatetime] = React.useState(new Date());
   const [sessions, setSessions] = React.useState([]);
+  const [editItemIdx, setEditItemIdx] = React.useState(null);
   //const [aaaa, setaaaa] = React.useState(new Date(datetime));
 
   const processCitizenshipArray = (arr) => {
@@ -78,24 +79,43 @@ export default function AddJobForm() {
     setOpen(true);
   };
 
+  const editSession = (e) => {
+    setEditItemIdx(e.target.parentNode.id);
+    let session = sessions[e.target.parentNode.id];
+    console.log(session);
+    setDatetime(session.datetime);
+    setLink(session.link);
+    setOpen(true);
+  };
+
   const clear = () => {
     setDatetime(new Date());
     setLink('');
   };
 
   const Create = () => {
-    setSessions([...sessions, { datetime: datetime.toISOString(), link: link }]);
+    if (!editItemIdx) {
+      setSessions([...sessions, { datetime: datetime.toISOString(), link: link }]);
+    } else {
+      let newSessions = [...sessions];
+      newSessions[editItemIdx].datetime = datetime;
+      newSessions[editItemIdx].link = link;
+      setSessions(newSessions);
+    }
     clear();
     setOpen(false);
   };
 
   const deleteSession = (e) => {
-    const idx = e.target.id;
+    const idx = e.target.parentNode.id;
     console.log(typeof parseInt(idx));
     setSessions([...sessions.slice(0, parseInt(idx)), ...sessions.slice(parseInt(idx) + 1)]);
   };
 
   const Cancel = () => {
+    if (editItemIdx) {
+      setEditItemIdx(null);
+    }
     clear();
     setOpen(false);
   };
@@ -103,10 +123,13 @@ export default function AddJobForm() {
   // React.useEffect(() => {
   //   console.log(filter);
   // }, [filter]);
-
   // React.useEffect(() => {
-  //   console.log(sessions);
-  // }, [sessions]);
+  //   console.log(link);
+  // }, [link]);
+
+  React.useEffect(() => {
+    console.log(sessions);
+  }, [sessions]);
   return (
     <Box
       className="AddJobForm"
@@ -173,7 +196,7 @@ export default function AddJobForm() {
               Cancel
             </JobSmallButton>
             <JobSmallButton variant="outlined" onClick={Create}>
-              Create
+              {editItemIdx ? 'Save' : 'Create'}
             </JobSmallButton>
           </Stack>
         </Box>
@@ -182,11 +205,11 @@ export default function AddJobForm() {
       {sessions &&
         sessions.map((session, idx) => (
           <Box key={idx} id={idx} className="SessionInfo">
-            <SessionInfo defaultValue={session.datetime} id="Job_session_time" readOnly multiline />
-            <SessionInfo defaultValue={session.link} id="Job_session_link" readOnly multiline />
-            <ButtonGroup variant="text" aria-label="text button group">
-              <Button onClick={createSession}>Edit</Button>
-              <Button id={idx} color="error" onClick={deleteSession}>
+            <SessionInfo value={session.datetime} id="Job_session_time" readOnly multiline />
+            <SessionInfo value={session.link} id="Job_session_link" readOnly multiline />
+            <ButtonGroup id={idx} variant="text" aria-label="text button group">
+              <Button onClick={editSession}>Edit</Button>
+              <Button color="error" onClick={deleteSession}>
                 Delete
               </Button>
             </ButtonGroup>
