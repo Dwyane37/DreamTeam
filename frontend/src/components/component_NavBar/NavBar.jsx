@@ -40,7 +40,7 @@ export default function NavBar(props) {
 
   const navigateProfile = () => {
     setanchorEl(null);
-    navigate('/profile');
+    navigate(`/profile/${sessionStorage.getItem('id')}`);
   };
 
   const navigateSettings = () => {

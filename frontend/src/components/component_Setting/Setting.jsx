@@ -71,11 +71,11 @@ export default function Settings() {
         <div className="settingContainer">
           <div className="settingItem">
             <label htmlFor="accountUserName">Username</label>
-            <TextField id="accountUserName" variant="outlined" value={accountInfo.username || ''} disabled={true} />
+            <TextField id="accountUserName" variant="outlined" value={accountInfo.username || ''} readOnly={true} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountEmail">Email</label>
-            <TextField id="accountEmail" variant="outlined" value={accountInfo.email || ''} disabled={true} />
+            <TextField id="accountEmail" variant="outlined" value={accountInfo.email || ''} readOnly={true} />
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
@@ -87,7 +87,7 @@ export default function Settings() {
               id="accountType"
               variant="outlined"
               value={accountInfo.type === 0 ? 'Student Account' : 'Company Account'}
-              disabled={true}
+              readOnly={true}
             />
           </div>
         </div>

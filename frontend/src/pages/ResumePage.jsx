@@ -12,7 +12,8 @@ import ProjectDisplay from '../components/resume_component/project-display';
 import MyDialog from '../components/resume_component/my-dialog';
 import NavBar from '../components/component_NavBar/NavBar';
 import { apiGet, apiPost } from '../components/API';
-import { useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
+
 // import { getResume, submitResume } from '../../api/resume';
 
 function ResumePage({ socket }) {
@@ -163,7 +164,7 @@ function ResumePage({ socket }) {
   const { state } = useLocation();
   // const resumeId = state?.followId || id;
   const params = useParams();
-  const uresumeId = params.userId;
+  const resumeId = params.userId;
 
   useEffect(() => {
     apiGet('user/getResume?resumeId=' + resumeId, {}).then((res) => {
