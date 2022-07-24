@@ -230,3 +230,4 @@ def follower():
     user_id = request.values.get('userId')
     message = query_follower(user_id)
     return jsonify(message)
+

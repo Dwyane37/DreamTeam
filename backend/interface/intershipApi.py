@@ -23,17 +23,22 @@ def initpage():
 
 @internship_opt.route("/search", methods=['GET'])
 def searchInternship():
-    key = request.values.get('keyword')
+    key = request.values.get('key')
     field = request.values.get('field')
     location = request.values.get('location')
     type = request.values.get('right')
     city = request.values.get("city")
     state = request.values.get("state")
+    print(key, field, location, type, city, state)
     res = search_intership(key, field, location, type,city,state)
+    print("res:",res)
     dict = {}
     for i in res:
         dict[repr(i.id)] = i.as_dict()
-    return dict
+    data = {}
+    data['data'] = dict
+    data['errortype'] = 200
+    return data
 
 @internship_opt.route("/view", methods=['GET'])
 def view():
@@ -76,5 +81,46 @@ def gethotjobs():
     data = {}
     data['data'] = dict
     data['errortype'] = 200
+    return data
+
+@internship_opt.route('wishlist', methods=['GET'])
+def getwishlist():
+    token = request.values.get('token')
+    deco = jwt.decode(token, token_key, algorithms='HS256')
+    id = deco['id']
+    res = get_wish_list(id)
+    dict = {}
+    for i in res:
+        dict[repr(i.id)] = i.as_dict()
+    return dict
+
+@internship_opt.route("/add", methods=['GET'])
+def add():
+    token = request.values.get('token')
+    deco = jwt.decode(token, token_key, algorithms='HS256')
+    id = deco['id']
+    internship_id = request.values.get('internship')
+    add_wishlist(id, internship_id)
+    return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
+
+@internship_opt.route('/delete', methods=['GET'])
+def delete():
+    id = request.values.get("wishlist_id")
+    delete_wishlist(id)
+    return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
+
+@internship_opt.route("/getuserwishlist", methods=["GET"])
+def getuserwishlist():
+    id = request.values.get("id")
+    res = get_wish_list(id)
+    # dict = {}
+    # dict['data'] = res
+    print(res)
+    # res = [dict(zip(r.keys(),r)) for r in res]
+    res = [dict(zip(result.keys(), result)) for result in res]
+    for i in res:
+        print(i)
+    data = {}
+    data['data'] = res
     return data
 
