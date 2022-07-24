@@ -31,14 +31,12 @@ export default function AddJobForm() {
     citizenship: [],
   };
   const [filter, setFilter] = React.useState(initFilter);
-  const [status, setStatus] = React.useState(0);
+  const [openSessionEdit, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
-  const [field, setField] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [right, setRight] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [link, setLink] = React.useState('');
   const [datetime, setDatetime] = React.useState(new Date());
+  const [sessions, setSessions] = React.useState([]);
   //const [aaaa, setaaaa] = React.useState(new Date(datetime));
 
   const post = (e) => {
@@ -64,21 +62,38 @@ export default function AddJobForm() {
   };
 
   const createSession = () => {
-    setStatus(1);
+    setOpen(true);
+  };
+
+  const clear = () => {
+    setDatetime(new Date());
+    setLink('');
   };
 
   const Create = () => {
-    setStatus(2);
+    setSessions([...sessions, { datetime: datetime, link: link }]);
+    clear();
+    setOpen(false);
+  };
+
+  const deleteSession = (e) => {
+    const idx = e.target.id;
+    console.log(typeof parseInt(idx));
+    setSessions([...sessions.slice(0, parseInt(idx)), ...sessions.slice(parseInt(idx) + 1)]);
   };
 
   const Cancel = () => {
-    setStatus(0);
+    clear();
+    setOpen(false);
   };
 
-  //const ttt = (event) => {
-  //  setTitle(event.target.value);
-  //};
+  // React.useEffect(() => {
+  //   console.log(filter);
+  // }, [filter]);
 
+  // React.useEffect(() => {
+  //   console.log(sessions);
+  // }, [sessions]);
   return (
     <Box
       className="AddJobForm"
@@ -103,30 +118,24 @@ export default function AddJobForm() {
         <FieldFilter label="defineField" updateFilter={[filter, setFilter]} />
         <CitizenshipFilter lable="defineCitizenship" updateFilter={[filter, setFilter]} />
         <p>Job Decription</p>
-        <TextareaAutosize minRows={3} maxRows={10} placeholder="Description" label="Description" />
+        <TextareaAutosize
+          minRows={6}
+          maxRows={10}
+          placeholder="Description"
+          value={description}
+          label="Description"
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
       </Box>
-      {status === 0 && (
-        <JobBigButton variant="outlined" onClick={createSession}>
-          Create an Info Session
-        </JobBigButton>
-      )}
-      {status === 2 && (
-        <Box className="SessionInfo">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="Job_session_time"></InputLabel>
-            <SessionInfo defaultValue={datetime} id="Job_session_time" readOnly multiline />
-            <SessionInfo defaultValue={link} id="Job_session_link" readOnly multiline />
-          </FormControl>
-          <ButtonGroup variant="text" aria-label="text button group">
-            <Button onClick={createSession}>Edit</Button>
-            <Button color="error" onClick={Cancel}>
-              Delete
-            </Button>
-          </ButtonGroup>
-        </Box>
-      )}
-      {status === 1 && (
-        <>
+
+      <JobBigButton variant="outlined" onClick={createSession}>
+        Create an Info Session
+      </JobBigButton>
+
+      {openSessionEdit && (
+        <Box className="createSession">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDateTimePicker
               label="Choose Date and Time"
@@ -154,15 +163,28 @@ export default function AddJobForm() {
               Create
             </JobSmallButton>
           </Stack>
-        </>
-      )}
-      {status !== 1 && (
-        <Box className="PostForm">
-          <JobSmallButton type="submit" variant="outlined">
-            Post
-          </JobSmallButton>
         </Box>
       )}
+
+      {sessions &&
+        sessions.map((session, idx) => (
+          <Box key={idx} id={idx} className="SessionInfo">
+            <SessionInfo defaultValue={session.datetime} id="Job_session_time" readOnly multiline />
+            <SessionInfo defaultValue={session.link} id="Job_session_link" readOnly multiline />
+            <ButtonGroup variant="text" aria-label="text button group">
+              <Button onClick={createSession}>Edit</Button>
+              <Button id={idx} color="error" onClick={deleteSession}>
+                Delete
+              </Button>
+            </ButtonGroup>
+          </Box>
+        ))}
+
+      <Box className="PostForm">
+        <JobSmallButton type="submit" variant="outlined">
+          Post
+        </JobSmallButton>
+      </Box>
     </Box>
   );
 }

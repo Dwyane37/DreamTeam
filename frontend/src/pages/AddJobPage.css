@@ -6,6 +6,6 @@
 }
 
 .returnBtn {
-  margin: 20px 30px;
+  margin: 20px 30px !important;
   align-self: flex-start;
 }
