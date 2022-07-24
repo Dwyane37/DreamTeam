@@ -43,7 +43,7 @@ export default function AddJobForm() {
     if (arr) {
       const ids = arr.map((item) => item.id);
       ids.sort();
-      return parseInt(ids.join(''));
+      return ids.join('');
     }
     return '';
   };
@@ -57,7 +57,7 @@ export default function AddJobForm() {
       state: filter.state?.name || '', // e.g. "New Southe Wales"
       city: filter.city?.name || '', // e.g. Sydney
       field: filter.field?.label || '', //e.g. Science
-      working_right: right || 0, //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
+      working_right: right || '0', //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
       description: description, //e.g. text text text
       meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
     };

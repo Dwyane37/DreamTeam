@@ -145,7 +145,7 @@ export default function NavBar(props) {
     if (arr) {
       const ids = arr.map((item) => item.id);
       ids.sort();
-      return parseInt(ids.join(''));
+      return ids.join('');
     }
     return '';
   };
@@ -160,7 +160,7 @@ export default function NavBar(props) {
         state: filter.state?.name || '',
         city: filter.city?.name || '',
         field: filter.field?.label || '',
-        right: right || 0,
+        right: right || '0',
       };
       console.log(attr);
       apiGet('internship/search', attr)
