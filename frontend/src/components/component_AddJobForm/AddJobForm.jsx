@@ -39,8 +39,18 @@ export default function AddJobForm() {
   const [sessions, setSessions] = React.useState([]);
   //const [aaaa, setaaaa] = React.useState(new Date(datetime));
 
+  const processCitizenshipArray = (arr) => {
+    if (arr) {
+      const ids = arr.map((item) => item.id);
+      ids.sort();
+      return parseInt(ids.join(''));
+    }
+    return '';
+  };
+
   const post = (e) => {
     e.preventDefault();
+    const right = processCitizenshipArray(filter.citizenship);
     const attr = {
       title: title,
       location: filter.country?.name || '', //e.g. "Australie"
