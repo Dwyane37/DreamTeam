@@ -154,6 +154,8 @@ def getRecommJobs(resume):
     resumeedu = ResumeEducation.query.filter_by(user_id=id).first()
     position = ResumeWorkExperience.query.filter_by(user_id=id).first()
     resume = ResumeUser.query.filter_by(user_id=id).first()
+    if resumeedu is None or position is None or resume is None:
+        return []
     field = resumeedu.major
     aim = position.position
     intro = resume.introduction
@@ -227,5 +229,39 @@ def add_wishlist(id, internship_id):
                  deleted=0)
         db.session.add(wish)
         db.session.commit()
+    except Exception as e:
+        print(e)
+
+def checkIfApplied(id,internship_id):
+    try:
+        apply = Apply.query.filter_by(user_id=id,internship_id=internship_id,deleted=0)
+        if apply is None:
+            return errorMessage(1, "You have already applied this position")
+
+        return errorMessage(200,"ok")
+    except Exception as e:
+        print(e)
+
+def apply_internship(id, internship_id):
+    try:
+        apply = Apply(id=getuuid(),
+                      user_id=id,
+                      internship_id=internship_id,
+                      create_time=getTime(datetime),
+                      update_time=getTime(datetime),
+                      deleted=0)
+        db.session.add(apply)
+        db.session.commit()
+
+    except Exception as e:
+        print(e)
+
+def get_apply_list(id):
+    try:
+        res = db.session.query(Internship.title, Internship.user_id, Apply.update_time,
+                               Apply.id).outerjoin(Apply, Apply.user_id == Internship.user_id).filter(
+            Apply.user_id == id, Internship.deleted == 0).all()
+        return res
+
     except Exception as e:
         print(e)

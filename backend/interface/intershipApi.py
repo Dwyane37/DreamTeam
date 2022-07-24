@@ -131,3 +131,28 @@ def getuserwishlist():
     data['errortype'] = 200
     return data
 
+@internship_opt.route("/apply", methods=["GET"])
+def apply():
+    id = request.values.get("id")
+    internship_id = request.values.get("internship_id")
+    message = checkIfApplied(id,internship_id)
+    if message.errortype == 1:
+        return json.dumps(message, default=lambda obj: obj.__dict__)
+    apply_internship(id, internship_id)
+
+    return json.dumps(errorMessage(200, "ok"),default=lambda obj: obj.__dict__)
+
+
+@internship_opt.route("/getapplylist", methods=["GET"])
+def getapplylist():
+    id = request.values.get("id")
+    res = get_apply_list(id)
+    # dict = {}
+    # dict['data'] = res
+    res = [dict(zip(result.keys(), result)) for result in res]
+    for i in res:
+        print(i)
+    data = {}
+    data['data'] = res
+    data['errortype'] = 200
+    return data
