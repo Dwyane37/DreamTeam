@@ -5,13 +5,21 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 
 import './MyJob.css';
 import { IconButton } from '@mui/material';
 
 export default function MyJobCard(props) {
+  const navigate = useNavigate();
   const handleEdit = (e) => {
     console.log('edit');
+    navigate('/editjob');
+  };
+
+  const handleView = (e) => {
+    console.log('view');
+    navigate('/viewjob');
   };
 
   const handleDelete = (e) => {
@@ -38,8 +46,10 @@ export default function MyJobCard(props) {
         <Button size="small" variant="outlined" onClick={handleEdit}>
           Edit
         </Button>
-
-        <Button className="delete-button-text" size="small" color="error" variant="outlined" startIcon={<DeleteIcon />}>
+        <Button size="small" variant="outlined" onClick={handleView}>
+          View
+        </Button>
+        <Button className="delete-button-text" size="small" color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={handleDelete}>
           Delete
         </Button>
       </CardActions>

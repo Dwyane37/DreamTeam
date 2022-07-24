@@ -1,0 +1,144 @@
+.welcomeMessageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.welcomeMessage {
+  text-align: center;
+  color: #92ba92;
+}
+
+.login_registerForm,
+.find_password_form,
+.verification_code_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50vw;
+  height: 30vh;
+  min-width: 250px;
+  min-height: 230px;
+  margin: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2rem;
+}
+.login_registerPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login_registerMain {
+  /* background-color: #92ba92; */
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.find_password_page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AddJobForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40vw;
+  height: 100vh;
+  min-width: 250px;
+  min-height: 230px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+  align-items: center;
+}
+
+.JobInformationForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 35vw;
+  height: 45vh;
+  min-width: 250px;
+  min-height: 230px;
+  margin: 1px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.AddJobMain {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PostForm {
+  display: flex;
+}
+
+.SessionInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30vw;
+  height: 10vh;
+  margin: 1px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+  align-items: center;
+}
+
+.EditJobForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40vw;
+  height: 100vh;
+  min-width: 250px;
+  min-height: 230px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+  align-items: center;
+}
+
+.EditJobMain {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ViewJobForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 40vw;
+  height: 100vh;
+  min-width: 250px;
+  min-height: 230px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 2rem;
+  align-items: center;
+}
+
+.ViewJobMain {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -9,10 +9,14 @@ import './Dashboard.css';
 export default function DashboardPage({ socket }) {
   const navigate = useNavigate();
   const [logedIn, setLogedIn] = React.useState(false);
+  function AddJob() {
+    navigate('/addjob');
+  }
   React.useEffect(() => {
     if (!sessionStorage.getItem('token')) {
       alert('Your are not logged in');
       navigate('/login');
+      //setLogedIn(true);
     } else {
       setLogedIn(true);
     }
@@ -24,7 +28,7 @@ export default function DashboardPage({ socket }) {
         <NavBar type={sessionStorage.getItem('type')} socket={socket} />
         <div className="dashboard-main">
           <h3>My Job Posts</h3>
-          <Button className="add-job-button" variant="contained" color="success">
+          <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>
             Add a Job Post
           </Button>
           <MyJobPanel />
