@@ -41,20 +41,20 @@ export default function AddJobForm() {
 
   const post = (e) => {
     e.preventDefault();
-    apiPost('internship/add_internship', {
-      title: title,
-      field: field,
-      location: location,
-      working_right: right,
-      description: description,
-      meeting: [{ link: link, datetime: datetime }],
-    })
-      .then((body) => {
-        console.log(body);
-        localStorage.setItem('token', body.errormessage);
-        navigate('/dashboard');
-      })
-      .catch((e) => alert(e));
+    // apiPost('internship/add_internship', {
+    //   title: title,
+    //   field: field,
+    //   location: location,
+    //   working_right: right,
+    //   description: description,
+    //   meeting: [{ link: link, datetime: datetime }],
+    // })
+    //   .then((body) => {
+    //     console.log(body);
+    //     localStorage.setItem('token', body.errormessage);
+    //     navigate('/dashboard');
+    //   })
+    //   .catch((e) => alert(e));
   };
 
   const handleChange = (newValue) => {
