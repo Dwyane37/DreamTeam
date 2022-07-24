@@ -17,11 +17,6 @@ export default function MyJobCard(props) {
     navigate('/editjob');
   };
 
-  const handleView = (e) => {
-    console.log('view');
-    navigate('/viewjob');
-  };
-
   const handleDelete = (e) => {
     console.log('delete');
   };
@@ -46,10 +41,15 @@ export default function MyJobCard(props) {
         <Button size="small" variant="outlined" onClick={handleEdit}>
           Edit
         </Button>
-        <Button size="small" variant="outlined" onClick={handleView}>
-          View
-        </Button>
-        <Button className="delete-button-text" size="small" color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={handleDelete}>
+
+        <Button
+          className="delete-button-text"
+          size="small"
+          color="error"
+          variant="outlined"
+          startIcon={<DeleteIcon />}
+          onClick={handleDelete}
+        >
           Delete
         </Button>
       </CardActions>
