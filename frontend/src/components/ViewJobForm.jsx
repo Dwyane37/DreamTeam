@@ -9,17 +9,13 @@ import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
-import Stack from '@mui/material/Stack';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 //import Input from '@mui/material/Input';
 //import JobInformationInp from '../components/JobInformationInp';
 
-export default function ViewJobForm () {
+export default function ViewJobForm() {
   const navigate = useNavigate();
   const [status, setStatus] = React.useState(0);
   const [title, setTitle] = React.useState('');
@@ -38,12 +34,14 @@ export default function ViewJobForm () {
       location: location,
       working_right: right,
       description: description,
-      meeting: [{link: link, datetime: datetime}],
-    }).then((body) => {
-      console.log(body)
-      localStorage.setItem('token', body.errormessage);
-      navigate('/login')
-    }).catch(e => alert(e))
+      meeting: [{ link: link, datetime: datetime }],
+    })
+      .then((body) => {
+        console.log(body);
+        localStorage.setItem('token', body.errormessage);
+        navigate('/login');
+      })
+      .catch((e) => alert(e));
   };
 
   const JobInformationInput = styled(InputBase)(({ theme }) => ({
@@ -58,11 +56,7 @@ export default function ViewJobForm () {
       fontSize: 16,
       width: '35vw',
       padding: '10px 12px',
-      transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-        'box-shadow',
-      ]),
+      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
       fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -94,11 +88,7 @@ export default function ViewJobForm () {
       fontSize: 16,
       width: '35vw',
       padding: '10px 12px',
-      transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-        'box-shadow',
-      ]),
+      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
       fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -130,11 +120,7 @@ export default function ViewJobForm () {
       fontSize: 16,
       width: '15vw',
       padding: '10px 12px',
-      transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-        'box-shadow',
-      ]),
+      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
       fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -163,11 +149,7 @@ export default function ViewJobForm () {
       position: 'relative',
       fontSize: 16,
       width: '25vw',
-      transition: theme.transitions.create([
-        'border-color',
-        'background-color',
-        'box-shadow',
-      ]),
+      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
       fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -187,7 +169,6 @@ export default function ViewJobForm () {
     },
   }));
 
-
   const Create = () => {
     setStatus(2);
   };
@@ -195,8 +176,6 @@ export default function ViewJobForm () {
   //const ttt = (event) => {
   //  setTitle(event.target.value);
   //};
-
-
 
   return (
     <Box
@@ -206,17 +185,42 @@ export default function ViewJobForm () {
         post(e);
       }}
     >
-      <Box
-        className="JobInformationForm"
-      >
+      <Box className="JobInformationForm">
         <FormControl variant="standard">
-          <TextField label="Title:" variant="standard" id="Job_title_input" value={title} onChange={(e) => {setTitle(e.target.value);}} InputProps={{readOnly: true,}} />
+          <TextField
+            label="Title:"
+            variant="standard"
+            id="Job_title_input"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            InputProps={{ readOnly: true }}
+          />
         </FormControl>
         <FormControl variant="standard">
-          <TextField label="Field:" variant="standard" id="Job_field_input" value={field} onChange={(e) => {setField(e.target.value);}} InputProps={{readOnly: true,}} />
+          <TextField
+            label="Field:"
+            variant="standard"
+            id="Job_field_input"
+            value={field}
+            onChange={(e) => {
+              setField(e.target.value);
+            }}
+            InputProps={{ readOnly: true }}
+          />
         </FormControl>
-        <FormControl variant="standard" >
-          <TextField label="Location:" variant="standard" id="Job_location_input" value={location} onChange={(e) => {setLocation(e.target.value);}} InputProps={{readOnly: true,}} />
+        <FormControl variant="standard">
+          <TextField
+            label="Location:"
+            variant="standard"
+            id="Job_location_input"
+            value={location}
+            onChange={(e) => {
+              setLocation(e.target.value);
+            }}
+            InputProps={{ readOnly: true }}
+          />
         </FormControl>
         <FormControl variant="standard">
           <InputLabel shrink htmlFor="Job_right_input">
@@ -225,32 +229,39 @@ export default function ViewJobForm () {
           <Select
             id="Job_right_input"
             value={right}
-            onChange={(e) => {setRight(e.target.value);}}
+            onChange={(e) => {
+              setRight(e.target.value);
+            }}
             readOnly
           >
-            <MenuItem value={"international student"}>International student</MenuItem>
-            <MenuItem value={"PR"}>PR</MenuItem>
+            <MenuItem value={'international student'}>International student</MenuItem>
+            <MenuItem value={'PR'}>PR</MenuItem>
           </Select>
         </FormControl>
         <FormControl variant="standard">
-          <TextField label="Description:" variant="standard" id="Job_description_input" value={description} onChange={(e) => {setDescription(e.target.value);}} multiline rows={3} InputProps={{readOnly: true,}} />
+          <TextField
+            label="Description:"
+            variant="standard"
+            id="Job_description_input"
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            multiline
+            rows={3}
+            InputProps={{ readOnly: true }}
+          />
         </FormControl>
-        
       </Box>
-      {status===2 && (
-        <Box
-          className="SessionInfo"
-        >
+      {status === 2 && (
+        <Box className="SessionInfo">
           <FormControl variant="standard">
-            <InputLabel shrink htmlFor="Job_session_time">
-            </InputLabel>
-            <SessionInfo defaultValue={datetime} id="Job_session_time" readOnly multiline/>
-            <SessionInfo defaultValue={link} id="Job_session_link" readOnly multiline/>
+            <InputLabel shrink htmlFor="Job_session_time"></InputLabel>
+            <SessionInfo defaultValue={datetime} id="Job_session_time" readOnly multiline />
+            <SessionInfo defaultValue={link} id="Job_session_link" readOnly multiline />
           </FormControl>
         </Box>
       )}
     </Box>
   );
 }
-
-

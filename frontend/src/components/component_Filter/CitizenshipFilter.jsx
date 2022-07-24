@@ -15,7 +15,7 @@ export default function CitizenshipFilter(props) {
   };
   return (
     <>
-      <h3>Citizenship</h3>
+      <p>Citizenship</p>
       {/* <Autocomplete
         disablePortal
         id="citizenship_filter"

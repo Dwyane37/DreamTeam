@@ -39,7 +39,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
           <Route path="/saved-jobs" element={<SavedJobs socket={socket} />} />
           <Route path="/" element={<WelcomePage />} />
-          <Route path="/profile" element={<ResumePage socket={socket} />} />
+          <Route path="/profile/:userId" element={<ResumePage socket={socket} />} />
           <Route path="/follow" element={<FollowPage socket={socket} />} />
         </Routes>
       </Router>

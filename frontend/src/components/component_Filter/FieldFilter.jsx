@@ -15,7 +15,7 @@ export default function FieldFilter(props) {
 
   return (
     <>
-      <h3>Field of Study</h3>
+      <p>Field of Study</p>
       <Autocomplete
         disablePortal
         id="field_filter"

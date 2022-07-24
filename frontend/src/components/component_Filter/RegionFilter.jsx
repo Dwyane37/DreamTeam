@@ -59,7 +59,7 @@ export default function RegionFilter(props) {
 
   return (
     <>
-      <h3>Region</h3>
+      <p>Location</p>
       <div className="region_filter_container">
         <RegionFilterElement
           id="country"
