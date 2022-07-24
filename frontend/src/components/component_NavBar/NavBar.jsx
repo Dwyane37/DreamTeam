@@ -133,7 +133,6 @@ export default function NavBar(props) {
   }, []);
 
   React.useEffect(() => {
-    console.log(props.socket);
     props.socket?.on('getApplication', (data) => {
       console.log(data.msg);
       setNotifications((prev) => [...prev, data.msg]);
@@ -143,24 +142,25 @@ export default function NavBar(props) {
   // Search
 
   const processCitizenshipArray = (arr) => {
-    const ids = arr.map((item) => item.id);
-    ids.sort();
-    return ids.join(',');
+    if (arr) {
+      const ids = arr.map((item) => item.id);
+      ids.sort();
+      return ids.join(',');
+    }
+    return '';
   };
   const handleSearch = () => {
-    console.log(keyword);
-    console.log(filter);
     const attr = {
       key: keyword,
-      location: filter.country.name,
-      state: filter.state.name,
-      city: filter.city.name,
-      field: filter.field.label,
-      type: processCitizenshipArray(filter.citizenship),
+      location: filter.country?.name,
+      state: filter.state?.name,
+      city: filter.city?.name,
+      field: filter.field?.label,
+      right: processCitizenshipArray(filter.citizenship),
     };
-    // apiGet('internship/search', attr)
-    //   .then((data) => setJobFunc(data))
-    //   .catch((e) => alert(e));
+    apiGet('internship/search', attr)
+      .then((data) => setJobFunc(data))
+      .catch((e) => alert(e));
     clear();
   };
 

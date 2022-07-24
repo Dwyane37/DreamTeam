@@ -29,6 +29,18 @@ export default function HomePage({ socket }) {
     socket?.emit('newUser', sessionStorage.getItem('id'));
   }, [logedIn]);
 
+  React.useEffect(() => {
+    apiGet('internship/gethotjobs', null)
+      .then((data) => getHotJobs(data))
+      .catch((e) => alert(e));
+    // apiCall('internship/home', null)
+    //   .then((data) => getJobs(data))
+    //   .catch((e) => alert(e));
+    // apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
+    //   .then((data) => getRecommend(data))
+    //   .catch((e) => alert(e));
+  }, []);
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = (e) => {
@@ -47,8 +59,8 @@ export default function HomePage({ socket }) {
         <div className="home-content-container">
           <div className="home-main-panel">
             <div className="home-sort-button">
-              <IconButton />
-              <SortIcon />
+              {/* <IconButton />
+              <SortIcon /> */}
             </div>
             <JobPanel openDialog={handleClickOpen} socket={socket} />
           </div>

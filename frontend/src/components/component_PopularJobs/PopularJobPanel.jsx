@@ -4,12 +4,6 @@ import { apiGet } from '../API';
 import { jobs } from '../assets';
 import './PopularJobPanel.css';
 export default function PopularJobPanel(props) {
-  // React.useEffect(() => {
-  //   apiGet('internship/gethotjobs', null)
-  //     .then((data) => console.log(data.data))
-  //     .catch((e) => alert(e));
-  // }, []);
-
   return (
     <div className="popular-panel">
       <div>Popular Internships</div>

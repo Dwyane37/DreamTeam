@@ -46,10 +46,6 @@ io.on('connection', (socket) => {
   //     });
   //   });
 
-  //   socket.on('logout', () => {
-  //     removeUser(socket.id);
-  //   });
-
   socket.on('disconnect', () => {
     console.log('disconnect');
     removeUser(socket.id);
