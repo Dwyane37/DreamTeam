@@ -160,34 +160,27 @@ def getinfo():
     data['errortype'] = 200
     return data
 
+# update 7.24 新增加图片上传方法
+@user_opt.route("/upload_image", methods=['POST'])
+def upload_image():
+    user_id = request.json["user_id"]
+    image_base64 = request.json["image_base64"]
+    message = save_image_from_base64(user_id, image_base64)
+    return json.dumps(message, default=lambda obj: obj.__dict__)
+
+
+# update 7.24 获取图片
+@user_opt.route("/image_thumbnail/<user_id>", methods=['GET'])
+def query_image(user_id):
+    return send_file(f"./image_thumbnail/{user_id}", mimetype='image/gif')
+
 @user_opt.route("/submitResume", methods=['POST'])
 def change_resume():
     resumeid = request.json["resumeid"]
     resume = request.json["resume"]
     message = update_resume(resumeid, resume)
-    # keys = [
-    #     "access_token", "name", "sex", "mobile", "age", "address",
-    #     "email", "aim", "honor", "education", "experience", "skills"
-    # ]
-    # # 验证输入参数
-    # miss_keys = [key for key in keys if key not in request.json.keys()]
-    # if miss_keys:
-    #     return jsonify(code=1, message="miss keys: " + ", ".join(miss_keys))
-    # token = request.json["access_token"]
-    # deco = jwt.decode(token,
-    #                   token_key,
-    #                   algorithms='HS256', options={"varify_signature": False})
-    #
-    # if time.time() > deco["exp"]:
-    #     return jsonify(code=1, message="Token has expired")
-    #
-    # user_id = deco["id"]
-    # message = change_resume(user_id=user_id, name=request.json["name"], sex=request.json["sex"],
-    #                 mobile=request.json["mobile"], age=request.json["age"], address=request.json["address"],
-    #                 email=request.json["email"], aim=request.json["aim"], honor=request.json["honor"],
-    #                 education=request.json["education"], experience=request.json["experience"],
-    #                 skills=request.json["skills"])
-    return jsonify(message)
+    # update 7.24: 修改返回结果格式
+    return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
 @user_opt.route("/getResume", methods=['GET'])
@@ -195,7 +188,8 @@ def get_resume():
     user_id = request.values.get('resumeId')
 
     message = query_resume(user_id)
-    return jsonify(message)
+    # update 7.24: 修改返回结果格式
+    return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
 # 关注
@@ -204,7 +198,8 @@ def like():
     following_id = request.values.get('followingId')
     follower_id = request.values.get('followerId')
     message = user_like(following_id, follower_id)
-    return jsonify(message)
+    # update 7.24: 修改返回结果格式
+    return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
 # 取关
@@ -213,7 +208,8 @@ def dislike():
     following_id = request.values.get('followingId')
     follower_id = request.values.get('followerId')
     message = user_dislike(following_id, follower_id)
-    return jsonify(message)
+    # update 7.24: 修改返回结果格式
+    return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
 # 关注列表
@@ -221,7 +217,8 @@ def dislike():
 def following():
     user_id = request.values.get('userId')
     message = query_following(user_id)
-    return jsonify(message)
+    # update 7.24: 修改返回结果格式
+    return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
 # 粉丝列表
@@ -229,5 +226,6 @@ def following():
 def follower():
     user_id = request.values.get('userId')
     message = query_follower(user_id)
-    return jsonify(message)
+    # update 7.24: 修改返回结果格式
+    return json.dumps(message, default=lambda obj: obj.__dict__)
 

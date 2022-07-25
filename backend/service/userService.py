@@ -1,3 +1,8 @@
+import base64
+from PIL import Image
+from io import BytesIO
+import os
+import re
 import pymysql
 import datetime
 from interface.userApi import *
@@ -144,7 +149,6 @@ def get_info(id):
 
 def update_resume(user_id, resume):
 
-    # db.session.commit()
     try:
         # 删除原有数据
         ResumeUser.query.filter_by(user_id=user_id).delete()
@@ -161,6 +165,8 @@ def update_resume(user_id, resume):
                 name=user_info["name"],
                 university=user_info["university"],
                 email=user_info["email"],
+                # update 7.24 新增加一个 头像字段，写入
+                thumbnail=user_info["thumbnail"],
                 user_id=user_id
             ))
 
@@ -215,9 +221,10 @@ def update_resume(user_id, resume):
                 user_id=user_id
             ))
         db.session.commit()
-        return {"code": 0, "message": "ok"}
+    # update 7.24: 修改返回结果格式
+        return errorMessage(200, "ok")
     except Exception as e:
-        return {"code": 1, "message": str(e)}
+        return errorMessage(1, str(e))
 
 
 def query_resume(user_id):
@@ -232,9 +239,10 @@ def query_resume(user_id):
             "awards": [x.to_dict() for x in user.awards],
             "projectDisplay": [x.to_dict() for x in user.displays]
         }
-        return body
+    # update 7.24: 修改返回结果格式
+        return errorMessage(200, body)
     except Exception as e:
-        return {"code": 1, "message": str(e)}
+        return errorMessage(1, str(e))
 
 
 # 关注
@@ -244,7 +252,8 @@ def user_like(following_id, follower_id):
         db.session.add(Follow(following_id=following_id, follower_id=follower_id))
         db.session.commit()
 
-    return {"code": 0, "message": "ok"}
+    # update 7.24: 修改返回结果格式
+    return errorMessage(200, "ok")
 
 
 # 取消关注
@@ -254,7 +263,8 @@ def user_dislike(following_id, follower_id):
         Follow.query.filter_by(following_id=following_id, follower_id=follower_id).delete()
         db.session.commit()
 
-    return {"code": 0, "message": "ok"}
+    # update 7.24: 修改返回结果格式
+    return errorMessage(200, "ok")
 
 
 # 查询关注列表
@@ -266,9 +276,10 @@ def query_following(user_id):
         "username": user.username,
         "email": user.email,
         "type": user.type
-        # TODO:
     } for user in users if user is not None]
-    return {"code": 0, "message": "ok", "data": data}
+
+    # update 7.24: 修改返回结果格式
+    return errorMessage(200, data)
 
 
 # 查询粉丝列表
@@ -282,6 +293,18 @@ def query_follower(user_id):
         "username": user.username,
         "email": user.email,
         "type": user.type
-    # TODO:
     } for user in users if user is not None]
-    return {"code": 0, "message": "ok", "data": data}
+    # update 7.24: 修改返回结果格式
+    return errorMessage(200, data)
+
+
+# update 7.24 新增加图片上传方法
+def save_image_from_base64(user_id, base64_string):
+    image_data = base64.b64decode(
+        re.sub('^data:image/.+;base64,', '', base64_string))
+    image = Image.open(BytesIO(image_data))
+    thumbnail_file_dir = "image_thumbnail"
+    os.makedirs(thumbnail_file_dir, exist_ok=True)
+    thumbnail_file_file = thumbnail_file_dir + f'/{user_id}.{base64_string[:20].split(";")[0].split("/")[-1]}'
+    image.save(thumbnail_file_file)
+    return errorMessage(200, "/user/" + thumbnail_file_file)
