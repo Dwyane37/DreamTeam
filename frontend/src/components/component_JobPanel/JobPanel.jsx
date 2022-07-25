@@ -1,20 +1,21 @@
-import * as React from 'react';
-import JobCard from './JobCard';
-import Pagination from '@mui/material/Pagination';
-import './JobPanel.css';
-import usePagination from './usePagination';
-import { jobs } from '../assets';
+import * as React from 'react'
+import JobCard from './JobCard'
+import Pagination from '@mui/material/Pagination'
+import Box from '@mui/material/Box'
+import './JobPanel.css'
+import usePagination from './usePagination'
+import { jobs } from '../assets'
 
 export default function JobPanel(props) {
-  const [page, setPage] = React.useState(1);
-  const PER_PAGE = 2;
-  const count = Math.ceil(jobs.length / PER_PAGE);
-  const handleData = usePagination(jobs, PER_PAGE);
+  const [page, setPage] = React.useState(1)
+  const PER_PAGE = 2
+  const count = Math.ceil(jobs.length / PER_PAGE)
+  const handleData = usePagination(jobs, PER_PAGE)
 
   const handlePageChange = (e, p) => {
-    setPage(p);
-    handleData.jump(p);
-  };
+    setPage(p)
+    handleData.jump(p)
+  }
 
   // const [open, setOpen] = React.useState(false);
 
@@ -29,7 +30,7 @@ export default function JobPanel(props) {
 
   return (
     <>
-      <div className="job-panel">
+      <div className='job-panel'>
         {handleData.currentData().map((job, idx) => (
           <JobCard
             jobID={job.jobID}
@@ -42,8 +43,15 @@ export default function JobPanel(props) {
             socket={props.socket}
           />
         ))}
-        <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
+        <Box className='pagination'>
+          <Pagination
+            count={count}
+            page={page}
+            onChange={handlePageChange}
+            shape='rounded'
+          />
+        </Box>
       </div>
     </>
-  );
+  )
 }

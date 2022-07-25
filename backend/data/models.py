@@ -39,6 +39,9 @@ class Internship(db.Model):
     field = Column(String(255))
     state = Column(String(255))
     city = Column(String(255))
+    # He
+    description = Column(String(1000))
+    working_right = Column(Integer)
 
     def __repr__(self):
         return '<Internship %r>' % self.id
@@ -188,9 +191,9 @@ class Apply(db.Model):
     id = Column(String(1000), primary_key=True)
     user_id = Column(String(1000))
     internship_id = Column(String(1000))
-    deleted = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
+    deleted = Column(Integer)
 
     def as_dict(obj):
         return dict((col.name, getattr(obj, col.name)) \
@@ -213,3 +216,4 @@ class Meeting(db.Model):
     def as_dict(obj):
         return dict((col.name, getattr(obj, col.name)) \
                     for col in class_mapper(obj.__class__).mapped_table.c)
+

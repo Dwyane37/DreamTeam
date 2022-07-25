@@ -6,6 +6,8 @@
 .home-main-panel {
   display: flex;
   flex-direction: column;
+
+  width: 50vw;
 }
 
 .home-side-panel {
