@@ -1,5 +1,7 @@
 .dashboard-main {
+  width: 1080px;
   margin: 2rem 4rem;
+  margin: 0 auto;
   position: relative;
 }
 

@@ -37,15 +37,16 @@ const FollowPage = ({ socket }) => {
   const id = sessionStorage.getItem('id');
 
   useEffect(() => {
-    apiGet('user/following', { userId: id }).then((res) => {
-      setFollowList(res.data);
-    });
+    apiGet('user/following', { userId: '2169683494' }).then((res) => {
+      console.log(res.data);
+      setFollowList(res.data.data)
+    })
   }, []);
 
   const toProfile = (followId) => {
     navigate(`/profile/${followId}`, {
       replace: false,
-      state: { followId, isFollow: true },
+      state: { followId},
     });
   };
 

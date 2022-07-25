@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import './ResumePage.css';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import React, { useEffect, useState } from 'react'
+import './ResumePage.css'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
 
-import Education from '../components/resume_component/education';
-import WorkExperience from '../components/resume_component/work-experience';
-import ProjectExperience from '../components/resume_component/project-experience';
-import Skill from '../components/resume_component/skill';
-import Awards from '../components/resume_component/awards';
-import ProjectDisplay from '../components/resume_component/project-display';
-import MyDialog from '../components/resume_component/my-dialog';
-import NavBar from '../components/component_NavBar/NavBar';
-import { apiGet, apiPost } from '../components/API';
-import { useParams, useLocation } from 'react-router-dom';
+import Education from '../components/resume_component/education'
+import WorkExperience from '../components/resume_component/work-experience'
+import ProjectExperience from '../components/resume_component/project-experience'
+import Skill from '../components/resume_component/skill'
+import Awards from '../components/resume_component/awards'
+import ProjectDisplay from '../components/resume_component/project-display'
+import MyDialog from '../components/resume_component/my-dialog'
+import NavBar from '../components/component_NavBar/NavBar'
+import { apiGet, apiPost } from '../components/API'
+import JobPanel from '../components/component_JobPanel/JobPanel'
+import { useParams, useLocation } from 'react-router-dom'
 
 // import { getResume, submitResume } from '../../api/resume';
 
@@ -24,327 +25,391 @@ function ResumePage({ socket }) {
     projectExperience: [],
     skills: [],
     awards: [],
-    projectDisplay: [],
-  });
+    projectDisplay: []
+  })
 
   const [dialogConfig, setDialogConfig] = useState({
     userInfo: [
       {
         label: 'name',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'university',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'email',
         required: false,
-        type: 'text',
-      },
+        type: 'text'
+      }
     ],
     education: [
       {
         label: 'university',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'start',
         required: true,
-        type: 'date',
+        type: 'date'
       },
       {
         label: 'end',
         required: true,
-        type: 'date',
+        type: 'date'
       },
       {
         label: 'faculty',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'major',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'grades',
         required: true,
-        type: 'text',
-      },
+        type: 'text'
+      }
     ],
     workExperience: [
       {
         label: 'company',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'position',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'start',
         required: true,
-        type: 'date',
+        type: 'date'
       },
       {
         label: 'end',
         required: true,
-        type: 'date',
+        type: 'date'
       },
       {
         label: 'description',
         required: true,
-        type: 'text',
-      },
+        type: 'text'
+      }
     ],
     projectExperience: [
       {
         label: 'name',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'start',
         required: true,
-        type: 'date',
+        type: 'date'
       },
       {
         label: 'end',
         required: true,
-        type: 'date',
+        type: 'date'
       },
       {
         label: 'description',
         required: true,
-        type: 'text',
-      },
+        type: 'text'
+      }
     ],
     skills: [
       {
         label: 'skill',
         required: true,
-        type: 'text',
-      },
+        type: 'text'
+      }
     ],
     awards: [
       {
         label: 'title',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'description',
         required: true,
-        type: 'text',
-      },
+        type: 'text'
+      }
     ],
     projectDisplay: [
       {
         label: 'name',
         required: true,
-        type: 'text',
+        type: 'text'
       },
       {
         label: 'link',
         required: true,
-        type: 'text',
-      },
-    ],
-  });
-  const [open, setOpen] = useState(false);
-  const [type, setType] = useState('false');
-  const id = sessionStorage.getItem('id');
-  const { state } = useLocation();
-  // const resumeId = state?.followId || id;
-  const params = useParams();
-  const resumeId = params.userId;
+        type: 'text'
+      }
+    ]
+  })
+  const [open, setOpen] = useState(false)
+  const [type, setType] = useState('false')
+  const id = sessionStorage.getItem('id')
+  const { state } = useLocation()
+  const resumeId = state?.followId
+  const params = useParams()
+  // const resumeId = params.userId
 
   useEffect(() => {
-    apiGet('user/getResume?resumeId=' + resumeId, {}).then((res) => {
-      setResumeData(res.data.data);
-    });
-  }, []);
+    apiGet('user/getResume?resumeId=' + id || resumeId, {}).then((res) => {
+      setResumeData(res.data.data)
+    })
+    apiGet('user/getinfo').then((res) => {
+      console.log(res.data)
+    })
+  }, [])
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const edit = (type) => {
-    setOpen(true);
-    setType(type);
-  };
+    setOpen(true)
+    setType(type)
+  }
 
   const deleteItem = (index) => {
-    const tempData = { ...resumeData };
-    tempData[type].splice(index - 1, 1);
-    console.log(tempData);
-    setResumeData({ ...tempData });
-    console.log(tempData);
-  };
+    const tempData = { ...resumeData }
+    tempData[type].splice(index - 1, 1)
+    console.log(tempData)
+    setResumeData({ ...tempData })
+    console.log(tempData)
+  }
 
   const save = (data) => {
-    console.log(data);
-    const temp = { ...resumeData };
-    temp[type] = data;
-    setResumeData({ ...temp });
-    setOpen(false);
-  };
+    console.log(data)
+    const temp = { ...resumeData }
+    temp[type] = data
+    setResumeData({ ...temp })
+    setOpen(false)
+  }
 
   const submit = () => {
-    apiPost('user/submitResume', { resumeid: id, resume: resumeData }).then((res) => {
-      console.log('提交成功');
-    });
-  };
+    apiPost('user/submitResume', { resumeid: id, resume: resumeData }).then(
+      (res) => {
+        console.log('提交成功')
+      }
+    )
+  }
 
   const cancel = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleFollow = () => {
     if (state.isFollow) {
       apiGet('user/following', { userId: id }).then((res) => {
-        alert('follow success');
-      });
+        alert('follow success')
+      })
     } else {
       apiGet('user/following', { userId: id }).then((res) => {
-        alert('unFollow success');
-      });
+        alert('unFollow success')
+      })
     }
-  };
+  }
 
   const student_resume = (
     <div>
-      <div className="education resume_item">
-        <div className="header">
+      <div className='education resume_item'>
+        <div className='header'>
           <span>Education</span>
-          <Button variant="contained" size="small" onClick={() => edit('education')}>
+          <Button
+            variant='contained'
+            size='small'
+            onClick={() => edit('education')}
+          >
             edit
           </Button>
         </div>
-        <div className="content">
+        <div className='content'>
           <Education education={resumeData.education} />
         </div>
       </div>
-      <div className="work_experience resume_item">
-        <div className="header">
+      <div className='work_experience resume_item'>
+        <div className='header'>
           <span>Work Experience</span>
-          <Button variant="contained" size="small" onClick={() => edit('workExperience')}>
+          <Button
+            variant='contained'
+            size='small'
+            onClick={() => edit('workExperience')}
+          >
             edit
           </Button>
         </div>
-        <div className="content">
+        <div className='content'>
           <WorkExperience workExperience={resumeData.workExperience} />
         </div>
       </div>
-      <div className="project_experience resume_item">
-        <div className="header">
+      <div className='project_experience resume_item'>
+        <div className='header'>
           <span>Project Experience</span>
-          <Button variant="contained" size="small" onClick={() => edit('projectExperience')}>
+          <Button
+            variant='contained'
+            size='small'
+            onClick={() => edit('projectExperience')}
+          >
             edit
           </Button>
         </div>
-        <div className="content">
+        <div className='content'>
           <ProjectExperience projectExperience={resumeData.projectExperience} />
         </div>
       </div>
-      <div className="skill resume_item">
-        <div className="header">
+      <div className='skill resume_item'>
+        <div className='header'>
           <span>Skills</span>
-          <Button variant="contained" size="small" onClick={() => edit('skills')}>
+          <Button
+            variant='contained'
+            size='small'
+            onClick={() => edit('skills')}
+          >
             edit
           </Button>
         </div>
-        <div className="content">
+        <div className='content'>
           <Skill skill={resumeData.skills} />
         </div>
       </div>
-      <div className="Awards resume_item">
-        <div className="header">
+      <div className='Awards resume_item'>
+        <div className='header'>
           <span>awards</span>
-          <Button variant="contained" size="small" onClick={() => edit('awards')}>
+          <Button
+            variant='contained'
+            size='small'
+            onClick={() => edit('awards')}
+          >
             edit
           </Button>
         </div>
-        <div className="content">
+        <div className='content'>
           <Awards awards={resumeData.awards} />
         </div>
       </div>
-      <div className="project_display resume_item">
-        <div className="header">
+      <div className='project_display resume_item'>
+        <div className='header'>
           <span>Project Display</span>
-          <Button variant="contained" size="small" onClick={() => edit('projectDisplay')}>
+          <Button
+            variant='contained'
+            size='small'
+            onClick={() => edit('projectDisplay')}
+          >
             edit
           </Button>
         </div>
-        <div className="content">
+        <div className='content'>
           <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
         </div>
       </div>
     </div>
-  );
+  )
 
   const hr_detail = (
-    <div className="resume_item">
-      <div className="header">
+    <div>
+      {/* <div className='header'>
         <span>Introduction</span>
-        <Button variant="contained" size="small" onClick={() => edit('projectDisplay')}>
+        <Button
+          variant='contained'
+          size='small'
+          onClick={() => edit('projectDisplay')}
+        >
           edit
         </Button>
       </div>
-      <div className="content">
+      <div className='content'>
         <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
-      </div>
+      </div> */}
+      <JobPanel />
     </div>
-  );
+  )
 
   return (
     <>
       <NavBar type={sessionStorage.getItem('type')} />
-      <div className="resume">
-        <div className="user_info resume_item">
-          <div className="header">
+      <div className='resume'>
+        <div className='user_info resume_item'>
+          <div className='header'>
             <div>
               {state?.followId && (
-                <Button variant="contained" size="small" onClick={() => handleFollow()}>
+                <Button
+                  variant='contained'
+                  size='small'
+                  onClick={() => handleFollow()}
+                >
                   {state?.isFollow ? 'UnFollow' : 'follow'}
                 </Button>
               )}
             </div>
-            <Button variant="contained" size="small" onClick={() => edit('userInfo')}>
+            <Button
+              variant='contained'
+              size='small'
+              onClick={() => edit('userInfo')}
+            >
               edit
             </Button>
           </div>
 
-          <div className="content">
-            <img src="https://www.yh31.com/uploadfile/ql/202104152042540827.jpg" alt="" className="avatar" />
-            <div className="info_wrap">
-              <div className="info_item">name: {resumeData.userInfo[0]?.name || 'n/a'}</div>
+          <div className='content'>
+            <img
+              src='https://www.yh31.com/uploadfile/ql/202104152042540827.jpg'
+              alt=''
+              className='avatar'
+            />
+            <div className='info_wrap'>
+              <div className='info_item'>
+                name: {resumeData.userInfo[0]?.name || 'n/a'}
+              </div>
 
-              <div className="info_item">
-                {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
+              <div className='info_item'>
+                {sessionStorage.getItem('type') === '0'
+                  ? 'Unversity: '
+                  : 'Company: '}
                 {resumeData.userInfo[0]?.unversity || 'n/a'}
               </div>
 
-              <div className="info_item">email: {resumeData.userInfo[0]?.email || 'n/a'}</div>
+              <div className='info_item'>
+                email: {resumeData.userInfo[0]?.email || 'n/a'}
+              </div>
             </div>
           </div>
         </div>
         {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
 
-        <div className="resume_footer">
-          <Button className="save" variant="contained" size="small" color="success" onClick={() => submit()}>
+        <div className='resume_footer'>
+          <Button
+            className='save'
+            variant='contained'
+            size='small'
+            color='success'
+            onClick={() => submit()}
+          >
             save
           </Button>
         </div>
       </div>
-      <Dialog open={open} onClose={handleClose} scroll="paper" fullWidth maxWidth="md">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        scroll='paper'
+        fullWidth
+        maxWidth='md'
+      >
         <MyDialog
           config={dialogConfig[type]}
           save={save}
@@ -355,7 +420,7 @@ function ResumePage({ socket }) {
         ></MyDialog>
       </Dialog>
     </>
-  );
+  )
 }
 
-export default ResumePage;
+export default ResumePage
