@@ -184,22 +184,25 @@ export default function NavBar(props) {
               I-Student
             </Typography>
           </div>
-
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-            />
-          </Search>
-          {type === '0' ? <Filter handleFilter={[filter, setFilter]} /> : null}
-          <Button style={{ color: 'white', marginLeft: '1rem' }} onClick={handleSearch}>
-            Search
-          </Button>
+          {type === '0' ? (
+            <>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
+                />
+              </Search>
+              <Filter handleFilter={[filter, setFilter]} />
+              <Button style={{ color: 'white', marginLeft: '1rem' }} onClick={handleSearch}>
+                Search
+              </Button>
+            </>
+          ) : null}
 
           <Box sx={{ flexGrow: 1 }} />
           <Box>
