@@ -51,7 +51,6 @@ const FollowPage = ({ socket }) => {
   };
 
   const handleUnfollow = (followingId, index) => {
-    console.log(id);
     const result = apiGet('/user/dislike', {
       followingId,
       followerId: id,

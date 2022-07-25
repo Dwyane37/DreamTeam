@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './ResumePage.css'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
-
+import TextField from '@mui/material/TextField'
 import Education from '../components/resume_component/education'
 import WorkExperience from '../components/resume_component/work-experience'
 import ProjectExperience from '../components/resume_component/project-experience'
@@ -42,6 +42,11 @@ function ResumePage({ socket }) {
       },
       {
         label: 'email',
+        required: false,
+        type: 'text'
+      },
+      {
+        label: 'introduction',
         required: false,
         type: 'text'
       }
@@ -160,6 +165,9 @@ function ResumePage({ socket }) {
     ]
   })
   const [open, setOpen] = useState(false)
+
+  const [userInfo, setUserInfo] = useState({})
+  const [openUserInfo, setOpenUserInfo] = useState(false)
   const [type, setType] = useState('false')
   const id = sessionStorage.getItem('id')
   const { state } = useLocation()
@@ -178,11 +186,30 @@ function ResumePage({ socket }) {
 
   const handleClose = () => {
     setOpen(false)
+    setOpenUserInfo(false)
   }
 
   const edit = (type) => {
     setOpen(true)
     setType(type)
+  }
+
+  const handleUserInput = (e, type) => {
+    let temp = { ...userInfo }
+    temp[type] = e.target.value
+    setUserInfo(temp)
+  }
+
+  const editUserInfo = (type) => {
+    setOpenUserInfo(true)
+  }
+
+  const saveUserInfo = () => {
+    console.log(userInfo);
+    const temp = { ...resumeData }
+    temp.userInfo = userInfo
+    setResumeData({ ...temp })
+    setOpenUserInfo(false)
   }
 
   const deleteItem = (index) => {
@@ -194,7 +221,6 @@ function ResumePage({ socket }) {
   }
 
   const save = (data) => {
-    console.log(data)
     const temp = { ...resumeData }
     temp[type] = data
     setResumeData({ ...temp })
@@ -211,6 +237,25 @@ function ResumePage({ socket }) {
 
   const cancel = () => {
     setOpen(false)
+  }
+
+  const uploadAvatar = () => {
+    const inputEl = document.createElement('input')
+    inputEl.type = 'file'
+    inputEl.click()
+    inputEl.onchange = (e) => {
+      const file = e.target.files[0]
+      if (!!file) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = function (e) {
+          let data = e.target.result
+          let temp = { ...resumeData }
+          temp.userInfo.thumbnail = data
+          setResumeData({ ...temp })
+        }
+      }
+    }
   }
 
   const handleFollow = () => {
@@ -359,34 +404,40 @@ function ResumePage({ socket }) {
             <Button
               variant='contained'
               size='small'
-              onClick={() => edit('userInfo')}
+              onClick={() => editUserInfo()}
             >
               edit
             </Button>
           </div>
-
           <div className='content'>
             <img
-              src='https://www.yh31.com/uploadfile/ql/202104152042540827.jpg'
+              src={
+                resumeData.userInfo?.thumbnail ||
+                'https://pic4.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg'
+              }
               alt=''
               className='avatar'
+              onClick={uploadAvatar}
             />
             <div className='info_wrap'>
               <div className='info_item'>
-                name: {resumeData.userInfo[0]?.name || 'n/a'}
+                name: {resumeData.userInfo?.name || 'n/a'}
               </div>
 
               <div className='info_item'>
                 {sessionStorage.getItem('type') === '0'
                   ? 'Unversity: '
                   : 'Company: '}
-                {resumeData.userInfo[0]?.unversity || 'n/a'}
+                {resumeData.userInfo?.unversity || 'n/a'}
               </div>
 
               <div className='info_item'>
-                email: {resumeData.userInfo[0]?.email || 'n/a'}
+                email: {resumeData.userInfo?.email || 'n/a'}
               </div>
             </div>
+          </div>
+          <div className='introduction'>
+            {resumeData.userInfo?.introduction}
           </div>
         </div>
         {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
@@ -418,6 +469,65 @@ function ResumePage({ socket }) {
           data={resumeData[type]}
           type={type}
         ></MyDialog>
+      </Dialog>
+      <Dialog
+        open={openUserInfo}
+        onClose={handleClose}
+        scroll='paper'
+        fullWidth
+        maxWidth='md'
+      >
+        <div className='user_form'>
+          <div className='form_item'>
+            <div className='label'>name</div>
+            <TextField
+              className='input'
+              size='small'
+              onChange={(e) => handleUserInput(e, 'name')}
+              fullWidth
+              defaultValue={resumeData.userInfo.name}
+            />
+          </div>
+          <div className='form_item'>
+            <div className='label'>unversity</div>
+            <TextField
+              className='input'
+              size='small'
+              onChange={(e) => handleUserInput(e, 'unversity')}
+              fullWidth
+              defaultValue={resumeData.userInfo.name}
+            />
+          </div>
+          <div className='form_item'>
+            <div className='label'>email</div>
+            <TextField
+              className='input'
+              size='small'
+              onChange={(e) => handleUserInput(e, 'email')}
+              fullWidth
+              defaultValue={resumeData.userInfo.name}
+            />
+          </div>
+          <div className='footer'>
+            <Button
+              className='cancel'
+              variant='contained'
+              size='small'
+              color='error'
+              onClick={() => setOpenUserInfo(false)}
+            >
+              cancel
+            </Button>
+            <Button
+              className='save'
+              variant='contained'
+              size='small'
+              onClick={() => saveUserInfo()}
+            >
+              save
+            </Button>
+          </div>
+        </div>
       </Dialog>
     </>
   )
