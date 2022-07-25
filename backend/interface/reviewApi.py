@@ -46,6 +46,7 @@ def personreview():
     res = [dict(zip(result.keys(), result)) for result in res]
     data = {}
     data['data'] = res
+    data['errortype'] = 200
     return data
 
 # @review_opt.route("/moviereview", methods=['GET'])

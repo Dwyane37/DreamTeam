@@ -154,6 +154,8 @@ def getRecommJobs(resume):
     resumeedu = ResumeEducation.query.filter_by(user_id=id).first()
     position = ResumeWorkExperience.query.filter_by(user_id=id).first()
     resume = ResumeUser.query.filter_by(user_id=id).first()
+    if resumeedu is None or position is None or resume is None:
+        return []
     field = resumeedu.major
     aim = position.position
     intro = resume.introduction
@@ -229,3 +231,127 @@ def add_wishlist(id, internship_id):
         db.session.commit()
     except Exception as e:
         print(e)
+
+def checkIfApplied(id,internship_id):
+    try:
+        apply = Apply.query.filter_by(user_id=id,internship_id=internship_id,deleted=0)
+        if apply is None:
+            return errorMessage(1, "You have already applied this position")
+
+        return errorMessage(200,"ok")
+    except Exception as e:
+        print(e)
+
+def apply_internship(id, internship_id):
+    try:
+        apply = Apply(id=getuuid(),
+                      user_id=id,
+                      internship_id=internship_id,
+                      create_time=getTime(datetime),
+                      update_time=getTime(datetime),
+                      deleted=0)
+        db.session.add(apply)
+        db.session.commit()
+
+    except Exception as e:
+        print(e)
+
+def get_apply_list(id):
+    try:
+        res = db.session.query(Internship.title, Internship.user_id, Apply.update_time,
+                               Apply.id).outerjoin(Apply, Apply.user_id == Internship.user_id).filter(
+            Apply.user_id == id, Internship.deleted == 0).all()
+        return res
+
+    except Exception as e:
+        print(e)
+     
+# He
+def addNewjob(inputs):
+    try:
+        id = getuuid()
+        newJob = Internship(id=id, title=inputs.title, field=inputs.field, location=inputs.location,
+                            state=inputs.state, city=inputs.city,
+                            deleted=0, working_right=inputs.working_right, description=inputs.description,
+                            create_time=getTime(datetime),
+                            update_time=getTime(datetime),
+                            )
+        db.session.add(newJob)
+        db.session.commit()
+        return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+def deletejob(inputs):
+    try:
+        Job = Internship(id=inputs.id, title=inputs.title, field=inputs.field, location=inputs.location,
+                            state=inputs.state, city=inputs.city,
+                            deleted=1, working_right=inputs.working_right, description=inputs.description,
+                            create_time=getTime(datetime),
+                            update_time=getTime(datetime),
+                            )
+        db.session.add(Job)
+        db.session.commit()
+        return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+def editjob(inputs):
+    try:
+        Job = Internship(id=inputs.id, title=inputs.title, field=inputs.field, location=inputs.location,
+                            state=inputs.state, city=inputs.city,
+                            deleted=0, working_right=inputs.working_right, description=inputs.description,
+                            create_time=getTime(datetime),
+                            update_time=getTime(datetime),
+                            )
+        db.session.add(Job)
+        db.session.commit()
+        return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+
+def addmeeting(inputs):
+    try:
+        id = getuuid()
+        meeting = Meeting(id=id, intership_id=inputs.intership_id,
+                           datetime=inputs.datetime, link=inputs.link,
+                           deleted=0,
+                           create_time=getTime(datetime),
+                           update_time=getTime(datetime),
+                           )
+        db.session.add(meeting)
+        db.session.commit()
+        return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+
+def deletemeeting(inputs):
+    try:
+        meeting = Meeting(id=inputs.id, intership_id=inputs.intership_id,
+                            datetime=inputs.datetime, link=inputs.link,
+                            deleted=1,
+                            create_time=getTime(datetime),
+                            update_time=getTime(datetime),
+                            )
+        db.session.add(meeting)
+        db.session.commit()
+        return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+
+def editmeeting(inputs):
+    try:
+        meeting = Meeting(id=inputs.id, intership_id=inputs.intership_id,
+                            datetime=inputs.datetime, link=inputs.link,
+                            deleted=0,
+                            create_time=getTime(datetime),
+                            update_time=getTime(datetime),
+                            )
+        db.session.add(meeting)
+        db.session.commit()
+        return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
