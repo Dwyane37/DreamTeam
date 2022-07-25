@@ -186,7 +186,23 @@ class Collection(db.Model):
     def __repr__(self):
         return '<Collection %r>' % self.id
 
-# He    
+class Apply(db.Model):
+    __tablename__ = 'db_apply'
+    id = Column(String(1000), primary_key=True)
+    user_id = Column(String(1000))
+    internship_id = Column(String(1000))
+    create_time = Column(TIMESTAMP)
+    update_time = Column(TIMESTAMP)
+    deleted = Column(Integer)
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
+    def __repr__(self):
+        return '<Apply %r>' % self.id
+
+# He
 class Meeting(db.Model):
     __tablename__ = 'db_meetings'
     id = Column(String(1000), primary_key=True, autoincrement=True)
@@ -200,3 +216,4 @@ class Meeting(db.Model):
     def as_dict(obj):
         return dict((col.name, getattr(obj, col.name)) \
                     for col in class_mapper(obj.__class__).mapped_table.c)
+

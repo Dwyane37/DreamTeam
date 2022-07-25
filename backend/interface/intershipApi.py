@@ -86,19 +86,19 @@ def gethotjobs():
     data['errortype'] = 200
     return data
 
-@internship_opt.route('wishlist', methods=['GET'])
-def getwishlist():
-    token = request.values.get('token')
-    deco = jwt.decode(token, token_key, algorithms='HS256')
-    id = deco['id']
-    res = get_wish_list(id)
-    dict = {}
-    for i in res:
-        dict[repr(i.id)] = i.as_dict()
-    data = {}
-    data['data'] = dict
-    data['errortype'] = 200
-    return data
+# @internship_opt.route('wishlist', methods=['GET'])
+# def getwishlist():
+#     token = request.values.get('token')
+#     deco = jwt.decode(token, token_key, algorithms='HS256')
+#     id = deco['id']
+#     res = get_wish_list(id)
+#     dict = {}
+#     for i in res:
+#         dict[repr(i.id)] = i.as_dict()
+#     data = {}
+#     data['data'] = dict
+#     data['errortype'] = 200
+#     return data
 
 @internship_opt.route("/add", methods=['GET'])
 def add():
@@ -298,8 +298,8 @@ def del_internship():
 def del_meeting():
     data = json.loads(request.data)
     id = data['id']
-    datetime = meeting['datetime']
-    link = meeting['link']
+    datetime = data['datetime']
+    link = data['link']
     meeting = Meeting(intership_id=id,
                       datetime=datetime, link=link,
                       deleted=1,
@@ -308,11 +308,11 @@ def del_meeting():
                       )
     save_meeting = deletemeeting(meeting)
     data['id'] = id
-    data['token'] = token
+    # data['token'] = token
     message = errorMessage(200, data)
-    deco = jwt.decode(token,
-                      token_key, algorithms='HS256', options={"varify_signature": False})
-    exptime = deco['exp']
+    # deco = jwt.decode(token,
+    #                   token_key, algorithms='HS256', options={"varify_signature": False})
+    # exptime = deco['exp']
 
     return json.dumps(message, default=lambda obj: obj.__dict__)
 

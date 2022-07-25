@@ -145,7 +145,7 @@ def searchJobById(id):
 
 def searchResume(id):
     try:
-        resume = Resume.query.filter_by(user_id=id).first()
+        resume = ResumeUser.query.filter_by(user_id=id).first()
         return resume
     except Exception as e:
         print(e)
@@ -265,7 +265,7 @@ def get_apply_list(id):
 
     except Exception as e:
         print(e)
-     
+
 # He
 def addNewjob(inputs):
     try:
