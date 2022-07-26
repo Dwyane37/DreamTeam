@@ -8,6 +8,10 @@
   flex-direction: column;
   width: 50vw;
   max-width: 600px;
+  border-radius: 25px;
+  background: '#e2e0e0';
+  /* box-shadow: 2px 3px #a8a8a8; */
+  box-shadow: 2px -3px 10px #c0bebe, -2px 3px 10px #c0bebe;
 }
 
 .home-side-panel {

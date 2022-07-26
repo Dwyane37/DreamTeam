@@ -19,9 +19,9 @@
 
 .job-card {
   height: 220px;
-  width: 100%;
+  width: 90%;
   margin: 1rem;
-  box-shadow: 2px 3px #a8a8a8;
+  border-radius: 10px;
 }
 
 .job-card:hover {

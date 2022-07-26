@@ -2,6 +2,10 @@
   width: 300px;
   height: 100px;
   margin: 10px 0;
+  border-radius: 25px;
+  background: '#e2e0e0';
+  /* box-shadow: 2px 3px #a8a8a8; */
+  /* box-shadow: 2px -3px 10px #c0bebe, -2px 3px 10px #c0bebe; */
 }
 
 .simple-job-card:hover {
