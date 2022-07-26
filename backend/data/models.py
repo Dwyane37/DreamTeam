@@ -39,6 +39,9 @@ class Internship(db.Model):
     field = Column(String(255))
     state = Column(String(255))
     city = Column(String(255))
+    # He
+    description = Column(String(1000))
+    working_right = Column(Integer)
 
     def __repr__(self):
         return '<Internship %r>' % self.id
@@ -58,6 +61,8 @@ class ResumeUser(db.Model):
     user_id = db.Column(String(255), db.ForeignKey('db_user.id'))
     users = db.relationship('User', backref='users')
     introduction = Column(String(1000))
+    # TODO 7.24 新增加一个 头像字段
+    thumbnail = Column(String(255))
 
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
@@ -182,3 +187,35 @@ class Collection(db.Model):
 
     def __repr__(self):
         return '<Collection %r>' % self.id
+
+class Apply(db.Model):
+    __tablename__ = 'db_apply'
+    id = Column(String(1000), primary_key=True)
+    user_id = Column(String(1000))
+    internship_id = Column(String(1000))
+    create_time = Column(TIMESTAMP)
+    update_time = Column(TIMESTAMP)
+    deleted = Column(Integer)
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
+    def __repr__(self):
+        return '<Apply %r>' % self.id
+
+# He
+class Meeting(db.Model):
+    __tablename__ = 'db_meetings'
+    id = Column(String(1000), primary_key=True, autoincrement=True)
+    internship_id = Column(String(1000))
+    datetime = Column(TIMESTAMP)
+    link = Column(String(1000))
+    deleted = Column(Integer)
+    def __repr__(self):
+        return '<Meeting %r>' % self.id
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name)) \
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+

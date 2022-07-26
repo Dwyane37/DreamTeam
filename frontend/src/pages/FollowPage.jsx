@@ -37,20 +37,20 @@ const FollowPage = ({ socket }) => {
   const id = sessionStorage.getItem('id');
 
   useEffect(() => {
-    apiGet('user/following', { userId: id }).then((res) => {
-      setFollowList(res.data);
-    });
+    apiGet('user/following', { userId: '2169683494' }).then((res) => {
+      console.log(res.data);
+      setFollowList(res.data.data)
+    })
   }, []);
 
   const toProfile = (followId) => {
     navigate(`/profile/${followId}`, {
       replace: false,
-      state: { followId, isFollow: true },
+      state: { followId},
     });
   };
 
   const handleUnfollow = (followingId, index) => {
-    console.log(id);
     const result = apiGet('/user/dislike', {
       followingId,
       followerId: id,
