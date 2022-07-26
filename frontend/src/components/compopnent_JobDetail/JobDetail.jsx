@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import './JobDetail.css';
 import { Button } from '@mui/material';
 import CommentBox from '../component_CommentBox/CommentBox';
+import { citizenship } from '../assets';
 
 export default function JobDetail(props) {
   const job = props.job;
@@ -20,7 +21,7 @@ export default function JobDetail(props) {
           <Typography variant="subtitle1" color="text.secondary">
             Location
           </Typography>
-          <Typography variant="body1"> {` ${job.region.city}, ${job.region.state} ${job.region.country}`}</Typography>
+          <Typography variant="body1"> {` ${job.city}, ${job.state} ${job.location}`}</Typography>
         </div>
         <div className="job-detail-element">
           <Typography variant="subtitle1" color="text.secondary">
@@ -39,9 +40,12 @@ export default function JobDetail(props) {
             Citizenship Requirements
           </Typography>
           <ul className="job-citizenship">
-            {job.citizenship.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
+            {job.working_right
+              .toString()
+              .split()
+              .map((item, idx) => (
+                <li key={idx}>{citizenship.filter((a) => a.id == item)[0].label}</li>
+              ))}
           </ul>
         </div>
         <div className="job-detail-element">
@@ -56,7 +60,7 @@ export default function JobDetail(props) {
           <Typography variant="subtitle1" color="text.secondary">
             Information Sessions
           </Typography>
-          {job.meetings.map((meeting, idx) => (
+          {job.meetings?.map((meeting, idx) => (
             <div key={idx}>
               <span className="session-date">{meeting.date}</span>
               <span className="session-time">{meeting.time}:</span>

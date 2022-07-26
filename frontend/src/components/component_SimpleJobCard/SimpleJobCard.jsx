@@ -9,7 +9,7 @@ export default function SimpleJobCard(props) {
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Card variant="outlined" className="simple-job-card" onClick={props.hanldeClickOpen}>
+    <Card id={props.jobID} variant="outlined" className="simple-job-card" onClick={props.hanldeClickOpen}>
       <CardContent>
         <Typography variant="h8" component="div">
           {props.title}

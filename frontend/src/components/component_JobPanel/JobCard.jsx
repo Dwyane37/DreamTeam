@@ -13,6 +13,56 @@ import './JobCard.css';
 export default function JobCard(props) {
   const [save, setSave] = React.useState(false);
 
+  function getCardAction(type) {
+    switch (type) {
+      case 'home':
+        return (
+          <CardActions className="job-card-action">
+            <Button size="small" onClick={handleApply}>
+              Apply
+            </Button>
+            <div onClick={handleSave}>
+              {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" />}
+              {save && <BookmarkAddedIcon className="BookmarkIcon" />}
+            </div>
+          </CardActions>
+        );
+      case 'saved':
+        return (
+          <CardActions className="job-card-action">
+            <Button size="small" onClick={handleApply}>
+              Apply
+            </Button>
+            <div onClick={handleUnsave}>
+              {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" />}
+              {save && <BookmarkAddedIcon className="BookmarkIcon" />}
+            </div>
+          </CardActions>
+        );
+      case 'myJob':
+        return (
+          <CardActions className="myjob-card-action">
+            <Button size="small" variant="outlined" onClick={handleEdit}>
+              Edit
+            </Button>
+
+            <Button
+              className="delete-button-text"
+              size="small"
+              color="error"
+              variant="outlined"
+              startIcon={<DeleteIcon />}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </CardActions>
+        );
+      case 'simple':
+        return;
+    }
+  }
+
   const handleApply = (e) => {
     // TODO Apply for the job
     e.stopPropagation();
@@ -39,6 +89,12 @@ export default function JobCard(props) {
     }
   };
 
+  const handleUnsave = (e) => {
+    e.stopPropagation();
+    const jobId = e.currentTarget.parentNode.parentNode.id;
+    setSave(!save);
+  };
+
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
@@ -55,15 +111,7 @@ export default function JobCard(props) {
           {props.briefing}
         </Typography>
       </CardContent>
-      <CardActions className="job-card-action">
-        <Button size="small" onClick={handleApply}>
-          Apply
-        </Button>
-        <div onClick={handleSave}>
-          {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" />}
-          {save && <BookmarkAddedIcon className="BookmarkIcon" />}
-        </div>
-      </CardActions>
+      {getCardAction(props.type)}
     </Card>
   );
 }

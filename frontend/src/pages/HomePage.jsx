@@ -32,13 +32,13 @@ export default function HomePage({ socket }) {
 
   React.useEffect(() => {
     apiGet('internship/gethotjobs', null)
-      .then((data) => getHotJobs(data))
+      .then((data) => getHotJobs(data.data))
       .catch((e) => alert(e));
     apiCall('internship/home', null)
-      .then((data) => getJobs(data))
+      .then((data) => getJobs(data.data))
       .catch((e) => alert(e));
     apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
-      .then((data) => getRecommend(data))
+      .then((data) => getRecommend(data.data))
       .catch((e) => alert(e));
   }, []);
 
@@ -51,20 +51,20 @@ export default function HomePage({ socket }) {
           <CssBaseline />
 
           <NavBar type={sessionStorage.getItem('type')} handleJobFetch={getJobs} socket={socket} />
-          <div className="home-content-container">
-            <div className="home-main-panel">
+          <Box className="home-content-container">
+            <Box className="home-main-panel">
               {/* <div className="home-sort-button">
                 <IconButton />
                 <SortIcon />
               </div> */}
-              <JobPanel socket={socket} jobs={dummyJobs} />
-            </div>
+              <JobPanel socket={socket} jobs={Object.values(jobs)} type="home" />
+            </Box>
 
             <div className="home-side-panel">
-              <RecommenderPanel jobs={dummyJobs} />
-              <PopularJobPanel jobs={dummyJobs} />
+              <RecommenderPanel jobs={Object.values(recommend)} />
+              <PopularJobPanel jobs={Object.values(hotJobs)} />
             </div>
-          </div>
+          </Box>
         </Box>
       </ThemeProvider>
     )

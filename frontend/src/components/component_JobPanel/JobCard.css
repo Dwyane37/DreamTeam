@@ -20,6 +20,7 @@
 .job-card {
   height: 220px;
   width: 90%;
+  min-width: 400px;
   margin: 1rem;
   border-radius: 10px;
 }

@@ -18,7 +18,7 @@ export const fields = [
 
 export const dummyJobs = [
   {
-    jobID: 1,
+    id: 1,
     title: 'Web Developer',
     company: 'Google',
     authorID: 91272343673357427676270600691321,
@@ -54,7 +54,7 @@ export const dummyJobs = [
     ],
   },
   {
-    jobID: 3,
+    id: 3,
     title: 'Pharmacy Assistance',
     company: 'Chemist Warehouse',
     authorID: 91272343673357427676270600691321,

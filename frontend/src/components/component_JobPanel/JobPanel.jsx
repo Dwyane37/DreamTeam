@@ -1,5 +1,6 @@
 import * as React from 'react';
 import JobCard from './JobCard';
+import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Box from '@mui/material/Box';
 import './JobPanel.css';
@@ -8,16 +9,15 @@ import { Dialog } from '@mui/material';
 import JobDetail from '../compopnent_JobDetail/JobDetail';
 
 function getJobDetail(jobs, id) {
-  const job = jobs.filter((job) => job.jobID == id);
+  const job = jobs.filter((job) => job.id == id);
   return job[0];
 }
 
 export default function JobPanel(props) {
-  const jobs = props.jobs;
   const [page, setPage] = React.useState(1);
-  const PER_PAGE = 2;
-  const count = Math.ceil(jobs.length / PER_PAGE);
-  const handleData = usePagination(jobs, PER_PAGE);
+  const PER_PAGE = 10;
+  const count = Math.ceil(props.jobs.length / PER_PAGE);
+  const handleData = usePagination(props.jobs, PER_PAGE);
 
   const handlePageChange = (e, p) => {
     setPage(p);
@@ -39,18 +39,24 @@ export default function JobPanel(props) {
   return (
     <>
       <div className="job-panel">
-        {handleData.currentData().map((job, idx) => (
-          <JobCard
-            jobID={job.jobID}
-            key={idx}
-            title={job.title}
-            company={job.company}
-            location={job.region}
-            briefing={job.description}
-            hanldeClickOpen={handleClickOpen}
-            socket={props.socket}
-          />
-        ))}
+        <Grid container>
+          {handleData.currentData().map((job, idx) => (
+            <Grid item xs={props.type === 'saved' ? 6 : 10} sm={props.type === 'saved' ? 3 : 8} key={idx}>
+              <JobCard
+                type={props.type}
+                jobID={job.id}
+                key={idx}
+                title={job.title}
+                company="company"
+                location={{ country: job.location, state: job.state, city: job.city }}
+                briefing={job.description}
+                hanldeClickOpen={handleClickOpen}
+                socket={props.socket}
+              />
+            </Grid>
+          ))}
+        </Grid>
+
         <Box className="pagination">
           <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
         </Box>
