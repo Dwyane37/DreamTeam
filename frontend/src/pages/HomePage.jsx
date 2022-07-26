@@ -31,15 +31,15 @@ export default function HomePage({ socket }) {
   }, [logedIn]);
 
   React.useEffect(() => {
-    // apiGet('internship/gethotjobs', null)
-    //   .then((data) => getHotJobs(data))
-    //   .catch((e) => alert(e));
-    // apiCall('internship/home', null)
-    //   .then((data) => getJobs(data))
-    //   .catch((e) => alert(e));
-    // apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
-    //   .then((data) => getRecommend(data))
-    //   .catch((e) => alert(e));
+    apiGet('internship/gethotjobs', null)
+      .then((data) => getHotJobs(data))
+      .catch((e) => alert(e));
+    apiCall('internship/home', null)
+      .then((data) => getJobs(data))
+      .catch((e) => alert(e));
+    apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
+      .then((data) => getRecommend(data))
+      .catch((e) => alert(e));
   }, []);
 
   const mdTheme = createTheme();

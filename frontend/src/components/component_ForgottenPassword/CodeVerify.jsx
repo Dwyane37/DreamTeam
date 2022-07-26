@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { TextField, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import './ForgottenPassword.css';
 
@@ -26,7 +26,9 @@ export default function CodeVerify(props) {
         handleSubmit(e);
       }}
     >
-      <label htmlFor="code">Enter the code you received</label>
+      <Typography variant="h7" htmlFor="code">
+        Enter the code you received
+      </Typography>
       <TextField
         error={codeCorrect === false && code !== '' ? true : false}
         aria-label="Verification Code"
@@ -41,7 +43,7 @@ export default function CodeVerify(props) {
         }}
       ></TextField>
       <div style={{ textAlign: 'right' }}>
-        <Button type="submit" variant="text">
+        <Button type="submit" variant="contained">
           Confirm
         </Button>
       </div>

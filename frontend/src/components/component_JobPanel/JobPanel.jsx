@@ -9,9 +9,6 @@ import JobDetail from '../compopnent_JobDetail/JobDetail';
 
 function getJobDetail(jobs, id) {
   const job = jobs.filter((job) => job.jobID == id);
-  console.log(id);
-  console.log(jobs.filter((job) => console.log(job.jobID)));
-  console.log(job);
   return job[0];
 }
 
