@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import SignInSide from './pages/SignIn';
+import SignUp from './pages/SignUpPage';
+// import RegisterPage from './pages/RegisterPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
@@ -19,6 +20,7 @@ function App() {
   const [socket, setSocket] = React.useState(null);
 
   React.useEffect(() => {
+    console.log('connect');
     setSocket(io('http://localhost:5005'));
   }, []);
 
@@ -26,9 +28,9 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/login" element={<LoginPage socket={socket} />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<SignInSide />} />
+          <Route path="/login" element={<SignInSide />} />
+          <Route path="/register" element={<SignUp />} />
           <Route path="/find_password" element={<FindPasswordPage />} />
           <Route path="/home" element={<HomePage socket={socket} />} />
           <Route path="/settings" element={<SettingsPage socket={socket} />} />

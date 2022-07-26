@@ -6,7 +6,7 @@ function AccountType(props) {
   let accHandler = props.handler;
   return (
     <Button
-      style={{ backgroundColor: props.colour }}
+      style={{ backgroundColor: props.colour, padding: '2rem 5rem', fontSize: 'x-large' }}
       className="account-type-button"
       variant="contained"
       onClick={() => {
