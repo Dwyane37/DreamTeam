@@ -224,14 +224,23 @@ def delete_wishlist(id):
 
 def add_wishlist(id, internship_id):
     try:
-        wish = Collection(id=getuuid(),
-                 user_id=id,
-                 internship_id=internship_id,
-                 deleted=0)
-        db.session.add(wish)
-        db.session.commit()
+        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id)
+        if wish is None:
+            wish = Collection(id=getuuid(),
+                     user_id=id,
+                     internship_id=internship_id,
+                     deleted=0)
+            db.session.add(wish)
+            db.session.commit()
+        elif wish.deleted == 0:
+            wish.deleted = 1
+            db.session.commit()
+        elif wish.deleted == 1:
+            wish.deleted = 0
+            db.session.commit()
     except Exception as e:
         print(e)
+
 
 def checkIfApplied(id,internship_id):
     try:
