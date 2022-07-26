@@ -7,6 +7,14 @@ import usePagination from './usePagination';
 import { Dialog } from '@mui/material';
 import JobDetail from '../compopnent_JobDetail/JobDetail';
 
+function getJobDetail(jobs, id) {
+  const job = jobs.filter((job) => job.jobID == id);
+  console.log(id);
+  console.log(jobs.filter((job) => console.log(job.jobID)));
+  console.log(job);
+  return job[0];
+}
+
 export default function JobPanel(props) {
   const jobs = props.jobs;
   const [page, setPage] = React.useState(1);
@@ -20,10 +28,11 @@ export default function JobPanel(props) {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [jobId, setJobId] = React.useState(null);
 
   const handleClickOpen = (e) => {
     setOpen(true);
-    console.log(e);
+    setJobId(e.currentTarget.id);
   };
 
   const handleClose = () => {
@@ -50,7 +59,7 @@ export default function JobPanel(props) {
         </Box>
       </div>
       <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="md">
-        <JobDetail handleClose={handleClose} job={props.jobs[0]} />
+        <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
       </Dialog>
     </>
   );

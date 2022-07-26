@@ -28,7 +28,6 @@ export default function JobCard(props) {
     // TODO Save the job
     e.stopPropagation();
     const jobId = e.currentTarget.parentNode.parentNode.id;
-    setSave(!save);
     if (!save) {
       // haven't saved it yet
       apiGet('/internship/save', { token: sessionStorage.getItem('token'), internship: jobId })
@@ -36,20 +35,9 @@ export default function JobCard(props) {
           console.log(data);
         })
         .catch((e) => alert(e));
-    } else {
-      apiGet('/internship/unsave', { token: sessionStorage.getItem('token'), internship: jobId })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((e) => alert(e));
+      setSave(true);
     }
   };
-
-  // const viewMore = (e) => {
-  //   // TODO view more details about the job
-  //   console.log('view more');
-  //   console.log(e.currentTarget.id);
-  // };
 
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
