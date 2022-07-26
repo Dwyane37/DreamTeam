@@ -11,26 +11,25 @@ function RegisterPage() {
     setAccType(state);
   };
 
-  return (
-    <div className="login_registerPage">
-      <LoginNav />
+  return;
+  // <div className="login_registerPage">
+  //   <LoginNav />
 
-      {accType ? (
-        <div className="login_registerMain">
-          <h1>{`Register as a ${accType}`}</h1>
-          <RegisterForm account={accType} />
-        </div>
-      ) : (
-        <>
-          <h1>Select your account type</h1>
-          <div className="selectAccountType">
-            <AccountType typename="student" colour="#5B9279" handler={updateState} />
-            <AccountType typename="company" colour="#91785D" handler={updateState} />
-          </div>
-        </>
-      )}
-    </div>
-  );
+  //   {accType ? (
+  //     <div className="login_registerMain">
+  //       <h1>{`Register as a ${accType}`}</h1>
+  //       <RegisterForm account={accType} />
+  //     </div>
+  //   ) : (
+  //     <>
+  //       <h1>Select your account type</h1>
+  //       <div className="selectAccountType">
+  //         <AccountType typename="student" colour="#5B9279" handler={updateState} />
+  //         <AccountType typename="company" colour="#91785D" handler={updateState} />
+  //       </div>
+  //     </>
+  //   )}
+  // </div>
 }
 
 export default RegisterPage;

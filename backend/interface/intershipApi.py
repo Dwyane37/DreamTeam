@@ -100,7 +100,7 @@ def gethotjobs():
 #     data['errortype'] = 200
 #     return data
 
-@internship_opt.route("/add", methods=['GET'])
+@internship_opt.route("/save", methods=['GET'])
 def add():
     token = request.values.get('token')
     deco = jwt.decode(token, token_key, algorithms='HS256')
@@ -109,7 +109,7 @@ def add():
     add_wishlist(id, internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
-@internship_opt.route('/delete', methods=['GET'])
+@internship_opt.route('/unsave', methods=['GET'])
 def delete():
     id = request.values.get("wishlist_id")
     delete_wishlist(id)

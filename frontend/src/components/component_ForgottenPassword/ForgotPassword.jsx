@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 import { apiGet } from '../API';
 import { ValidateEmail } from '../assets';
+import Link from '@mui/material/Link';
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
@@ -35,7 +36,9 @@ export default function ForgotPassword() {
 
   return (
     <div>
-      <p onClick={handleClickOpen}>Forgotten Password</p>
+      <Link variant="body2" onClick={handleClickOpen}>
+        Forgot Password?
+      </Link>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Need help with your password?</DialogTitle>
         <DialogContent>

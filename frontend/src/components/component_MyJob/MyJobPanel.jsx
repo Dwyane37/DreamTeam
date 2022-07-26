@@ -2,9 +2,8 @@ import * as React from 'react';
 import MyJobCard from './MyJobCard';
 import Pagination from '@mui/material/Pagination';
 import usePagination from '../component_JobPanel/usePagination';
-import { jobs } from '../assets';
 
-export default function MyJobPanel() {
+export default function MyJobPanel({ jobs }) {
   const [page, setPage] = React.useState(1);
   const PER_PAGE = 1;
   const count = Math.ceil(jobs.length / PER_PAGE);

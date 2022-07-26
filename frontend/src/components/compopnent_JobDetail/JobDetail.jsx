@@ -2,11 +2,10 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import './JobDetail.css';
 import { Button } from '@mui/material';
-import { jobs } from '../assets';
 import CommentBox from '../component_CommentBox/CommentBox';
 
 export default function JobDetail(props) {
-  const job = jobs[0];
+  const job = props.job;
   const handleApply = () => {
     console.log('apply');
     props.handleClose();
