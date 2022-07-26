@@ -3,9 +3,11 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
-
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { apiGet, apiCall } from '../API';
+import { ValidatePassword } from '../assets';
+
 import './Setting.css';
 export default function Settings() {
   const init_psw = {
@@ -24,6 +26,13 @@ export default function Settings() {
   };
   const changeHandler = (e) => {
     setPasswords({ ...passwords, [e.target.id]: e.target.value });
+  };
+  const getHelperText = (password) => {
+    if (!ValidatePassword(password)) {
+      return 'Please enter a valid password';
+    } else if (matching === false) {
+      return 'Passwords do not match';
+    }
   };
 
   React.useEffect(() => {
@@ -96,7 +105,17 @@ export default function Settings() {
         <Typography className="settingTitle" variant="h6">
           Password Settings
         </Typography>
+
         <div className="settingContainer">
+          <Grid item xs={12}>
+            <Typography variant="h8">Your password should:</Typography>
+            <ul>
+              <li> contain 6 to 20 characters</li>
+              <li> and contain at least one numeric digit</li>
+              <li> and contain at least one uppercase</li>
+              <li>and contain at least one lowercase letter</li>
+            </ul>
+          </Grid>
           <div className="settingItem">
             <label id="old_password_lable" htmlFor="old_password">
               Current Password
@@ -123,12 +142,13 @@ export default function Settings() {
               New Password
             </label>
             <TextField
-              error={matching === false ? true : false}
+              error={matching === false || !ValidatePassword(passwords.new_password) ? true : false}
               aria-label="New Password"
               id="new_password"
               type="password"
               onChange={(e) => changeHandler(e)}
               value={passwords.new_password}
+              helperText={getHelperText(passwords.new_password)}
             />
           </div>
           <div className="settingItem">
@@ -136,7 +156,7 @@ export default function Settings() {
               Confirm Password
             </label>
             <TextField
-              error={matching === false ? true : false}
+              error={matching === false || !ValidatePassword(passwords.new_password_confirm) ? true : false}
               aria-label="Confirme Password"
               id="new_password_confirm"
               type="password"
@@ -146,7 +166,11 @@ export default function Settings() {
             />
           </div>
 
-          <Button variant="outlined" onClick={resetPassword}>
+          <Button
+            disabled={matching && ValidatePassword(passwords.new_password) && !empty ? false : true}
+            variant="outlined"
+            onClick={resetPassword}
+          >
             Reset Password
           </Button>
         </div>
