@@ -16,7 +16,7 @@ export const fields = [
   { id: 6, label: ' Engineering' },
 ];
 
-export const jobs = [
+export const dummyJobs = [
   {
     jobID: 1,
     title: 'Web Developer',

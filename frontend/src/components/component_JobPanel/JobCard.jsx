@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import { apiGet } from '../API';
 
 import './JobCard.css';
 
@@ -26,7 +27,22 @@ export default function JobCard(props) {
   const handleSave = (e) => {
     // TODO Save the job
     e.stopPropagation();
+    const jobId = e.currentTarget.parentNode.parentNode.id;
     setSave(!save);
+    if (!save) {
+      // haven't saved it yet
+      apiGet('/internship/save', { token: sessionStorage.getItem('token'), internship: jobId })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => alert(e));
+    } else {
+      apiGet('/internship/unsave', { token: sessionStorage.getItem('token'), internship: jobId })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((e) => alert(e));
+    }
   };
 
   // const viewMore = (e) => {
@@ -38,7 +54,7 @@ export default function JobCard(props) {
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Card id={props.jobID} variant="outlined" className="job-card" onClick={props.hanldeClickOpen}>
+    <Card id={props.jobID} className="job-card" variant="outlined" onClick={props.hanldeClickOpen}>
       <CardContent>
         <Typography variant="h5" component="div">
           {props.title}
@@ -55,9 +71,9 @@ export default function JobCard(props) {
         <Button size="small" onClick={handleApply}>
           Apply
         </Button>
-        <div>
-          {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" onClick={handleSave} />}
-          {save && <BookmarkAddedIcon className="BookmarkIcon" onClick={handleSave} />}
+        <div onClick={handleSave}>
+          {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" />}
+          {save && <BookmarkAddedIcon className="BookmarkIcon" />}
         </div>
       </CardActions>
     </Card>

@@ -57,7 +57,7 @@ export default function SignUp() {
   };
 
   const [accType, setType] = React.useState('');
-  const [signupInfo, setSignupInfo] = React.useState({ username: '', email: '', passwords: '' });
+  const [signupInfo, setSignupInfo] = React.useState({ username: '', email: '', password: '' });
   const [profileInfo, setProfileInfo] = React.useState({ name: '', school: '', major: '' });
 
   const handleNext = (e) => {
@@ -118,12 +118,13 @@ export default function SignUp() {
                   Congrats! You've just created your account.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Now click{' '}
+                  You can click{' '}
                   <span style={{ color: 'blue', textDecoration: 'underline' }} onClick={navSignIn}>
                     here
                   </span>{' '}
                   to login.
                 </Typography>
+                <Typography variant="subtitle1"></Typography>
               </React.Fragment>
             ) : (
               <React.Fragment>

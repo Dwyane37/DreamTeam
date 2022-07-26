@@ -3,6 +3,7 @@ import NavBar from '../components/component_NavBar/NavBar';
 import Button from '@mui/material/Button';
 import MyJobPanel from '../components/component_MyJob/MyJobPanel';
 import { useNavigate } from 'react-router-dom';
+import { dummyJobs } from '../components/assets';
 
 import './Dashboard.css';
 
@@ -31,7 +32,7 @@ export default function DashboardPage({ socket }) {
           <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>
             Add a Job Post
           </Button>
-          <MyJobPanel />
+          <MyJobPanel jobs={dummyJobs} />
         </div>
       </div>
     )

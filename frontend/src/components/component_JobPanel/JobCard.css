@@ -1,4 +1,4 @@
-.job-card{
+.job-card {
   width: 100%;
 }
 
@@ -20,11 +20,12 @@
 .job-card {
   height: 220px;
   width: 100%;
-  /* margin: 1rem; */
+  margin: 1rem;
+  box-shadow: 2px 3px #a8a8a8;
 }
 
 .job-card:hover {
-  border: 1px solid lightcoral;
+  /* border: 1px solid lightcoral; */
   transform: scale(1.01, 1.01);
   transition: 0.1s;
   cursor: pointer;
