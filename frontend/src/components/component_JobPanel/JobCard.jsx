@@ -6,6 +6,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Paper } from '@mui/material';
+
 import { apiGet } from '../API';
 
 import './JobCard.css';
@@ -58,8 +61,6 @@ export default function JobCard(props) {
             </Button>
           </CardActions>
         );
-      case 'simple':
-        return;
     }
   }
 
@@ -95,10 +96,20 @@ export default function JobCard(props) {
     setSave(!save);
   };
 
+  const handleEdit = (e) => {
+    console.log('edit');
+    navigate('/editjob');
+  };
+
+  const handleDelete = (e) => {
+    console.log('delete');
+  };
+
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Card id={props.jobID} className="job-card" variant="outlined" onClick={props.hanldeClickOpen}>
+    <Paper id={props.jobID} onClick={props.hanldeClickOpen} className="job-card">
+      {/* <Card id={props.jobID} className="job-card" variant="outlined" onClick={props.hanldeClickOpen}> */}
       <CardContent>
         <Typography variant="h5" component="div">
           {props.title}
@@ -112,6 +123,7 @@ export default function JobCard(props) {
         </Typography>
       </CardContent>
       {getCardAction(props.type)}
-    </Card>
+      {/* </Card> */}
+    </Paper>
   );
 }

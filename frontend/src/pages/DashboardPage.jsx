@@ -2,6 +2,7 @@ import React from 'react';
 import NavBar from '../components/component_NavBar/NavBar';
 import Button from '@mui/material/Button';
 import MyJobPanel from '../components/component_MyJob/MyJobPanel';
+import JobPanel from '../components/component_JobPanel/JobPanel';
 import { useNavigate } from 'react-router-dom';
 import { dummyJobs } from '../components/assets';
 
@@ -23,6 +24,7 @@ export default function DashboardPage({ socket }) {
     }
     socket?.emit('newUser', sessionStorage.getItem('id'));
   }, [logedIn]);
+
   return (
     logedIn && (
       <div>
@@ -32,7 +34,8 @@ export default function DashboardPage({ socket }) {
           <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>
             Add a Job Post
           </Button>
-          <MyJobPanel jobs={dummyJobs} />
+
+          <JobPanel jobs={dummyJobs} type="myJob" />
         </div>
       </div>
     )

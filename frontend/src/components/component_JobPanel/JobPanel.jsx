@@ -39,15 +39,22 @@ export default function JobPanel(props) {
   return (
     <>
       <div className="job-panel">
-        <Grid container>
+        <Grid container spacing={{ md: 3 }}>
           {handleData.currentData().map((job, idx) => (
-            <Grid item xs={props.type === 'saved' ? 6 : 10} sm={props.type === 'saved' ? 3 : 8} key={idx}>
+            <Grid
+              item
+              xs={props.type === 'saved' ? 6 : 10}
+              sm={props.type === 'saved' ? 6 : 8}
+              md={props.type === 'saved' ? 6 : 8}
+              lg={props.type === 'saved' ? 4 : 8}
+              key={idx}
+            >
               <JobCard
                 type={props.type}
                 jobID={job.id}
                 key={idx}
                 title={job.title}
-                company="company"
+                company={job.company}
                 location={{ country: job.location, state: job.state, city: job.city }}
                 briefing={job.description}
                 hanldeClickOpen={handleClickOpen}
@@ -61,7 +68,7 @@ export default function JobPanel(props) {
           <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
         </Box>
       </div>
-      <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="md">
+      <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
         <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
       </Dialog>
     </>
