@@ -98,3 +98,10 @@ export function ValidatePassword(inputtxt) {
     return true;
   }
 }
+
+export const faqSample = [
+  { summary: 'FAQ question 1', detail: 'FAQ answer with lost of details' },
+  { summary: 'FAQ question 2', detail: 'FAQ answer with lost of details' },
+  { summary: 'FAQ question 3', detail: 'FAQ answer with lost of details' },
+  { summary: 'FAQ question 4', detail: 'FAQ answer with lost of details' },
+];

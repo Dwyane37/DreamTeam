@@ -1,9 +1,10 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import './JobDetail.css';
-import { Button } from '@mui/material';
+import { Button, Divider, Grid, Paper } from '@mui/material';
 import CommentBox from '../component_CommentBox/CommentBox';
-import { citizenship } from '../assets';
+import { citizenship, faqSample } from '../assets';
+import FAQ from './FAQ';
 
 export default function JobDetail(props) {
   const job = props.job;
@@ -13,7 +14,7 @@ export default function JobDetail(props) {
   };
   return (
     <div className="dialog-page">
-      <div className="card-jobDetail">
+      <Paper style={{ padding: '40px 20px', display: 'flex', flexDirection: 'column' }}>
         <Typography component="h3" variant="h5" align="center">
           {job.title}
         </Typography>
@@ -70,7 +71,7 @@ export default function JobDetail(props) {
         </div>
         <div className="job-detail-element">
           <Typography variant="subtitle1" color="text.secondary">
-            Details
+            Job Description
           </Typography>
           <Typography variant="body1">{job.description}</Typography>
         </div>
@@ -79,14 +80,14 @@ export default function JobDetail(props) {
             Apply
           </Button>
         </div>
-      </div>
-      <div className="comment-container">
-        {/* <Typography variant="subtitle1" color="black">
-          Comments
-        </Typography>
-        <div className="comment-panel"></div> */}
-        <CommentBox />
-      </div>
+      </Paper>
+
+      <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
+      <FAQ data={faqSample} />
+      <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
+      {/* <div className="comment-container"> */}
+      {/* <CommentBox /> */}
+      {/* </div> */}
     </div>
   );
 }
