@@ -2,6 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { Paper } from '@mui/material';
 
 import './SimpleJobCard.css';
 
@@ -9,7 +10,7 @@ export default function SimpleJobCard(props) {
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Card id={props.jobID} variant="outlined" className="simple-job-card" onClick={props.hanldeClickOpen}>
+    <Paper id={props.jobID} onClick={props.hanldeClickOpen}>
       <CardContent>
         <Typography variant="h8" component="div">
           {props.title}
@@ -19,6 +20,6 @@ export default function SimpleJobCard(props) {
           {location}
         </Typography>
       </CardContent>
-    </Card>
+    </Paper>
   );
 }

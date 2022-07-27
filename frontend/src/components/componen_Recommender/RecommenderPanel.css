@@ -2,11 +2,7 @@
   margin-bottom: 3rem;
   /* border: 1px solid #274c77; */
   padding: 1rem;
-  border-radius: 5px;
-  border-radius: 25px;
-  background: '#e2e0e0';
-  /* box-shadow: 2px 3px #a8a8a8; */
-  box-shadow: 2px -3px 10px #c0bebe, -2px 3px 10px #c0bebe;
+  /* border: 1px solid red; */
 }
 .recommender-refresh {
   display: flex;
@@ -18,4 +14,8 @@
 
 .recommender-refresh:hover {
   color: #274c77;
+}
+
+.helperText {
+  font-size: small;
 }

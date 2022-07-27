@@ -1,12 +1,11 @@
 import React from 'react';
 
 import NavBar from '../components/component_NavBar/NavBar';
-import Box from '@mui/material/Box';
+import { Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import JobPanel from '../components/component_JobPanel/JobPanel';
 import RecommenderPanel from '../components/componen_Recommender/RecommenderPanel';
 import PopularJobPanel from '../components/component_PopularJobs/PopularJobPanel';
-import { dummyJobs } from '../components/assets';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 

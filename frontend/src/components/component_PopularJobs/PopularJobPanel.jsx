@@ -1,13 +1,13 @@
 import * as React from 'react';
-import SimpleJobCard from '../component_SimpleJobCard/SimpleJobCard';
 
-import { Dialog } from '@mui/material';
+import { Dialog, Paper } from '@mui/material';
 import JobDetail from '../compopnent_JobDetail/JobDetail';
+import SidePanelList from '../SidePanel';
 import './PopularJobPanel.css';
 
 function getJobDetail(jobs, id) {
-  const job = jobs.filter((job) => job.id == id);
-  return job[0];
+  const job = jobs.find((job) => job.id == id);
+  return job;
 }
 
 export default function PopularJobPanel(props) {
@@ -24,20 +24,13 @@ export default function PopularJobPanel(props) {
   };
   return (
     <>
-      <div className="popular-panel">
+      <Paper className="popular-panel">
+        {/* <div className="popular-panel"> */}
         <div>Trending Search</div>
-        {props.jobs.map((job, idx) => (
-          <SimpleJobCard
-            key={idx}
-            jobID={job.id}
-            title={job.title}
-            company={job.company || 'company'}
-            location={{ country: job.location, state: job.state, city: job.city }}
-            hanldeClickOpen={handleClickOpen}
-          />
-        ))}
-      </div>
-      <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="md">
+        <SidePanelList jobs={props.jobs} handleClickOpen={handleClickOpen} />
+        {/* </div> */}
+      </Paper>
+      <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
         <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
       </Dialog>
     </>

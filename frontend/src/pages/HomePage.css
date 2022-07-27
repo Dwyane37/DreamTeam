@@ -20,6 +20,10 @@
 .home-side-panel {
   display: flex;
   flex-direction: column;
+  width: 25vw;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 100vh;
 }
 
 .home-sort-button {
