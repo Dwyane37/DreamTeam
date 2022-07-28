@@ -1,6 +1,7 @@
 .home-content-container {
   display: flex;
   justify-content: space-around;
+  align-self: center;
   padding-top: 5rem;
 }
 .home-main-panel {
@@ -9,10 +10,8 @@
   width: 50vw;
   max-width: 1200px;
   max-height: 100vh;
-  overflow: scroll;
-
+  /* overflow: scroll; */
   background: '#e2e0e0';
-  border-right: 1px solid lightblue;
   /* box-shadow: 2px 3px #a8a8a8; */
   /* box-shadow: 2px -3px 10px #c0bebe, -2px 3px 10px #c0bebe; */
 }
