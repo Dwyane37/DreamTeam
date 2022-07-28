@@ -37,10 +37,17 @@ const FollowPage = ({ socket }) => {
   const id = sessionStorage.getItem('id');
 
   useEffect(() => {
+<<<<<<< HEAD
     apiGet('user/following', { userId: '2169683494' }).then((res) => {
       console.log(res.data);
       setFollowList(res.data.data);
     });
+=======
+    apiGet('user/following', { userId: id }).then((res) => {
+      console.log(res);
+      setFollowList(res.errormessage)
+    })
+>>>>>>> WuHanqiu-patch-1
   }, []);
 
   const toProfile = (followId) => {
@@ -64,11 +71,12 @@ const FollowPage = ({ socket }) => {
   };
 
   return (
-    <div className="follow">
+    <div className='follow'>
       <NavBar type={sessionStorage.getItem('type')} />
-      <div className="follow_list">
+      <div className='follow_list'>
         {followList.length > 0 ? (
           followList.map((item, index) => (
+<<<<<<< HEAD
             <div className="follow_item" key={item.id} onClick={() => toProfile(item.id)}>
               <div className="left">
                 <img alt="" className="avatar" src={item.avatar}></img>
@@ -79,15 +87,38 @@ const FollowPage = ({ socket }) => {
               </div>
               <div className="right">
                 <Button onClick={(e) => handleUnfollow(e, item.id, index)}>unfollow</Button>
+=======
+            <div className='follow_item' key={item.id}>
+              <div className='left'>
+                <img
+                  alt=''
+                  className='avatar'
+                  src={item.avatar}
+                  onClick={() => toProfile(item.id)}
+                ></img>
+                <div className='info'>
+                  <div className='nickname'>{item.username}</div>
+                  <div className='company'>{item.company}</div>
+                </div>
+              </div>
+              <div className='right'>
+                <Button onClick={() => handleUnfollow(item.id, index)}>
+                  unfollow
+                </Button>
+>>>>>>> WuHanqiu-patch-1
               </div>
             </div>
           ))
         ) : (
+<<<<<<< HEAD
           <div className="empty">You haven't followed any employers yet</div>
+=======
+          <div className='empty'>No Data</div>
+>>>>>>> WuHanqiu-patch-1
         )}
       </div>
     </div>
-  );
+  )
 };
 
 export default FollowPage;

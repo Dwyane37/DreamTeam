@@ -17,6 +17,7 @@ import SignUpForm from '../components/component_Register/SignUpForm';
 import ProfileInfo from '../components/component_Register/UserInfoForm';
 import SelectAccount from '../components/component_Register/SelectAccount';
 import { useNavigate } from 'react-router-dom';
+import { apiPost } from '../components/API';
 
 // function Copyright() {
 //   return (
