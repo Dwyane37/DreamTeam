@@ -22,13 +22,13 @@ export default function SidePanelList({ jobs, handleClickOpen }) {
         bgcolor: 'background.paper',
       }}
     >
-      {jobs.slice(0, 5).map((job, idx) => (
-        <>
+      {jobs.map((job, idx) => (
+        <div key={idx}>
           <ListItem button id={job.id} onClick={handleClickOpen}>
             <ListItemText primary={job.title} secondary={job.company} />
           </ListItem>
           <Divider />
-        </>
+        </div>
       ))}
     </List>
   );
