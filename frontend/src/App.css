@@ -48,3 +48,7 @@
 .PostForm {
   display: flex;
 }
+
+body {
+  background-color: #d2e8f6 !important;
+}

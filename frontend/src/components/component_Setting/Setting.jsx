@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { Typography, Divider } from '@mui/material';
 import { apiGet, apiCall } from '../API';
 import { ValidatePassword } from '../assets';
 
@@ -88,7 +88,14 @@ export default function Settings() {
           </div>
           <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
-            <TextField id="accountMobile" variant="outlined" value={accountInfo.mobile || ''} />
+            <TextField
+              id="accountMobile"
+              variant="outlined"
+              value={accountInfo.mobile || ''}
+              onChange={(e) => {
+                setAccountInfo({ ...accountInfo, mobile: e.target.value });
+              }}
+            />
           </div>
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
@@ -99,8 +106,12 @@ export default function Settings() {
               readOnly={true}
             />
           </div>
+          <Button variant="contained">Save</Button>
         </div>
       </Box>
+
+      <Divider sx={{ backgroundColor: '#6b8baf' }} variant="middle" />
+
       <Box className="settingSection">
         <Typography className="settingTitle" variant="h6">
           Password Settings
@@ -168,7 +179,7 @@ export default function Settings() {
 
           <Button
             disabled={matching && ValidatePassword(passwords.new_password) && !empty ? false : true}
-            variant="outlined"
+            variant="contained"
             onClick={resetPassword}
           >
             Reset Password
