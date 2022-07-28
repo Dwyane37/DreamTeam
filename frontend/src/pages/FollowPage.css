@@ -2,7 +2,7 @@
   width: 800px;
   margin: 0 auto;
   padding: 10px 15px;
-  margin-top: 20px;
+  margin-top: 5rem;
   border: 1px solid #ddd;
 }
 
@@ -13,9 +13,14 @@
 
   width: 100%;
   border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+  padding: 10px;
+  background-color: aliceblue;
+  border-radius: 5px;
 }
-
+.follow_list .follow_item:hover {
+  transform: scale(1.01, 1.02);
+  transition: linear 0.2s;
+}
 .follow_list .follow_item:last-child {
   border-bottom: none;
 }
