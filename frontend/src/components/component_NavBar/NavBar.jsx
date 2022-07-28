@@ -226,11 +226,6 @@ export default function NavBar(props) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
             <IconButton
               size="large"
               edge="start"

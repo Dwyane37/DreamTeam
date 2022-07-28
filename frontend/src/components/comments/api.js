@@ -1,4 +1,4 @@
-import { apiGet } from '../API';
+import { apiGet, apiPost } from '../API';
 const imgLink =
   'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
 
@@ -41,6 +41,10 @@ export const getComments = async () => {
 };
 
 export const createComment = async (text, internshipId, parentId = null) => {
+  apiPost('review/review', { token: sessionStorage.getItem('token'), review: text, internship: internshipId })
+    .then((d) => console.log(d.data))
+    .catch((e) => alert(e));
+
   return {
     id: Math.random().toString(36).substr(2, 9),
     body: text,
@@ -55,6 +59,9 @@ export const updateComment = async (text) => {
   return { text };
 };
 
-export const deleteComment = async () => {
+export const deleteComment = async (commentId) => {
+  apiGet('review/deletereview', { id: commentId })
+    .then((d) => console.log(d.data))
+    .catch((e) => alert(e));
   return {};
 };

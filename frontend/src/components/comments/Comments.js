@@ -41,7 +41,7 @@ const Comments = ({ internshipId, currentUserId }) => {
   };
   const deleteComment = (commentId) => {
     if (window.confirm('Are you sure you want to remove comment?')) {
-      deleteCommentApi().then(() => {
+      deleteCommentApi(commentId).then(() => {
         const updatedBackendComments = backendComments.filter((backendComment) => backendComment.id !== commentId);
         setBackendComments(updatedBackendComments);
       });
