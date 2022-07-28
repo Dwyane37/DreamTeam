@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Paper } from '@mui/material';
+import { Paper, Divider } from '@mui/material';
 
 import CommentForm from './CommentForm';
 import Comment from './Comment';
@@ -56,7 +56,10 @@ const Comments = ({ commentsUrl, currentUserId }) => {
 
   return (
     <Paper className="comments">
-      <h3 className="comments-title">Comments</h3>
+      <h3 className="comments-title">
+        {rootComments.length} {rootComments.length === 1 ? 'Comment' : 'Comments'}
+      </h3>
+      <Divider sx={{ margin: '20px 0' }} />
       <CommentForm submitLabel="Post" handleSubmit={addComment} />
       <div className="comments-container">
         {rootComments.map((rootComment) => (

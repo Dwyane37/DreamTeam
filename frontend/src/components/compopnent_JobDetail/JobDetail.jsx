@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import './JobDetail.css';
 import { Button, Divider, Grid, Paper } from '@mui/material';
-import CommentBox from '../component_CommentBox/CommentBox';
+import Comments from '../comments/Comments';
 import { citizenship, faqSample } from '../assets';
 import FAQ from './FAQ';
 
@@ -75,19 +75,23 @@ export default function JobDetail(props) {
           </Typography>
           <Typography variant="body1">{job.description}</Typography>
         </div>
-        <div className="apply-button">
-          <Button variant="contained" color="success" onClick={handleApply}>
-            Apply
-          </Button>
-        </div>
+        {sessionStorage.getItem('type') === '0' && (
+          <div className="buttons">
+            <Button variant="contained" color="success" onClick={handleApply}>
+              Apply
+            </Button>
+
+            <Button variant="contained" color="info" onClick={handleApply}>
+              Save
+            </Button>
+          </div>
+        )}
       </Paper>
 
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
       <FAQ data={faqSample} />
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
-      {/* <div className="comment-container"> */}
-      {/* <CommentBox /> */}
-      {/* </div> */}
+      <Comments commentsUrl="" currentUserId="1" />
     </div>
   );
 }
