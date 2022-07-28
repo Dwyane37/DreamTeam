@@ -91,7 +91,7 @@ export default function JobDetail(props) {
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
       <FAQ data={faqSample} />
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
-      <Comments commentsUrl="" currentUserId="1" />
+      <Comments internshipId={props.job.id} currentUserId="1" />
     </div>
   );
 }

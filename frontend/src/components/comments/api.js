@@ -1,3 +1,4 @@
+import { apiGet } from '../API';
 const imgLink =
   'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
 
@@ -39,7 +40,7 @@ export const getComments = async () => {
   ];
 };
 
-export const createComment = async (text, parentId = null) => {
+export const createComment = async (text, internshipId, parentId = null) => {
   return {
     id: Math.random().toString(36).substr(2, 9),
     body: text,
