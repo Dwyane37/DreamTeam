@@ -39,25 +39,26 @@ const FollowPage = ({ socket }) => {
   useEffect(() => {
     apiGet('user/following', { userId: '2169683494' }).then((res) => {
       console.log(res.data);
-      setFollowList(res.data.data)
-    })
+      setFollowList(res.data.data);
+    });
   }, []);
 
   const toProfile = (followId) => {
     navigate(`/profile/${followId}`, {
       replace: false,
-      state: { followId},
+      state: { followId },
     });
   };
 
-  const handleUnfollow = (followingId, index) => {
+  const handleUnfollow = (e, followingId, index) => {
+    e.stopPropagation();
     const result = apiGet('/user/dislike', {
       followingId,
       followerId: id,
     });
-    if (!result.code) {
-      alert('success');
-    }
+    // if (!result.code) {
+    //   // alert('success');
+    // }
     followList.splice(index, 1);
     setFollowList([...followList]);
   };
@@ -68,21 +69,21 @@ const FollowPage = ({ socket }) => {
       <div className="follow_list">
         {followList.length > 0 ? (
           followList.map((item, index) => (
-            <div className="follow_item" key={item.id}>
+            <div className="follow_item" key={item.id} onClick={() => toProfile(item.id)}>
               <div className="left">
-                <img alt="" className="avatar" src={item.avatar} onClick={() => toProfile(item.id)}></img>
+                <img alt="" className="avatar" src={item.avatar}></img>
                 <div className="info">
                   <div className="nickname">{item.nickname}</div>
                   <div className="company">{item.company}</div>
                 </div>
               </div>
               <div className="right">
-                <Button onClick={() => handleUnfollow(item.id, index)}>unfollow</Button>
+                <Button onClick={(e) => handleUnfollow(e, item.id, index)}>unfollow</Button>
               </div>
             </div>
           ))
         ) : (
-          <div className="empty">No Data</div>
+          <div className="empty">You haven't followed any employers yet</div>
         )}
       </div>
     </div>

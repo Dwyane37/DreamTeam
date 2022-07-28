@@ -1,6 +1,6 @@
 .job-panel {
   border-radius: 5px;
-  width: 100%;
+  width: 90%;
   max-width: 1400px;
   min-width: 275px;
   /* height: 100vw; */
@@ -9,8 +9,13 @@
   align-items: center;
 }
 
+.job-card {
+  justify-content: center;
+}
+
 .pagination {
   display: flex;
   justify-content: flex-end;
+  /* align-self: flex-start; */
   margin-top: 20px;
 }

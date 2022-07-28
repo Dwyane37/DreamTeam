@@ -7,7 +7,6 @@ export default function SettingsPage({ socket }) {
   return (
     <>
       <NavBar type={sessionStorage.getItem('type')} socket={socket} />
-      <Typography variant="h5">Settings</Typography>
       <Settings />
     </>
   );

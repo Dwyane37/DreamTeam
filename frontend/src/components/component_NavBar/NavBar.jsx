@@ -12,16 +12,21 @@ import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import Logout from '../Logout';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Logout from './Logout';
 import Filter from '../component_Filter/Filter';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Button, Divider } from '@mui/material';
 import { apiGet } from '../API';
 
 // #########################
 export default function NavBar(props) {
   const type = props.type;
   const navigate = useNavigate();
+  const location = useLocation();
   const [keyword, setKeyword] = React.useState('');
   const setJobFunc = props.handleJobFetch;
 
@@ -84,15 +89,28 @@ export default function NavBar(props) {
       //   horizontal: 'right',
       // }}
     >
-      <MenuItem onClick={navigateProfile}>Profile</MenuItem>
+      <MenuItem onClick={navigateProfile}>
+        <AccountBoxIcon /> Profile
+      </MenuItem>
       {type === '0' ? (
         <div>
-          <MenuItem onClick={navigateFollowedEmployers}>Followed Employers</MenuItem>
-          <MenuItem onClick={navigateSavings}>Saved Jobs</MenuItem>
+          <MenuItem onClick={navigateFollowedEmployers}>
+            <VisibilityIcon />
+            Followed Employers
+          </MenuItem>
+          <MenuItem onClick={navigateSavings}>
+            <FavoriteIcon />
+            Saved Jobs
+          </MenuItem>
         </div>
       ) : null}
 
-      <MenuItem onClick={navigateSettings}>Settings</MenuItem>
+      <MenuItem onClick={navigateSettings}>
+        {' '}
+        <SettingsIcon />
+        Settings
+      </MenuItem>
+      <Divider />
       <Logout socket={props.socket} />
     </Menu>
   );
@@ -160,11 +178,13 @@ export default function NavBar(props) {
         state: filter.state?.name || '',
         city: filter.city?.name || '',
         field: filter.field?.label || '',
-        right: right || '0',
+        right: right || '',
       };
       console.log(attr);
       apiGet('internship/search', attr)
-        .then((data) => setJobFunc(data))
+        .then((data) => {
+          setJobFunc(data.data);
+        })
         .catch((e) => alert(e));
       clear();
     }
@@ -179,12 +199,12 @@ export default function NavBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#6096ba' }}>
         <Toolbar>
-          <div style={{ border: '1px solid white', padding: '0.7rem 0.5rem', borderRadius: '10%' }}>
+          <div>
             <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
               I-Student
             </Typography>
           </div>
-          {type === '0' ? (
+          {type === '0' && location.pathname === '/home' ? (
             <>
               <Search>
                 <SearchIconWrapper>
