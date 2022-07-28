@@ -205,7 +205,7 @@ function ResumePage({ socket }) {
   }
 
   const saveUserInfo = () => {
-    console.log(userInfo);
+    console.log(userInfo)
     const temp = { ...resumeData }
     temp.userInfo = userInfo
     setResumeData({ ...temp })
@@ -250,9 +250,14 @@ function ResumePage({ socket }) {
         reader.readAsDataURL(file)
         reader.onload = function (e) {
           let data = e.target.result
-          let temp = { ...resumeData }
-          temp.userInfo.thumbnail = data
-          setResumeData({ ...temp })
+          apiPost('/api/upload_image', {
+            user_id: id,
+            image_base64: data
+          }).then((res) => {
+            let temp = { ...resumeData }
+            temp.userInfo.thumbnail = res.data
+            setResumeData({ ...temp })
+          })
         }
       }
     }

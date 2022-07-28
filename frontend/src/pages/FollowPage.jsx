@@ -37,9 +37,9 @@ const FollowPage = ({ socket }) => {
   const id = sessionStorage.getItem('id');
 
   useEffect(() => {
-    apiGet('user/following', { userId: '2169683494' }).then((res) => {
-      console.log(res.data);
-      setFollowList(res.data.data)
+    apiGet('user/following', { userId: id }).then((res) => {
+      console.log(res);
+      setFollowList(res.errormessage)
     })
   }, []);
 
@@ -63,30 +63,37 @@ const FollowPage = ({ socket }) => {
   };
 
   return (
-    <div className="follow">
+    <div className='follow'>
       <NavBar type={sessionStorage.getItem('type')} />
-      <div className="follow_list">
+      <div className='follow_list'>
         {followList.length > 0 ? (
           followList.map((item, index) => (
-            <div className="follow_item" key={item.id}>
-              <div className="left">
-                <img alt="" className="avatar" src={item.avatar} onClick={() => toProfile(item.id)}></img>
-                <div className="info">
-                  <div className="nickname">{item.nickname}</div>
-                  <div className="company">{item.company}</div>
+            <div className='follow_item' key={item.id}>
+              <div className='left'>
+                <img
+                  alt=''
+                  className='avatar'
+                  src={item.avatar}
+                  onClick={() => toProfile(item.id)}
+                ></img>
+                <div className='info'>
+                  <div className='nickname'>{item.username}</div>
+                  <div className='company'>{item.company}</div>
                 </div>
               </div>
-              <div className="right">
-                <Button onClick={() => handleUnfollow(item.id, index)}>unfollow</Button>
+              <div className='right'>
+                <Button onClick={() => handleUnfollow(item.id, index)}>
+                  unfollow
+                </Button>
               </div>
             </div>
           ))
         ) : (
-          <div className="empty">No Data</div>
+          <div className='empty'>No Data</div>
         )}
       </div>
     </div>
-  );
+  )
 };
 
 export default FollowPage;
