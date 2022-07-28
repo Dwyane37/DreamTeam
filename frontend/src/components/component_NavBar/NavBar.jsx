@@ -21,6 +21,7 @@ import Filter from '../component_Filter/Filter';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Button, Divider } from '@mui/material';
 import { apiGet } from '../API';
+import SideDrawer from './Drawer';
 
 // #########################
 export default function NavBar(props) {
@@ -53,16 +54,6 @@ export default function NavBar(props) {
     navigate('/settings');
   };
 
-  const navigateFollowedEmployers = () => {
-    setanchorEl(null);
-    navigate('/follow');
-  };
-
-  const navigateSavings = () => {
-    setanchorEl(null);
-    navigate('/saved-jobs');
-  };
-
   // Menu
   const [anchorEl, setanchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -92,18 +83,6 @@ export default function NavBar(props) {
       <MenuItem onClick={navigateProfile}>
         <AccountBoxIcon /> Profile
       </MenuItem>
-      {type === '0' ? (
-        <div>
-          <MenuItem onClick={navigateFollowedEmployers}>
-            <VisibilityIcon />
-            Followed Employers
-          </MenuItem>
-          <MenuItem onClick={navigateSavings}>
-            <FavoriteIcon />
-            Saved Jobs
-          </MenuItem>
-        </div>
-      ) : null}
 
       <MenuItem onClick={navigateSettings}>
         {' '}
@@ -199,6 +178,7 @@ export default function NavBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#6096ba' }}>
         <Toolbar>
+          <SideDrawer />
           <div>
             <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
               I-Student
