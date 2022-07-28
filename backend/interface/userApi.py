@@ -20,7 +20,7 @@ login_manager = LoginManager()
 login_users = []
 token_key = "dreamTeam"
 
-@user_opt.route("/register",methods=['POST'], endpoint="register")
+@user_opt.route("/register",methods=['POST'])
 def register():
     data = json.loads(request.data)
     username = data['username']
@@ -32,11 +32,12 @@ def register():
     else:
         type = 1
     message = checkRegistered(username, email)
+
     if message.errortype == 1:
         return json.dumps(message, default=lambda obj: obj.__dict__)
     user = User(username=username, password=password, email=email,type=type)
     mesvalue = registerNewAccount(user)
-    start_date = time.time() + 3600
+    start_date = time.time() + 360000
     id = mesvalue.errormessage
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
@@ -63,7 +64,7 @@ def login():
         login_users.append(username)
 
     id = getUserId(username)
-    start_date = time.time() + 3600
+    start_date = time.time() + 360000
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
     data = {}
@@ -92,7 +93,7 @@ def changepassword():
         return json.dumps(message, default=lambda obj: obj.__dict__)
 
     message = changepasswd(id, new_password)
-    start_date = time.time() + 3600
+    start_date = time.time() + 360000
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
     data = {}
