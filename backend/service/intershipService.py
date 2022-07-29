@@ -171,7 +171,7 @@ def getRecommJobs(resume):
         list.append(temp.lower())
     descrip = field + " " + aim + " " + intro + " "
     descrip = descrip.lower()
-    recomm_index = get_recomm(descrip,list,5)
+    recomm_index = get_recomm(descrip,list,10)
     return_lst = [res[i-1] for i in recomm_index]
     return return_lst
 
@@ -192,7 +192,7 @@ def get_recomm(descrip,soup,num):
 def getCurrentJobs():
     try:
         res = Internship.query.order_by(desc(Internship.update_time)).all()
-        res = res[:10]
+        res = res[:5]
         return res
 
     except Exception as e:
@@ -201,7 +201,7 @@ def getCurrentJobs():
 def getHotJobs():
     try:
         res = Internship.query.order_by(Internship.view)
-        res = res[:10]
+        res = res[:5]
         return res
 
     except Exception as e:

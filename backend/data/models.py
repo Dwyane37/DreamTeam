@@ -26,9 +26,9 @@ class User(db.Model):
 
 class Internship(db.Model):
     __tablename__ = 'db_internships'
-    id = Column(String(1000), primary_key=True)
+    id = Column(String(255), primary_key=True)
     title = Column(String(255))
-    user_id = Column(String(1000))
+    user_id = Column(String(255))
     content = Column(String(1000))
     type = Column(String(128))
     create_time = Column(TIMESTAMP)
@@ -158,9 +158,9 @@ class Follow(db.Model):
 
 class Review(db.Model):
     __tablename__ = 'db_review'
-    id = Column(String(1000), primary_key=True)
-    user_id = Column(String(1000), ForeignKey(User.id))
-    internship_id = Column(String(1000), ForeignKey(Internship.id))
+    id = Column(String(255), primary_key=True)
+    user_id = Column(String(255), ForeignKey(User.id))
+    internship_id = Column(String(255), ForeignKey(Internship.id))
     content = Column(String(1000))
     deleted = Column(Integer)
     create_time = Column(TIMESTAMP)
@@ -176,9 +176,9 @@ class Review(db.Model):
 
 class Collection(db.Model):
     __tablename__ = 'db_collection'
-    id = Column(String(1000), primary_key=True )
-    user_id =Column(String(1000))
-    internship_id = Column(String(1000))
+    id = Column(String(255), primary_key=True)
+    user_id =Column(String(255))
+    internship_id = Column(String(255))
     deleted = Column(Integer)
 
     def as_dict(obj):
@@ -190,9 +190,9 @@ class Collection(db.Model):
 
 class Apply(db.Model):
     __tablename__ = 'db_apply'
-    id = Column(String(1000), primary_key=True)
-    user_id = Column(String(1000))
-    internship_id = Column(String(1000))
+    id = Column(String(255), primary_key=True)
+    user_id = Column(String(255))
+    internship_id = Column(String(255))
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
     deleted = Column(Integer)
@@ -207,8 +207,8 @@ class Apply(db.Model):
 # He
 class Meeting(db.Model):
     __tablename__ = 'db_meetings'
-    id = Column(String(1000), primary_key=True, autoincrement=True)
-    internship_id = Column(String(1000))
+    id = Column(String(255), primary_key=True)
+    internship_id = Column(String(255))
     datetime = Column(TIMESTAMP)
     link = Column(String(1000))
     deleted = Column(Integer)

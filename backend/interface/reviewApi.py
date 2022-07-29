@@ -15,7 +15,7 @@ review_opt = Blueprint('review_opt', __name__)
 @review_opt.route("/review",methods=['GET', 'POST'] )
 def review():
     data = json.loads(request.data)
-    token = data['params']['token']
+    token = data['token']
     deco = jwt.decode(token, token_key, algorithms='HS256')
     id = deco['id']
     review = data['params']['review']

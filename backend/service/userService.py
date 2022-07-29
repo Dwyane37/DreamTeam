@@ -158,7 +158,6 @@ def update_resume(user_id, resume):
         ResumeSkill.query.filter_by(user_id=user_id).delete()
         ResumeAward.query.filter_by(user_id=user_id).delete()
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
-
         # 插入新数据
         for user_info in resume["userInfo"]:
             db.session.add(ResumeUser(
@@ -169,7 +168,6 @@ def update_resume(user_id, resume):
                 thumbnail=user_info["thumbnail"],
                 user_id=user_id
             ))
-
         for education in resume["education"]:
             db.session.add(ResumeEducation(
                 university=education["university"],
@@ -224,6 +222,7 @@ def update_resume(user_id, resume):
     # update 7.24: 修改返回结果格式
         return errorMessage(200, "ok")
     except Exception as e:
+        print(e)
         return errorMessage(1, str(e))
 
 
