@@ -22,6 +22,7 @@ export default function JobPanel(props) {
   const handlePageChange = (e, p) => {
     setPage(p);
     handleData.jump(p);
+    window.scrollTo({ top: 0 });
   };
 
   const [open, setOpen] = React.useState(false);
@@ -43,13 +44,14 @@ export default function JobPanel(props) {
           {handleData.currentData().map((job, idx) => (
             <Grid
               item
-              xs={props.type === 'saved' ? 6 : 10}
-              sm={props.type === 'saved' ? 6 : 8}
-              md={props.type === 'saved' ? 6 : 8}
-              lg={props.type === 'saved' ? 4 : 8}
+              xs={props.type === 'saved' || props.type === 'myJob' ? 12 : 12}
+              sm={props.type === 'saved' || props.type === 'myJob' ? 8 : 12}
+              md={props.type === 'saved' || props.type === 'myJob' ? 6 : 12}
+              lg={props.type === 'saved' || props.type === 'myJob' ? 4 : 12}
               key={idx}
             >
               <JobCard
+                className="job-card"
                 type={props.type}
                 jobID={job.id}
                 key={idx}

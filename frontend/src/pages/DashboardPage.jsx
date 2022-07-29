@@ -34,8 +34,9 @@ export default function DashboardPage({ socket }) {
           <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>
             Add a Job Post
           </Button>
-
-          <JobPanel jobs={dummyJobs} type="myJob" />
+          <div className="jobSection">
+            <JobPanel jobs={dummyJobs} type="myJob" />
+          </div>
         </div>
       </div>
     )

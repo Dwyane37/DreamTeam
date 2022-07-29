@@ -14,8 +14,11 @@
 }
 
 .job-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   min-width: 300px;
-  margin: 1rem;
+  height: 250px;
   border-radius: 10px;
 }
 

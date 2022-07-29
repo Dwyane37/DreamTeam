@@ -53,6 +53,7 @@ export default function AddJobForm() {
     e.preventDefault();
     const right = processCitizenshipArray(filter.citizenship);
     const attr = {
+      id: sessionStorage.getItem('id'),
       title: title,
       location: filter.country?.name || '', //e.g. "Australie"
       state: filter.state?.name || '', // e.g. "New Southe Wales"

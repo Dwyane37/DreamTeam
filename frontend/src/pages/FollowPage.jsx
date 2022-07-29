@@ -37,27 +37,28 @@ const FollowPage = ({ socket }) => {
   const id = sessionStorage.getItem('id');
 
   useEffect(() => {
-    apiGet('user/following', { userId: '2169683494' }).then((res) => {
-      console.log(res.data);
-      setFollowList(res.data.data)
-    })
+    apiGet('user/following', { userId: id }).then((res) => {
+      console.log(res);
+      setFollowList(res.errormessage);
+    });
   }, []);
 
   const toProfile = (followId) => {
     navigate(`/profile/${followId}`, {
       replace: false,
-      state: { followId},
+      state: { followId },
     });
   };
 
-  const handleUnfollow = (followingId, index) => {
+  const handleUnfollow = (e, followingId, index) => {
+    e.stopPropagation();
     const result = apiGet('/user/dislike', {
       followingId,
       followerId: id,
     });
-    if (!result.code) {
-      alert('success');
-    }
+    // if (!result.code) {
+    //   // alert('success');
+    // }
     followList.splice(index, 1);
     setFollowList([...followList]);
   };
@@ -72,7 +73,7 @@ const FollowPage = ({ socket }) => {
               <div className="left">
                 <img alt="" className="avatar" src={item.avatar} onClick={() => toProfile(item.id)}></img>
                 <div className="info">
-                  <div className="nickname">{item.nickname}</div>
+                  <div className="nickname">{item.username}</div>
                   <div className="company">{item.company}</div>
                 </div>
               </div>
@@ -82,7 +83,7 @@ const FollowPage = ({ socket }) => {
             </div>
           ))
         ) : (
-          <div className="empty">No Data</div>
+          <div className="empty">You haven't followed any employers yet</div>
         )}
       </div>
     </div>

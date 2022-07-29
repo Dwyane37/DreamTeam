@@ -7,21 +7,24 @@ import Typography from '@mui/material/Typography';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
 import { Paper } from '@mui/material';
 
 import { apiGet } from '../API';
 
 import './JobCard.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function JobCard(props) {
   const [save, setSave] = React.useState(false);
+  const navigate = useNavigate();
 
   function getCardAction(type) {
     switch (type) {
       case 'home':
         return (
           <CardActions className="job-card-action">
-            <Button size="small" onClick={handleApply}>
+            <Button size="small" onClick={handleApply} variant="outlined">
               Apply
             </Button>
             <div onClick={handleSave}>
@@ -33,13 +36,24 @@ export default function JobCard(props) {
       case 'saved':
         return (
           <CardActions className="job-card-action">
-            <Button size="small" onClick={handleApply}>
+            <Button size="small" variant="outlined" color="success" endIcon={<SendIcon />} onClick={handleApply}>
               Apply
             </Button>
-            <div onClick={handleUnsave}>
-              {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" />}
-              {save && <BookmarkAddedIcon className="BookmarkIcon" />}
-            </div>
+
+            <Button
+              className="BookmarkIcon"
+              size="small"
+              // sx={{background}}
+              variant="outlined"
+              endIcon={<BookmarkAddedIcon />}
+              onClick={handleUnsave}
+            >
+              Click to Unsave
+            </Button>
+
+            {/* //   <BookmarkAddOutlinedIcon className="BookmarkIcon" /> */}
+
+            {/* {save && <BookmarkAddedIcon className="BookmarkIcon" />} */}
           </CardActions>
         );
       case 'myJob':
@@ -81,7 +95,10 @@ export default function JobCard(props) {
     const jobId = e.currentTarget.parentNode.parentNode.id;
     if (!save) {
       // haven't saved it yet
-      apiGet('/internship/save', { token: sessionStorage.getItem('token'), internship: jobId })
+      apiGet('/internship/save', {
+        token: sessionStorage.getItem('token'),
+        internship: jobId,
+      })
         .then((data) => {
           console.log(data);
         })
@@ -93,15 +110,20 @@ export default function JobCard(props) {
   const handleUnsave = (e) => {
     e.stopPropagation();
     const jobId = e.currentTarget.parentNode.parentNode.id;
+    console.log(jobId);
+
     setSave(!save);
   };
 
   const handleEdit = (e) => {
+    e.stopPropagation();
+
     console.log('edit');
     navigate('/editjob');
   };
 
   const handleDelete = (e) => {
+    e.stopPropagation();
     console.log('delete');
   };
 

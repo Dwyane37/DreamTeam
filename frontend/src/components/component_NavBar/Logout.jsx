@@ -3,9 +3,10 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import { apiCall } from '../components/API';
+import { apiCall } from '../API';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Logout({ socket }) {
   const [open, setOpen] = React.useState(false);
@@ -36,7 +37,10 @@ export default function Logout({ socket }) {
       {/* <Button variant="outlined" onClick={handleClickOpen}>
         Logout
       </Button> */}
-      <MenuItem onClick={handleClickOpen}>Logout</MenuItem>
+      <MenuItem onClick={handleClickOpen}>
+        <LogoutIcon />
+        Logout
+      </MenuItem>
       <Dialog
         open={open}
         onClose={handleClose}

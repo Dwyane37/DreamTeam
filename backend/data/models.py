@@ -4,6 +4,7 @@ from sqlalchemy.orm import class_mapper
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     __tablename__ = 'db_user'
     id = Column(String(255), primary_key=True)
@@ -21,8 +22,9 @@ class User(db.Model):
         return '<User %r>' % self.username
 
     def as_dict(obj):
-        return dict((col.name, getattr(obj, col.name)) \
+        return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
+
 
 class Internship(db.Model):
     __tablename__ = 'db_internships'
@@ -47,7 +49,7 @@ class Internship(db.Model):
         return '<Internship %r>' % self.id
 
     def as_dict(obj):
-        return dict((col.name, getattr(obj, col.name)) \
+        return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
 
@@ -156,18 +158,21 @@ class Follow(db.Model):
     following_id = Column(String(255))
     follower_id = Column(String(255))
 
+
 class Review(db.Model):
     __tablename__ = 'db_review'
     id = Column(String(255), primary_key=True)
     user_id = Column(String(255), ForeignKey(User.id))
     internship_id = Column(String(255), ForeignKey(Internship.id))
+    # user_id = Column(String(255))
+    # internship_id = Column(String(255))
     content = Column(String(1000))
     deleted = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
 
     def as_dict(obj):
-        return dict((col.name, getattr(obj, col.name)) \
+        return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
     def __repr__(self):
@@ -177,16 +182,17 @@ class Review(db.Model):
 class Collection(db.Model):
     __tablename__ = 'db_collection'
     id = Column(String(255), primary_key=True)
-    user_id =Column(String(255))
+    user_id = Column(String(255))
     internship_id = Column(String(255))
     deleted = Column(Integer)
 
     def as_dict(obj):
-        return dict((col.name, getattr(obj, col.name)) \
+        return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
     def __repr__(self):
         return '<Collection %r>' % self.id
+
 
 class Apply(db.Model):
     __tablename__ = 'db_apply'
@@ -198,13 +204,15 @@ class Apply(db.Model):
     deleted = Column(Integer)
 
     def as_dict(obj):
-        return dict((col.name, getattr(obj, col.name)) \
+        return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
     def __repr__(self):
         return '<Apply %r>' % self.id
 
 # He
+
+
 class Meeting(db.Model):
     __tablename__ = 'db_meetings'
     id = Column(String(255), primary_key=True)
@@ -212,10 +220,10 @@ class Meeting(db.Model):
     datetime = Column(TIMESTAMP)
     link = Column(String(1000))
     deleted = Column(Integer)
+
     def __repr__(self):
         return '<Meeting %r>' % self.id
 
     def as_dict(obj):
-        return dict((col.name, getattr(obj, col.name)) \
+        return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
-

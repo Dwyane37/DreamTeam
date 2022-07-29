@@ -6,8 +6,11 @@
 }
 
 .add-job-button {
-  padding: 0.8rem;
+  padding: 0.8rem !important;
   position: absolute;
-  top: 1rem;
   left: 90%;
+}
+
+.jobSection {
+  margin-top: 3rem;
 }

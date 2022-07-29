@@ -18,8 +18,8 @@ def review():
     token = data['token']
     deco = jwt.decode(token, token_key, algorithms='HS256')
     id = deco['id']
-    review = data['params']['review']
-    internship_id = data['params']['internship']
+    review = data['review']
+    internship_id = data['internship']
     # message = checkIfUserReviewed(id,movie_id)
     # if message.errortype == 1:
     #     return json.dumps(message,default=lambda obj: obj.__dict__)
