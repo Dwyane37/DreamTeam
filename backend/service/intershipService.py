@@ -7,6 +7,15 @@ from data.models import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
+DB_CONFIG = { #---根据在你电脑上的schema名字改
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "passwd": "123456",
+    # "db": "Sleep_project1",
+    "db": "intern",
+    "charset": "utf8"
+}
 def init():
     res = Internship.query.filter_by(deleted=0).order_by(desc("update_time")).all()
     for e in res:
@@ -209,10 +218,26 @@ def getHotJobs():
 
 def get_wish_list(id):
     # Movie.query.join(Wishlist).filter()
-    res = db.session.query(Internship.title, Collection.internship_id, Internship.user_id,
-                           Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
-        Collection.user_id == id,Collection.deleted==0).all()
-    return res
+    conn = pymysql.connect(
+        host=DB_CONFIG["host"],
+        port=DB_CONFIG["port"],
+        user=DB_CONFIG["user"],
+        passwd=DB_CONFIG["passwd"],
+        db=DB_CONFIG["db"],
+        charset=DB_CONFIG["charset"]
+    )
+    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+    sql = "SELECT db_internships.id, db_internships.title, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
+          "LEFT JOIN db_resume_user_info on db_internships.user_id = db_resume_user_info.user_id " \
+          "where db_collection.user_id = {} ;".format(id)
+    # res = db.session.query(Internship.id,Internship.title, Internship.user_id,
+    #                        Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
+    #     Collection.user_id == id,Collection.deleted==0).all()
+    # return res
+    cursor.execute(sql)  # ASC
+    result = cursor.fetchall()
+    conn.close()
+    return result
 
 def delete_wishlist(id):
     try:
@@ -224,7 +249,7 @@ def delete_wishlist(id):
 
 def add_wishlist(id, internship_id):
     try:
-        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id)
+        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id,deleted=0).first()
         if wish is None:
             wish = Collection(id=getuuid(),
                      user_id=id,

@@ -18,12 +18,13 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
 }
 
 
-def review_internship(id,review,internship_id):
+def review_internship(id,review,internship_id,parent_id):
     try:
         newReview = Review(id=getuuid(), user_id=id,
                            internship_id=internship_id,
                            content=review,
                            deleted=0,
+                           parent_id=parent_id,
                            create_time=getTime(datetime),
                            update_time=getTime(datetime))
         db.session.add(newReview)
@@ -35,6 +36,10 @@ def delete_review(id):
     try:
         review = Review.query.get(id)
         review.deleted = 1
+        res = Review.query.filter_by(parent_id=id).all()
+        if res is not None:
+            for rev in res:
+                delete_review(rev.id)
         db.session.commit()
     except Exception as e:
         print(e)

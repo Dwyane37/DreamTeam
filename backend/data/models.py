@@ -41,6 +41,7 @@ class Internship(db.Model):
     field = Column(String(255))
     state = Column(String(255))
     city = Column(String(255))
+    applychannel = Column(String(1000))
     # He
     description = Column(String(1000))
     working_right = Column(Integer)

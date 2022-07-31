@@ -106,6 +106,7 @@ def add():
     deco = jwt.decode(token, token_key, algorithms='HS256')
     id = deco['id']
     internship_id = request.values.get('internship')
+    print(id,internship_id)
     add_wishlist(id, internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
@@ -123,9 +124,9 @@ def getuserwishlist():
     # dict['data'] = res
     print(res)
     # res = [dict(zip(r.keys(),r)) for r in res]
-    res = [dict(zip(result.keys(), result)) for result in res]
-    for i in res:
-        print(i)
+    # res = [dict(zip(result.keys(), result)) for result in res]
+    # for i in res:
+    #     print(i)
     data = {}
     data['data'] = res
     data['errortype'] = 200

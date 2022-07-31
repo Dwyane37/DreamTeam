@@ -20,11 +20,12 @@ def review():
     id = deco['id']
     review = data['review']
     internship_id = data['internship']
+    parent_id = data['parent_id']
     # message = checkIfUserReviewed(id,movie_id)
     # if message.errortype == 1:
     #     return json.dumps(message,default=lambda obj: obj.__dict__)
 
-    review_internship(id,review,internship_id)
+    review_internship(id,review,internship_id,parent_id)
 
     # gain experience
     # gain_experience(id)
