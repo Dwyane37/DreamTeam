@@ -41,9 +41,12 @@ export default function JobDetail(props) {
             Citizenship Requirements
           </Typography>
           <ul className="job-citizenship">
-            {job.working_right.split('').map((item, idx) => (
-              <li key={idx}>{citizenship[item - 1].label}</li>
-            ))}
+            {job.working_right
+              .toString()
+              .split('')
+              .map((item, idx) => (
+                <li key={idx}>{citizenship[item - 1].label}</li>
+              ))}
           </ul>
         </div>
         <div className="job-detail-element">
