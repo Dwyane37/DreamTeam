@@ -14,8 +14,8 @@ import {
 
 const Comments = ({ internshipId, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
+  const [rootComments, setRootComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
-  const rootComments = backendComments.filter((backendComment) => backendComment.parentId === null);
   const getReplies = (commentId) =>
     backendComments
       .filter((backendComment) => backendComment.parentId === commentId)
@@ -24,7 +24,7 @@ const Comments = ({ internshipId, currentUserId }) => {
   const addComment = (text, parentId) => {
     createCommentApi(text, internshipId, parentId).then((comment) => {
       getCommentsApi().then((data) => {
-        setBackendComments(data);
+        setBackendComments(data.data);
       });
       // setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
@@ -47,7 +47,7 @@ const Comments = ({ internshipId, currentUserId }) => {
     if (window.confirm('Are you sure you want to remove comment?')) {
       deleteCommentApi(commentId).then(() => {
         getCommentsApi().then((data) => {
-          setBackendComments(data);
+          setBackendComments(data.data);
         });
         // const updatedBackendComments = backendComments.filter((backendComment) => backendComment.id !== commentId);
         // setBackendComments(updatedBackendComments);
@@ -57,7 +57,9 @@ const Comments = ({ internshipId, currentUserId }) => {
 
   useEffect(() => {
     getCommentsApi().then((data) => {
-      setBackendComments(data);
+      setBackendComments(data.data);
+      const root = data.data.filter((backendComment) => backendComment.parentId === null);
+      setRootComments(root);
     });
   }, []);
 
