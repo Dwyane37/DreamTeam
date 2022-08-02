@@ -75,6 +75,8 @@ export default function JobCard(props) {
             </Button>
           </CardActions>
         );
+      default:
+        return null;
     }
   }
 

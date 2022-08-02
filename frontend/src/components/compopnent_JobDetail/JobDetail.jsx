@@ -41,12 +41,9 @@ export default function JobDetail(props) {
             Citizenship Requirements
           </Typography>
           <ul className="job-citizenship">
-            {job.working_right
-              .toString()
-              .split()
-              .map((item, idx) => (
-                <li key={idx}>{citizenship.filter((a) => a.id == item)[0].label}</li>
-              ))}
+            {job.working_right.split('').map((item, idx) => (
+              <li key={idx}>{citizenship[item - 1].label}</li>
+            ))}
           </ul>
         </div>
         <div className="job-detail-element">
@@ -91,7 +88,7 @@ export default function JobDetail(props) {
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
       <FAQ data={faqSample} />
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
-      <Comments internshipId={props.job.id} currentUserId="1" />
+      <Comments internshipId={props.job.id} currentUserId={sessionStorage.getItem('id')} />
     </div>
   );
 }

@@ -9,8 +9,8 @@ import { Dialog } from '@mui/material';
 import JobDetail from '../compopnent_JobDetail/JobDetail';
 
 function getJobDetail(jobs, id) {
-  const job = jobs.filter((job) => job.id == id);
-  return job[0];
+  const job = jobs.find((job) => job.id == id);
+  return job;
 }
 
 export default function JobPanel(props) {
@@ -44,10 +44,10 @@ export default function JobPanel(props) {
           {handleData.currentData().map((job, idx) => (
             <Grid
               item
-              xs={props.type === 'saved' || props.type === 'myJob' ? 12 : 12}
-              sm={props.type === 'saved' || props.type === 'myJob' ? 8 : 12}
-              md={props.type === 'saved' || props.type === 'myJob' ? 6 : 12}
-              lg={props.type === 'saved' || props.type === 'myJob' ? 4 : 12}
+              xs={props.type === 'home' ? 12 : 12}
+              sm={props.type === 'home' ? 12 : 8}
+              md={props.type === 'home' ? 12 : 6}
+              lg={props.type === 'home' ? 12 : 4}
               key={idx}
             >
               <JobCard

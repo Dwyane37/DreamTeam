@@ -22,13 +22,11 @@ export const dummyJobs = [
     title: 'Web Developer',
     company: 'Google',
     authorID: 91272343673357427676270600691321,
-    region: {
-      country: 'Australia',
-      state: 'NSW',
-      city: 'Sydney',
-    },
+    location: 'Australia',
+    state: 'NSW',
+    city: 'Sydney',
     field: 'Information Technology',
-    citizenship: ['Australian PR', 'Australian Citizen'],
+    working_right: '235',
     description:
       'Computer science offers a sought-after, rewarding career path for tech-savvy people interested in the latest computer advancements. IT professionals who understand computer science trends remain competitive for the best career opportunities including artificial intelligence, Edge and quantum computing, cybersecurity, bio informatics and robotics.',
     meetings: [
@@ -41,12 +39,10 @@ export const dummyJobs = [
     title: 'Data Analysis',
     company: 'Microsoft',
     authorID: 91272343673357427676270600691321,
-    region: {
-      country: 'Australia',
-      state: 'NSW',
-      city: 'North Sydney',
-    },
-    citizenship: ['Australian PR', 'Australian Citizen'],
+    location: 'Australia',
+    state: 'NSW',
+    city: 'Sydney',
+    working_right: '123',
     description: 'This is a job description',
     meetings: [
       { date: '2022-07-22', time: '8:00 - 9:00', link: 'zoom-link-1' },
@@ -58,13 +54,11 @@ export const dummyJobs = [
     title: 'Pharmacy Assistance',
     company: 'Chemist Warehouse',
     authorID: 91272343673357427676270600691321,
-    region: {
-      country: 'Australia',
-      state: 'NSW',
-      city: 'Sydney',
-    },
+    location: 'Australia',
+    state: 'NSW',
+    city: 'Sydney',
     field: 'Medicine',
-    citizenship: ['Australian PR', 'Australian Citizen'],
+    working_right: '123',
     description: 'random texts',
     meetings: [
       { date: '2022-07-21', time: '8:00 - 9:00', link: 'zoom-link-1' },
