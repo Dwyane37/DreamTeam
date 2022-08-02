@@ -44,7 +44,10 @@ def personreview():
     # deco = jwt.decode(token, token_key, algorithms='HS256')
     id = request.values.get('id')
     res = getAllReviewsById(id)
-    res = [dict(zip(result.keys(), result)) for result in res]
+    if res is not None:
+        res = [dict(zip(result.keys(), result)) for result in res]
+    else:
+        res = []
     data = {}
     data['data'] = res
     data['errortype'] = 200
@@ -55,7 +58,10 @@ def internshipreview():
     id = request.values.get("movie_id")
     res = getInternReviewById(id)
     data = {}
-    res = [dict(zip(result.keys(), result)) for result in res]
+    if res is not None:
+        res = [dict(zip(result.keys(), result)) for result in res]
+    else:
+        res = []
     data['data'] = res
     data['errortype'] = 200
     return data
