@@ -41,7 +41,12 @@ export const getComments = async () => {
 };
 
 export const createComment = async (text, internshipId, parentId = null) => {
-  apiPost('review/review', { token: sessionStorage.getItem('token'), review: text, internship: internshipId })
+  apiPost('review/review', {
+    token: sessionStorage.getItem('token'),
+    review: text,
+    internship: internshipId,
+    parent_id: parentId,
+  })
     .then((d) => console.log(d.data))
     .catch((e) => alert(e));
 
