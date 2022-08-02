@@ -51,32 +51,34 @@ export default function SideDrawer() {
 
   const list = () => (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-      <List>
-        <ListItem id="saved-job" disablePadding onClick={navigateSavings}>
-          <ListItemButton>
-            <ListItemIcon>
-              <FavoriteIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Saved Jobs'} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem id="applied-job" disablePadding onClick={navigateApplications}>
-          <ListItemButton>
-            <ListItemIcon>
-              <OutboxIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Applied Jobs'} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem id="followed-employer" disablePadding onClick={navigateFollowedEmployers}>
-          <ListItemButton>
-            <ListItemIcon>
-              <VisibilityIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Followed Employer'} />
-          </ListItemButton>
-        </ListItem>
-      </List>
+      {sessionStorage.getItem('type') == 0 && (
+        <List>
+          <ListItem id="saved-job" disablePadding onClick={navigateSavings}>
+            <ListItemButton>
+              <ListItemIcon>
+                <FavoriteIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Saved Jobs'} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem id="applied-job" disablePadding onClick={navigateApplications}>
+            <ListItemButton>
+              <ListItemIcon>
+                <OutboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Applied Jobs'} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem id="followed-employer" disablePadding onClick={navigateFollowedEmployers}>
+            <ListItemButton>
+              <ListItemIcon>
+                <VisibilityIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Followed Employer'} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      )}
 
       <Divider />
       <List>
