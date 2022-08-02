@@ -54,10 +54,11 @@ def personreview():
 def internshipreview():
     id = request.values.get("movie_id")
     res = getInternReviewById(id)
-    dict = {}
-    for i in res:
-        dict[repr(i.id)] = i.as_dict()
-    return dict
+    data = {}
+    res = [dict(zip(result.keys(), result)) for result in res]
+    data['data'] = res
+    data['errortype'] = 200
+    return data
 
 # @review_opt.route("/like", methods=['GET'])
 # def like():
