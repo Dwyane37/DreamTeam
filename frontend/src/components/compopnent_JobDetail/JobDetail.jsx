@@ -89,8 +89,8 @@ export default function JobDetail(props) {
       </Paper>
 
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
-      <FAQ data={faqSample} />
-      <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
+      {/* <FAQ data={faqSample} />
+      <Divider variant="fullWidth" style={{ margin: '30px 0' }} /> */}
       <Comments internshipId={props.job.id} currentUserId={sessionStorage.getItem('id')} />
     </div>
   );

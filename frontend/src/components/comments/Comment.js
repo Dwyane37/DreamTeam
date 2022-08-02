@@ -26,10 +26,10 @@ function Comment({
   // const timePassed = new Date() - new Date(comment.createdAt) > fiveMinutes;
   // const canDelete = currentUserId === comment.userId && replies.length === 0;
   // const canEdit = currentUserId === comment.userId;
-  const canModify = currentUserId === comment.userId;
+  const canModify = currentUserId === userId;
   const canReply = Boolean(currentUserId);
   const replyId = parentId ? parentId : comment.id;
-  const createdAt = new Date(comment.createdAt).toLocaleDateString();
+  const createdAt = new Date(comment.create_time).toLocaleDateString();
   const navigateProfile = () => {
     navigate(`/profile/${userId}`);
   };
@@ -47,12 +47,12 @@ function Comment({
 
           {canModify && <More handleEdit={setActiveComment} handleDelete={deleteComment} id={comment.id} />}
         </div>
-        {!isEditing && <div className="comment-text">{comment.body}</div>}
+        {!isEditing && <div className="comment-text">{comment.content}</div>}
         {isEditing && (
           <CommentForm
             submitLabel="Update"
             hasCancelButton
-            initialText={comment.body}
+            initialText={comment.content}
             handleSubmit={(text) => updateComment(text, comment.id)}
             handleCancel={() => {
               setActiveComment(null);

@@ -16,16 +16,18 @@ const Comments = ({ internshipId, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [rootComments, setRootComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
+  const [change, setChange] = useState(false);
   const getReplies = (commentId) =>
     backendComments
-      .filter((backendComment) => backendComment.parentId === commentId)
-      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      .filter((backendComment) => backendComment.parent_id === commentId)
+      .sort((a, b) => new Date(a.create_time).getTime() - new Date(b.create_time).getTime());
 
   const addComment = (text, parentId) => {
     createCommentApi(text, internshipId, parentId).then((comment) => {
-      getCommentsApi().then((data) => {
-        setBackendComments(data.data);
-      });
+      // getCommentsApi(internshipId).then((data) => {
+      //   setBackendComments(Object.values(data));
+      // });
+      setChange(!change);
       // setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
@@ -46,9 +48,10 @@ const Comments = ({ internshipId, currentUserId }) => {
   const deleteComment = (commentId) => {
     if (window.confirm('Are you sure you want to remove comment?')) {
       deleteCommentApi(commentId).then(() => {
-        getCommentsApi().then((data) => {
-          setBackendComments(data.data);
-        });
+        setChange(!change);
+        // getCommentsApi(internshipId).then((data) => {
+        //   setBackendComments(Object.values(data));
+        // });
         // const updatedBackendComments = backendComments.filter((backendComment) => backendComment.id !== commentId);
         // setBackendComments(updatedBackendComments);
       });
@@ -56,36 +59,38 @@ const Comments = ({ internshipId, currentUserId }) => {
   };
 
   useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data.data);
-      const root = data.data.filter((backendComment) => backendComment.parentId === null);
+    getCommentsApi(internshipId).then((data) => {
+      setBackendComments(Object.values(data));
+      const root = Object.values(data).filter((backendComment) => backendComment.parent_id === null);
       setRootComments(root);
     });
-  }, []);
+  }, [change]);
 
   return (
     <Paper className="comments">
       <h3 className="comments-title">
-        {rootComments.length} {rootComments.length === 1 ? 'Comment' : 'Comments'}
+        {rootComments?.length} {rootComments?.length === 1 ? 'Comment' : 'Comments'}
       </h3>
       <Divider sx={{ margin: '20px 0' }} />
       <CommentForm submitLabel="Post" handleSubmit={addComment} />
-      <div className="comments-container">
-        {rootComments.map((rootComment) => (
-          <Comment
-            userId={rootComment.userId}
-            key={rootComment.id}
-            comment={rootComment}
-            replies={getReplies(rootComment.id)}
-            activeComment={activeComment}
-            setActiveComment={setActiveComment}
-            addComment={addComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
-            currentUserId={currentUserId}
-          />
-        ))}
-      </div>
+      {rootComments && (
+        <div className="comments-container">
+          {rootComments.map((rootComment) => (
+            <Comment
+              userId={rootComment.user_id}
+              key={rootComment.id}
+              comment={rootComment}
+              replies={getReplies(rootComment.id)}
+              activeComment={activeComment}
+              setActiveComment={setActiveComment}
+              addComment={addComment}
+              deleteComment={deleteComment}
+              updateComment={updateComment}
+              currentUserId={currentUserId}
+            />
+          ))}
+        </div>
+      )}
     </Paper>
   );
 };
