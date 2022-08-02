@@ -7,10 +7,10 @@ import { dummyJobs } from '../components/assets';
 import { apiGet } from '../components/API';
 
 export default function AppliedJobs({ socket }) {
-  const [saved, setSaved] = React.useState([]);
+  const [applied, setApplied] = React.useState([]);
   React.useEffect(() => {
-    apiGet('/internship/getuserwishlist', { id: sessionStorage.getItem('id') })
-      .then((data) => setSaved(data.data))
+    apiGet('/internship/getapplylist', { id: sessionStorage.getItem('id') })
+      .then((data) => setApplied(data.data))
       .catch((e) => alert(e));
   }, []);
   return (
@@ -22,7 +22,7 @@ export default function AppliedJobs({ socket }) {
         </Typography>
         {/* <h3>My Saved Jobs</h3> */}
         <div className="panel-savedJob">
-          <JobPanel jobs={dummyJobs} type="applied" />
+          <JobPanel jobs={applied} type="applied" />
         </div>
       </div>
     </div>
