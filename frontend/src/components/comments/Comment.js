@@ -1,10 +1,13 @@
 import CommentForm from './CommentForm';
 import { Grid, Button, Avatar } from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { useNavigate } from 'react-router-dom';
+
 import More from './More';
 import './Comment.css';
 
-const Comment = ({
+function Comment({
+  userId,
   comment,
   replies,
   setActiveComment,
@@ -14,7 +17,9 @@ const Comment = ({
   addComment,
   parentId = null,
   currentUserId,
-}) => {
+}) {
+  const navigate = useNavigate();
+
   const isEditing = activeComment && activeComment.id === comment.id && activeComment.type === 'editing';
   const isReplying = activeComment && activeComment.id === comment.id && activeComment.type === 'replying';
   // const fiveMinutes = 300000;
@@ -25,9 +30,12 @@ const Comment = ({
   const canReply = Boolean(currentUserId);
   const replyId = parentId ? parentId : comment.id;
   const createdAt = new Date(comment.createdAt).toLocaleDateString();
+  const navigateProfile = () => {
+    navigate(`/profile/${userId}`);
+  };
   return (
     <Grid className="comment" container wrap="wrap" spacing={2}>
-      <Grid item>
+      <Grid item onClick={navigateProfile}>
         <Avatar alt="" src={comment.avatar} />
       </Grid>
       <Grid justifyContent="left" item xs zeroMinWidth>
@@ -103,6 +111,6 @@ const Comment = ({
       </Grid>
     </Grid>
   );
-};
+}
 
 export default Comment;

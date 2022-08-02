@@ -20,9 +20,13 @@ const Comments = ({ internshipId, currentUserId }) => {
     backendComments
       .filter((backendComment) => backendComment.parentId === commentId)
       .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
   const addComment = (text, parentId) => {
     createCommentApi(text, internshipId, parentId).then((comment) => {
-      setBackendComments([comment, ...backendComments]);
+      getCommentsApi().then((data) => {
+        setBackendComments(data);
+      });
+      // setBackendComments([comment, ...backendComments]);
       setActiveComment(null);
     });
   };
@@ -42,8 +46,11 @@ const Comments = ({ internshipId, currentUserId }) => {
   const deleteComment = (commentId) => {
     if (window.confirm('Are you sure you want to remove comment?')) {
       deleteCommentApi(commentId).then(() => {
-        const updatedBackendComments = backendComments.filter((backendComment) => backendComment.id !== commentId);
-        setBackendComments(updatedBackendComments);
+        getCommentsApi().then((data) => {
+          setBackendComments(data);
+        });
+        // const updatedBackendComments = backendComments.filter((backendComment) => backendComment.id !== commentId);
+        // setBackendComments(updatedBackendComments);
       });
     }
   };
@@ -64,6 +71,7 @@ const Comments = ({ internshipId, currentUserId }) => {
       <div className="comments-container">
         {rootComments.map((rootComment) => (
           <Comment
+            userId={rootComment.userId}
             key={rootComment.id}
             comment={rootComment}
             replies={getReplies(rootComment.id)}
