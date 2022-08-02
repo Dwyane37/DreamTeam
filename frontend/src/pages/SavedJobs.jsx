@@ -22,7 +22,7 @@ export default function SavedJobs({ socket }) {
         </Typography>
         {/* <h3>My Saved Jobs</h3> */}
         <div className="panel-savedJob">
-          <JobPanel jobs={dummyJobs} type="saved" />
+          <JobPanel jobs={saved} type="saved" />
         </div>
       </div>
     </div>
