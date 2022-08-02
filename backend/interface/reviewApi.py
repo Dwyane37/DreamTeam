@@ -50,15 +50,15 @@ def personreview():
     data['errortype'] = 200
     return data
 
-# @review_opt.route("/moviereview", methods=['GET'])
-# def moviereview():
-#     id = request.values.get("movie_id")
-#     res = getMovieReviewById(id)
-#     dict = {}
-#     for i in res:
-#         dict[repr(i.id)] = i.as_dict()
-#     return dict
-#
+@review_opt.route("/internshipreview", methods=['GET'])
+def internshipreview():
+    id = request.values.get("movie_id")
+    res = getInternReviewById(id)
+    dict = {}
+    for i in res:
+        dict[repr(i.id)] = i.as_dict()
+    return dict
+
 # @review_opt.route("/like", methods=['GET'])
 # def like():
 #     token = request.values.get('token')

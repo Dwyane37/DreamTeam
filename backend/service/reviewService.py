@@ -57,14 +57,15 @@ def getAllReviewsById(id):
     except Exception as e:
         print(e)
 
-# def getMovieReviewById(id):
-#     try:
-#
-#         res = Review.query.filter_by(movie_id=id).all()
-#         return res
-#
-#     except Exception as e:
-#         print(e)
+
+
+def getInternReviewById(id):
+    try:
+        res = Review.query.filter_by(internship_id=id).all()
+        return res
+
+    except Exception as e:
+        print(e)
 #
 # def changelike(id, review_id):
 #     try:

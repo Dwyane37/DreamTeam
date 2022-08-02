@@ -239,9 +239,9 @@ def get_wish_list(id):
     conn.close()
     return result
 
-def delete_wishlist(id):
+def delete_wishlist(user_id,internship_id):
     try:
-        wishlist = Collection.query.get(id)
+        wishlist = Collection.query.filter_by(user_id=user_id,internship_id=internship_id).first()
         wishlist.deleted = 1
         db.session.commit()
     except Exception as e:
