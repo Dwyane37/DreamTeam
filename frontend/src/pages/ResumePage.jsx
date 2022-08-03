@@ -31,134 +31,134 @@ function ResumePage({ socket }) {
   const [dialogConfig, setDialogConfig] = useState({
     userInfo: [
       {
-        label: 'name',
+        label: 'Name',
         required: true,
         type: 'text',
       },
       {
-        label: 'university',
+        label: 'University',
         required: true,
         type: 'text',
       },
       {
-        label: 'email',
+        label: 'Email',
         required: false,
         type: 'text',
       },
       {
-        label: 'introduction',
+        label: 'About',
         required: false,
         type: 'text',
       },
     ],
     education: [
       {
-        label: 'university',
+        label: 'University',
         required: true,
         type: 'text',
       },
       {
-        label: 'start',
+        label: 'Start',
         required: true,
         type: 'date',
       },
       {
-        label: 'end',
+        label: 'End',
         required: true,
         type: 'date',
       },
       {
-        label: 'faculty',
+        label: 'Faculty',
         required: true,
         type: 'text',
       },
       {
-        label: 'major',
+        label: 'Major',
         required: true,
         type: 'text',
       },
       {
-        label: 'grades',
+        label: 'Grades',
         required: true,
         type: 'text',
       },
     ],
     workExperience: [
       {
-        label: 'company',
+        label: 'Company',
         required: true,
         type: 'text',
       },
       {
-        label: 'position',
+        label: 'Position',
         required: true,
         type: 'text',
       },
       {
-        label: 'start',
+        label: 'Start',
         required: true,
         type: 'date',
       },
       {
-        label: 'end',
+        label: 'End',
         required: true,
         type: 'date',
       },
       {
-        label: 'description',
+        label: 'Description',
         required: true,
         type: 'text',
       },
     ],
     projectExperience: [
       {
-        label: 'name',
+        label: 'Title',
         required: true,
         type: 'text',
       },
       {
-        label: 'start',
+        label: 'Start',
         required: true,
         type: 'date',
       },
       {
-        label: 'end',
+        label: 'End',
         required: true,
         type: 'date',
       },
       {
-        label: 'description',
+        label: 'Description',
         required: true,
         type: 'text',
       },
     ],
     skills: [
       {
-        label: 'skill',
+        label: 'Skill',
         required: true,
         type: 'text',
       },
     ],
     awards: [
       {
-        label: 'title',
+        label: 'Title',
         required: true,
         type: 'text',
       },
       {
-        label: 'description',
+        label: 'Description',
         required: true,
         type: 'text',
       },
     ],
     projectDisplay: [
       {
-        label: 'name',
+        label: 'Title',
         required: true,
         type: 'text',
       },
       {
-        label: 'link',
+        label: 'Link',
         required: true,
         type: 'text',
       },
@@ -177,10 +177,8 @@ function ResumePage({ socket }) {
 
   useEffect(() => {
     apiGet('user/getResume', { resumeId }).then((res) => {
-      setResumeData(res.data.data);
-    });
-    apiGet('user/getinfo').then((res) => {
       console.log(res.data);
+      setResumeData(res.data.data);
     });
   }, []);
 
@@ -321,7 +319,7 @@ function ResumePage({ socket }) {
       </div>
       <div className="Awards resume_item">
         <div className="header">
-          <span>awards</span>
+          <span>Awards</span>
           <Button variant="contained" size="small" onClick={() => edit('awards')}>
             edit
           </Button>
@@ -390,14 +388,14 @@ function ResumePage({ socket }) {
               onClick={uploadAvatar}
             />
             <div className="info_wrap">
-              <div className="info_item">name: {resumeData.userInfo?.name || 'n/a'}</div>
+              <div className="info_item">Full Name: {resumeData.userInfo?.name || 'n/a'}</div>
 
               <div className="info_item">
                 {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
                 {resumeData.userInfo?.unversity || 'n/a'}
               </div>
 
-              <div className="info_item">email: {resumeData.userInfo?.email || 'n/a'}</div>
+              <div className="info_item">Contact Email: {resumeData.userInfo?.email || 'n/a'}</div>
             </div>
           </div>
           <div className="introduction">{resumeData.userInfo?.introduction}</div>
@@ -423,7 +421,7 @@ function ResumePage({ socket }) {
       <Dialog open={openUserInfo} onClose={handleClose} scroll="paper" fullWidth maxWidth="md">
         <div className="user_form">
           <div className="form_item">
-            <div className="label">name</div>
+            <div className="label">Name:</div>
             <TextField
               className="input"
               size="small"
@@ -433,7 +431,7 @@ function ResumePage({ socket }) {
             />
           </div>
           <div className="form_item">
-            <div className="label">unversity</div>
+            <div className="label"> {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}</div>
             <TextField
               className="input"
               size="small"
@@ -443,7 +441,7 @@ function ResumePage({ socket }) {
             />
           </div>
           <div className="form_item">
-            <div className="label">email</div>
+            <div className="label">Contact Email:</div>
             <TextField
               className="input"
               size="small"
