@@ -11,13 +11,12 @@ class User(db.Model):
     username = Column(String(255), nullable=False)
     password = Column(String(255), nullable=False)
     mobile = Column(Integer)
-    nickname = Column(String(255))
     type = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
     email = Column(String(255))
     deleted = Column(Integer)
-
+    nickname = Column(String(255))
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -45,6 +44,7 @@ class Internship(db.Model):
     # He
     description = Column(String(1000))
     working_right = Column(Integer)
+    company = Column(String(255))
 
     def __repr__(self):
         return '<Internship %r>' % self.id

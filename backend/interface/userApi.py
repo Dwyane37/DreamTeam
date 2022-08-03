@@ -27,6 +27,8 @@ def register():
     password = data['password']
     email = data['email']
     type = data['type']
+    nickname = data['nickname']
+    organisation = data['organisation']
     if type == 'student':
         type = 0
     else:

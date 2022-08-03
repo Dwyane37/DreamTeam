@@ -61,9 +61,9 @@ def getAllReviewsById(id):
 
 def getInternReviewById(id):
     try:
-        res = db.session.query(Review.user_id,Review.internship_id,Review.content,Review.update_time,Review.parent_id,
-                         User.nickname, ResumeUser.thumbnail).outerjoin(User,Review.user_id == User.id).outerjoin(
-            ResumeUser,ResumeUser.user_id == User.id
+        res = db.session.query(Review.id,Review.user_id,Review.internship_id,Review.content,Review.update_time,Review.parent_id,
+                         ResumeUser.name, ResumeUser.thumbnail).outerjoin(Internship,Review.internship_id == Internship.id).outerjoin(
+            ResumeUser,ResumeUser.user_id == Review.user_id
         ).filter(Internship.id==id)
         # res = Review.query.filter_by(internship_id=id).all()
         return res
