@@ -5,12 +5,22 @@ import { Button, Divider, Grid, Paper } from '@mui/material';
 import Comments from '../comments/Comments';
 import { citizenship, faqSample } from '../assets';
 import FAQ from './FAQ';
+import { apiGet } from '../API';
 
 export default function JobDetail(props) {
   const job = props.job;
-  const handleApply = () => {
-    console.log('apply');
-    props.handleClose();
+
+  const handleSave = (e) => {
+    // TODO Save the job
+    e.stopPropagation();
+    apiGet('/internship/save', {
+      token: sessionStorage.getItem('token'),
+      internship: job.id,
+    })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((e) => alert(e));
   };
   return (
     <div className="dialog-page">
@@ -75,13 +85,19 @@ export default function JobDetail(props) {
           </Typography>
           <Typography variant="body1">{job.description}</Typography>
         </div>
+        <div className="job-detail-element">
+          <Typography variant="subtitle1" color="text.secondary">
+            Apply Method
+          </Typography>
+          <Typography variant="body1">{job.applychannel}</Typography>
+        </div>
         {sessionStorage.getItem('type') === '0' && (
           <div className="buttons">
-            <Button variant="contained" color="success" onClick={handleApply}>
+            {/* <Button variant="contained" color="success" onClick={handleApply}>
               Apply
-            </Button>
+            </Button> */}
 
-            <Button variant="contained" color="info" onClick={handleApply}>
+            <Button variant="contained" color="info" onClick={handleSave}>
               Save
             </Button>
           </div>
