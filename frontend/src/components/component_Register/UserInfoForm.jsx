@@ -5,7 +5,11 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function ProfileInfo() {
+export default function ProfileInfo({ state, label }) {
+  const [name, setName] = React.useState({ firstname: '', lastname: '' });
+  React.useEffect(() => {
+    state[1]({ ...state[0], name: `${name.firstname} ${name.lastname}` });
+  }, [name]);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -18,9 +22,13 @@ export default function ProfileInfo() {
             id="firstName"
             name="firstName"
             label="First name"
+            value={name.firstname}
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={(e) => {
+              setName({ ...name, firstname: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -29,66 +37,28 @@ export default function ProfileInfo() {
             id="lastName"
             name="lastName"
             label="Last name"
+            value={name.lastname}
             fullWidth
             autoComplete="family-name"
             variant="standard"
+            onChange={(e) => {
+              setName({ ...name, lastname: e.target.value });
+            }}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
-            id="address1"
-            name="address1"
-            label="Address line 1"
+            id="organisation"
+            name="organisation"
+            label={label}
+            value={name.organisation}
             fullWidth
-            autoComplete="shipping address-line1"
+            autoComplete="Organisation"
             variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField id="state" name="state" label="State/Province/Region" fullWidth variant="standard" />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
+            onChange={(e) => {
+              state[1]({ ...state[0], organisation: e.target.value });
+            }}
           />
         </Grid>
       </Grid>
