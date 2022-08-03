@@ -166,6 +166,7 @@ export default function EditJobForm() {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
+          style={{ background: "#ebf4f9"}}
         />
         <p>Apply Method</p>
         <TextareaAutosize
@@ -177,6 +178,7 @@ export default function EditJobForm() {
           onChange={(e) => {
             setApplication(e.target.value);
           }}
+          style={{ background: "#ebf4f9"}}
         />
       </Box>
 
