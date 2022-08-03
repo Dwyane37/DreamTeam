@@ -41,7 +41,7 @@ export const apiGet = async (path, paramDic) => {
   // await console.log(res);
   const body = await res.json();
   await console.log(body);
-  if (body.errortype == 200 || res.status == 200) {
+  if (body.errortype == 200) {
     return body;
   } else {
     throw new Error(body.errormessage);
