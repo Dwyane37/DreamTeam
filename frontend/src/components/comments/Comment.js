@@ -41,7 +41,7 @@ function Comment({
       <Grid justifyContent="left" item xs zeroMinWidth>
         <div className="comment-header">
           <div className="comment-content">
-            <h4 className="comment-author">{comment.nickname || 'Unknown User'}</h4>
+            <h4 className="comment-author">{comment.name || 'Unknown User'}</h4>
             <div>{createdAt}</div>
           </div>
 
