@@ -38,7 +38,9 @@ def register():
     if message.errortype == 1:
         return json.dumps(message, default=lambda obj: obj.__dict__)
     user = User(username=username, password=password, email=email,type=type)
+    resume = ResumeUser(name=nickname,email=email,university=organisation)
     mesvalue = registerNewAccount(user)
+    addresume(resume)
     start_date = time.time() + 360000
     id = mesvalue.errormessage
     mes = {'id': id, 'exp': start_date}

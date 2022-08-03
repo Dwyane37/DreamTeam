@@ -38,6 +38,10 @@ def registerNewAccount(inputs):
     except Exception as e:
         return errorMessage(1, e)
 
+def addresume(resume):
+    db.session.add(resume)
+    db.session.commit()
+
 def getLoginusertype(id):
     try:
         user = User.query.get(id)
