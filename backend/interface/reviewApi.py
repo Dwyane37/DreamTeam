@@ -44,21 +44,28 @@ def personreview():
     # deco = jwt.decode(token, token_key, algorithms='HS256')
     id = request.values.get('id')
     res = getAllReviewsById(id)
-    res = [dict(zip(result.keys(), result)) for result in res]
+    if res is not None:
+        res = [dict(zip(result.keys(), result)) for result in res]
+    else:
+        res = []
     data = {}
     data['data'] = res
     data['errortype'] = 200
     return data
 
-# @review_opt.route("/moviereview", methods=['GET'])
-# def moviereview():
-#     id = request.values.get("movie_id")
-#     res = getMovieReviewById(id)
-#     dict = {}
-#     for i in res:
-#         dict[repr(i.id)] = i.as_dict()
-#     return dict
-#
+@review_opt.route("/internshipreview", methods=['GET'])
+def internshipreview():
+    id = request.values.get("movie_id")
+    res = getInternReviewById(id)
+    data = {}
+    if res is not None:
+        res = [dict(zip(result.keys(), result)) for result in res]
+    else:
+        res = []
+    data['data'] = res
+    data['errortype'] = 200
+    return data
+
 # @review_opt.route("/like", methods=['GET'])
 # def like():
 #     token = request.values.get('token')

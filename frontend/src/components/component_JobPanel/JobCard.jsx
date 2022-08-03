@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { Paper } from '@mui/material';
 
-import { apiGet } from '../API';
+import { apiGet, apiPost } from '../API';
 
 import './JobCard.css';
 import { useNavigate } from 'react-router-dom';
@@ -75,6 +75,8 @@ export default function JobCard(props) {
             </Button>
           </CardActions>
         );
+      default:
+        return null;
     }
   }
 
@@ -110,7 +112,9 @@ export default function JobCard(props) {
   const handleUnsave = (e) => {
     e.stopPropagation();
     const jobId = e.currentTarget.parentNode.parentNode.id;
-    console.log(jobId);
+    apiGet('/internship/unsave', { internship_id: jobId, user_id: sessionStorage.getItem('id') }).then((d) =>
+      alert('You have unsaved the job')
+    );
 
     setSave(!save);
   };
@@ -124,6 +128,7 @@ export default function JobCard(props) {
 
   const handleDelete = (e) => {
     e.stopPropagation();
+    const jobID = e.currentTarget.id;
     console.log('delete');
   };
 

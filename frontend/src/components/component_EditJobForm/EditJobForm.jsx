@@ -4,209 +4,138 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { apiPost } from '../API';
-import { alpha, styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 // import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { SessionInfo, JobBigButton, JobSmallButton } from '../component_AddJobForm/AddJobFormStyle';
+import FieldFilter from '../component_Filter/FieldFilter';
+import RegionFilter from '../component_Filter/RegionFilter';
+import CitizenshipFilter from '../component_Filter/CitizenshipFilter';
 
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-//import Input from '@mui/material/Input';
-//import JobInformationInp from '../components/JobInformationInp';
+import '../component_AddJobForm/AddJobForm.css';
 
 export default function EditJobForm() {
   const navigate = useNavigate();
-  const [status, setStatus] = React.useState(0);
+  const initFilter = {
+    country: null,
+    state: null,
+    city: null,
+    field: null,
+    citizenship: [],
+  };
+  const [filter, setFilter] = React.useState(initFilter);
+  const [openSessionEdit, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
-  const [field, setField] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [right, setRight] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [application, setApplication] = React.useState('');
   const [link, setLink] = React.useState('');
-  const [datetime, setDatetime] = React.useState(new Date('2022-07-13T12:00:00'));
+  const [datetime, setDatetime] = React.useState(new Date());
+  const [sessions, setSessions] = React.useState([]);
+  const [editItemIdx, setEditItemIdx] = React.useState(null);
+  //const [aaaa, setaaaa] = React.useState(new Date(datetime));
+
+  const processCitizenshipArray = (arr) => {
+    if (arr) {
+      const ids = arr.map((item) => item.id);
+      ids.sort();
+      return ids.join('');
+    }
+    return '';
+  };
 
   const post = (e) => {
     e.preventDefault();
-    apiPost('internship/add_internship', {
+    const right = processCitizenshipArray(filter.citizenship);
+    const attr = {
+      id: sessionStorage.getItem('id'),
       title: title,
-      field: field,
-      location: location,
-      working_right: right,
-      description: description,
-      meeting: [{ link: link, datetime: datetime }],
-    })
+      location: filter.country?.name || '', //e.g. "Australie"
+      state: filter.state?.name || '', // e.g. "New Southe Wales"
+      city: filter.city?.name || '', // e.g. Sydney
+      field: filter.field?.label || '', //e.g. Science
+      working_right: right || '0', //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
+      description: description, //e.g. text text text
+      application: application,
+      meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
+    };
+    console.log(attr);
+
+    apiPost('internship/add_internship', attr)
       .then((body) => {
         console.log(body);
       })
       .catch((e) => alert(e));
   };
 
-  const JobInformationInput = styled(InputBase)(({ theme }) => ({
-    'label + &': {
-      marginTop: theme.spacing(2),
-    },
-    '& .MuiInputBase-input': {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      width: '35vw',
-      padding: '10px 12px',
-      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
-        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  }));
-
-  const DescriptionInput = styled(InputBase)(({ theme }) => ({
-    'label + &': {
-      marginTop: theme.spacing(2.5),
-    },
-    '& .MuiInputBase-input': {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      width: '35vw',
-      padding: '10px 12px',
-      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
-        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  }));
-
-  const AddLinkInput = styled(InputBase)(({ theme }) => ({
-    'label + &': {
-      marginTop: theme.spacing(2),
-    },
-    '& .MuiInputBase-input': {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      width: '15vw',
-      padding: '10px 12px',
-      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
-        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  }));
-
-  const SessionInfo = styled(InputBase)(({ theme }) => ({
-    'label + &': {
-      marginTop: theme.spacing(2),
-    },
-    '& .MuiInputBase-input': {
-      borderRadius: 4,
-      position: 'relative',
-      fontSize: 16,
-      width: '25vw',
-      transition: theme.transitions.create(['border-color', 'background-color', 'box-shadow']),
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
-        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  }));
-
-  const JobSmallButton = styled(Button)({
-    textTransform: 'none',
-    width: '7vw',
-  });
-
-  const JobBigButton = styled(Button)({
-    textTransform: 'none',
-    width: '35vw',
-    //margin: '10px',
-  });
-
   const handleChange = (newValue) => {
     setDatetime(newValue);
   };
 
   const createSession = () => {
-    setStatus(1);
+    setOpen(true);
+  };
+
+  const editSession = (e) => {
+    setEditItemIdx(e.target.parentNode.id);
+    let session = sessions[e.target.parentNode.id];
+    console.log(session);
+    setDatetime(session.datetime);
+    setLink(session.link);
+    setOpen(true);
+  };
+
+  const clear = () => {
+    setDatetime(new Date());
+    setLink('');
   };
 
   const Create = () => {
-    setStatus(2);
+    if (!editItemIdx) {
+      setSessions([...sessions, { datetime: datetime.toISOString(), link: link }]);
+    } else {
+      let newSessions = [...sessions];
+      newSessions[editItemIdx].datetime = datetime;
+      newSessions[editItemIdx].link = link;
+      setSessions(newSessions);
+    }
+    clear();
+    setOpen(false);
+  };
+
+  const deleteSession = (e) => {
+    const idx = e.target.parentNode.id;
+    console.log(typeof parseInt(idx));
+    setSessions([...sessions.slice(0, parseInt(idx)), ...sessions.slice(parseInt(idx) + 1)]);
   };
 
   const Cancel = () => {
-    setStatus(0);
+    if (editItemIdx) {
+      setEditItemIdx(null);
+    }
+    clear();
+    setOpen(false);
   };
 
-  //const ttt = (event) => {
-  //  setTitle(event.target.value);
-  //};
+  // React.useEffect(() => {
+  //   console.log(filter);
+  // }, [filter]);
+  // React.useEffect(() => {
+  //   console.log(link);
+  // }, [link]);
 
+  React.useEffect(() => {
+    console.log(sessions);
+  }, [sessions]);
   return (
     <Box
-      className="EditJobForm"
+      className="AddJobForm"
       component="form"
       onSubmit={(e) => {
         post(e);
@@ -224,85 +153,45 @@ export default function EditJobForm() {
             }}
           />
         </FormControl>
-        <FormControl variant="standard">
-          <TextField
-            label="Field:"
-            variant="standard"
-            id="Job_field_input"
-            value={field}
-            onChange={(e) => {
-              setField(e.target.value);
-            }}
-          />
-        </FormControl>
-        <FormControl variant="standard">
-          <TextField
-            label="Location:"
-            variant="standard"
-            id="Job_location_input"
-            value={location}
-            onChange={(e) => {
-              setLocation(e.target.value);
-            }}
-          />
-        </FormControl>
-        <FormControl variant="standard">
-          <InputLabel shrink htmlFor="Job_right_input">
-            Working right:
-          </InputLabel>
-          <Select
-            id="Job_right_input"
-            value={right}
-            onChange={(e) => {
-              setRight(e.target.value);
-            }}
-          >
-            <MenuItem value={'international student'}>International student</MenuItem>
-            <MenuItem value={'PR'}>PR</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl variant="standard">
-          <TextField
-            label="Description:"
-            variant="standard"
-            id="Job_description_input"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-            multiline
-            rows={3}
-          />
-        </FormControl>
+        <RegionFilter label="defineLocation" updateFilter={[filter, setFilter]} />
+        <FieldFilter label="defineField" updateFilter={[filter, setFilter]} />
+        <CitizenshipFilter lable="defineCitizenship" updateFilter={[filter, setFilter]} />
+        <p>Job Decription</p>
+        <TextareaAutosize
+          minRows={6}
+          maxRows={10}
+          placeholder="Description"
+          value={description}
+          label="Description"
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
+        <p>Apply Method</p>
+        <TextareaAutosize
+          minRows={3}
+          maxRows={5}
+          placeholder="Apply method, e.g. email or link"
+          value={application}
+          label="Apply Method"
+          onChange={(e) => {
+            setApplication(e.target.value);
+          }}
+        />
       </Box>
-      {status === 0 && (
-        <JobBigButton variant="outlined" onClick={createSession}>
-          Create an Info Session
-        </JobBigButton>
-      )}
-      {status === 2 && (
-        <Box className="SessionInfo">
-          <FormControl variant="standard">
-            <InputLabel shrink htmlFor="Job_session_time"></InputLabel>
-            <SessionInfo defaultValue={datetime} id="Job_session_time" readOnly multiline />
-            <SessionInfo defaultValue={link} id="Job_session_link" readOnly multiline />
-          </FormControl>
-          <ButtonGroup variant="text" aria-label="text button group">
-            <Button onClick={createSession}>Edit</Button>
-            <Button color="error" onClick={Cancel}>
-              Delete
-            </Button>
-          </ButtonGroup>
-        </Box>
-      )}
-      {status === 1 && (
-        <>
+
+      <JobBigButton variant="outlined" onClick={createSession}>
+        Create an Info Session
+      </JobBigButton>
+
+      {openSessionEdit && (
+        <Box className="createSession">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDateTimePicker
-              label="Choose date"
-              inputFormat="MM/dd/yyyy"
+              label="Choose Date and Time"
+              // inputFormat="MM/dd/yyyy"
               value={datetime}
-              onChange={handleChange}
+              onChange={(newValue) => handleChange(newValue)}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
@@ -321,18 +210,31 @@ export default function EditJobForm() {
               Cancel
             </JobSmallButton>
             <JobSmallButton variant="outlined" onClick={Create}>
-              Create
+              {editItemIdx ? 'Save' : 'Create'}
             </JobSmallButton>
           </Stack>
-        </>
-      )}
-      {status !== 1 && (
-        <Box className="PostForm">
-          <JobSmallButton type="submit" variant="outlined">
-            Post
-          </JobSmallButton>
         </Box>
       )}
+
+      {sessions &&
+        sessions.map((session, idx) => (
+          <Box key={idx} id={idx} className="SessionInfo">
+            <SessionInfo value={session.datetime} id="Job_session_time" readOnly multiline />
+            <SessionInfo value={session.link} id="Job_session_link" readOnly multiline />
+            <ButtonGroup id={idx} variant="text" aria-label="text button group">
+              <Button onClick={editSession}>Edit</Button>
+              <Button color="error" onClick={deleteSession}>
+                Delete
+              </Button>
+            </ButtonGroup>
+          </Box>
+        ))}
+
+      <Box className="PostForm">
+        <JobSmallButton type="submit" variant="outlined">
+          Post
+        </JobSmallButton>
+      </Box>
     </Box>
   );
 }

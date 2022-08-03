@@ -112,8 +112,9 @@ def add():
 
 @internship_opt.route('/unsave', methods=['GET'])
 def delete():
-    id = request.values.get("wishlist_id")
-    delete_wishlist(id)
+    user_id = request.values.get("user_id")
+    internship_id = request.values.get("internship_id")
+    delete_wishlist(user_id,internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
 @internship_opt.route("/getuserwishlist", methods=["GET"])

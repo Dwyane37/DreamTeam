@@ -12,7 +12,9 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import OutboxIcon from '@mui/icons-material/Outbox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
 import { useNavigate } from 'react-router-dom';
 
 export default function SideDrawer() {
@@ -37,28 +39,57 @@ export default function SideDrawer() {
     navigate('/saved-jobs');
   };
 
+  const navigateApplications = () => {
+    setState(false);
+    navigate('/applied-jobs');
+  };
+
+  const navigateCommentHistory = () => {
+    setState(false);
+    navigate('/comment-history');
+  };
+
   const list = () => (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
-      <List>
-        {['Saved Jobs', 'Applied Jobs'].map((text, index) => (
-          <ListItem key={text} disablePadding onClick={index % 2 === 0 ? navigateSavings : null}>
+      {sessionStorage.getItem('type') == 0 && (
+        <List>
+          <ListItem id="saved-job" disablePadding onClick={navigateSavings}>
             <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <FavoriteIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon>
+                <FavoriteIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Saved Jobs'} />
             </ListItemButton>
           </ListItem>
-        ))}
-      </List>
+          <ListItem id="applied-job" disablePadding onClick={navigateApplications}>
+            <ListItemButton>
+              <ListItemIcon>
+                <OutboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Applied Jobs'} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem id="followed-employer" disablePadding onClick={navigateFollowedEmployers}>
+            <ListItemButton>
+              <ListItemIcon>
+                <VisibilityIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Followed Employer'} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      )}
+
       <Divider />
       <List>
-        {['Followed Employer', 'Comment History'].map((text, index) => (
-          <ListItem key={text} disablePadding onClick={index % 2 === 0 ? navigateFollowedEmployers : null}>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <VisibilityIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding onClick={navigateCommentHistory}>
+          <ListItemButton>
+            <ListItemIcon>
+              <CommentIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Comment History'} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );

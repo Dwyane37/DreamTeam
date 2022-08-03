@@ -34,6 +34,7 @@ export default function AddJobForm() {
   const [openSessionEdit, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [application, setApplication] = React.useState('');
   const [link, setLink] = React.useState('');
   const [datetime, setDatetime] = React.useState(new Date());
   const [sessions, setSessions] = React.useState([]);
@@ -61,6 +62,7 @@ export default function AddJobForm() {
       field: filter.field?.label || '', //e.g. Science
       working_right: right || '0', //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
       description: description, //e.g. text text text
+      application: application,
       meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
     };
     console.log(attr);
@@ -163,6 +165,17 @@ export default function AddJobForm() {
           label="Description"
           onChange={(e) => {
             setDescription(e.target.value);
+          }}
+        />
+        <p>Apply Method</p>
+        <TextareaAutosize
+          minRows={3}
+          maxRows={5}
+          placeholder="Apply method, e.g. email or link"
+          value={application}
+          label="Apply Method"
+          onChange={(e) => {
+            setApplication(e.target.value);
           }}
         />
       </Box>

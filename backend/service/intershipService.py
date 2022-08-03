@@ -11,7 +11,7 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
     "host": "127.0.0.1",
     "port": 3306,
     "user": "root",
-    "passwd": "123456",
+    "passwd": "zswjq997131",
     # "db": "Sleep_project1",
     "db": "intern",
     "charset": "utf8"
@@ -229,7 +229,7 @@ def get_wish_list(id):
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     sql = "SELECT db_internships.id, db_internships.title, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
           "LEFT JOIN db_resume_user_info on db_internships.user_id = db_resume_user_info.user_id " \
-          "where db_collection.user_id = {} ;".format(id)
+          "where db_collection.user_id = {} and db_collection.deleted = 0;".format(id)
     # res = db.session.query(Internship.id,Internship.title, Internship.user_id,
     #                        Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
     #     Collection.user_id == id,Collection.deleted==0).all()
@@ -239,9 +239,9 @@ def get_wish_list(id):
     conn.close()
     return result
 
-def delete_wishlist(id):
+def delete_wishlist(user_id,internship_id):
     try:
-        wishlist = Collection.query.get(id)
+        wishlist = Collection.query.filter_by(user_id=user_id,internship_id=internship_id).first()
         wishlist.deleted = 1
         db.session.commit()
     except Exception as e:
@@ -249,7 +249,7 @@ def delete_wishlist(id):
 
 def add_wishlist(id, internship_id):
     try:
-        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id,deleted=0).first()
+        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id).first()
         if wish is None:
             wish = Collection(id=getuuid(),
                      user_id=id,

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import SignInSide from './pages/SignIn';
 import SignUp from './pages/SignUpPage';
-// import RegisterPage from './pages/RegisterPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
@@ -12,6 +11,7 @@ import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
 import DashboardPage from './pages/DashboardPage';
 import SavedJobs from './pages/SavedJobs';
+import AppliedJobs from './pages/AppliedJobs';
 import ResumePage from './pages/ResumePage';
 import FollowPage from './pages/FollowPage';
 import { io } from 'socket.io-client';
@@ -38,6 +38,7 @@ function App() {
           <Route path="/editjob" element={<EditJobPage />} />
           <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
           <Route path="/saved-jobs" element={<SavedJobs socket={socket} />} />
+          <Route path="/applied-jobs" element={<AppliedJobs socket={socket} />} />
           <Route path="/" element={<WelcomePage />} />
           <Route path="/profile/:userId" element={<ResumePage socket={socket} />} />
           <Route path="/follow" element={<FollowPage socket={socket} />} />

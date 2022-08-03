@@ -43,9 +43,9 @@ export default function JobDetail(props) {
           <ul className="job-citizenship">
             {job.working_right
               .toString()
-              .split()
+              .split('')
               .map((item, idx) => (
-                <li key={idx}>{citizenship.filter((a) => a.id == item)[0].label}</li>
+                <li key={idx}>{citizenship[item - 1].label}</li>
               ))}
           </ul>
         </div>
@@ -89,9 +89,9 @@ export default function JobDetail(props) {
       </Paper>
 
       <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
-      <FAQ data={faqSample} />
-      <Divider variant="fullWidth" style={{ margin: '30px 0' }} />
-      <Comments internshipId={props.job.id} currentUserId="1" />
+      {/* <FAQ data={faqSample} />
+      <Divider variant="fullWidth" style={{ margin: '30px 0' }} /> */}
+      <Comments internshipId={props.job.id} currentUserId={sessionStorage.getItem('id')} />
     </div>
   );
 }

@@ -172,6 +172,7 @@ class Review(db.Model):
     deleted = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
+    parent_id = Column(String(255))
 
     def as_dict(obj):
         return dict((col.name, getattr(obj, col.name))
