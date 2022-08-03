@@ -20,7 +20,7 @@ const Comments = ({ internshipId, currentUserId }) => {
   const getReplies = (commentId) =>
     backendComments
       .filter((backendComment) => backendComment.parent_id === commentId)
-      .sort((a, b) => new Date(a.create_time).getTime() - new Date(b.create_time).getTime());
+      .sort((a, b) => new Date(a.update_time).getTime() - new Date(b.update_time).getTime());
 
   const addComment = (text, parentId) => {
     createCommentApi(text, internshipId, parentId).then((comment) => {
@@ -60,8 +60,8 @@ const Comments = ({ internshipId, currentUserId }) => {
 
   useEffect(() => {
     getCommentsApi(internshipId).then((data) => {
-      setBackendComments(Object.values(data));
-      const root = Object.values(data).filter((backendComment) => backendComment.parent_id === null);
+      setBackendComments(data.data);
+      const root = data.data.filter((backendComment) => backendComment.parent_id === null);
       setRootComments(root);
     });
   }, [change]);

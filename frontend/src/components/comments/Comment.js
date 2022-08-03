@@ -29,19 +29,19 @@ function Comment({
   const canModify = currentUserId === userId;
   const canReply = Boolean(currentUserId);
   const replyId = parentId ? parentId : comment.id;
-  const createdAt = new Date(comment.create_time).toLocaleDateString();
+  const createdAt = new Date(comment.update_time).toLocaleDateString();
   const navigateProfile = () => {
     navigate(`/profile/${userId}`);
   };
   return (
     <Grid className="comment" container wrap="wrap" spacing={2}>
       <Grid item onClick={navigateProfile}>
-        <Avatar alt="" src={comment.avatar} />
+        <Avatar alt="" src={comment.thumbnail} />
       </Grid>
       <Grid justifyContent="left" item xs zeroMinWidth>
         <div className="comment-header">
           <div className="comment-content">
-            <h4 className="comment-author">{comment.username}</h4>
+            <h4 className="comment-author">{comment.nickname || 'Unknown User'}</h4>
             <div>{createdAt}</div>
           </div>
 
