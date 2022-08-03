@@ -49,15 +49,19 @@ export default function SignUp() {
   const [profileInfo, setProfileInfo] = React.useState({ firstname: '', lastname: '', name: '', organisation: '' });
 
   const handleNext = (e) => {
-    setActiveStep(activeStep + 1);
-    if (e.target.value === 'Sign Up') {
-      apiPost('user/register', { ...signupInfo, type: accType })
+    if (activeStep === 2) {
+      apiPost('user/register', {
+        ...signupInfo,
+        type: accType,
+        nickname: profileInfo.name,
+        organisation: profileInfo.organisation,
+      })
         .then((body) => {
           console.log(body);
-          navigate('/login');
         })
         .catch((e) => alert(e));
     }
+    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
