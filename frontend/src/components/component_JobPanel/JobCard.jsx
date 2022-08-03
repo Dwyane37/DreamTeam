@@ -112,9 +112,10 @@ export default function JobCard(props) {
   const handleUnsave = (e) => {
     e.stopPropagation();
     const jobId = e.currentTarget.parentNode.parentNode.id;
-    apiGet('/internship/unsave', { internship_id: jobId, user_id: sessionStorage.getItem('id') }).then((d) =>
-      alert('You have unsaved the job')
-    );
+    apiGet('/internship/unsave', { internship_id: jobId, user_id: sessionStorage.getItem('id') }).then((d) => {
+      alert('You have unsaved the job');
+      window.location.reload(false);
+    });
 
     setSave(!save);
   };
