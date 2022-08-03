@@ -5,8 +5,12 @@ import Pagination from '@mui/material/Pagination';
 import Box from '@mui/material/Box';
 import './JobPanel.css';
 import usePagination from './usePagination';
-import { Dialog } from '@mui/material';
+import { Dialog, Button } from '@mui/material';
 import JobDetail from '../compopnent_JobDetail/JobDetail';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function getJobDetail(jobs, id) {
   const job = jobs.find((job) => job.id == id);
@@ -26,15 +30,52 @@ export default function JobPanel(props) {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [openApply, setOpenApply] = React.useState(false);
   const [jobId, setJobId] = React.useState(null);
 
   const handleClickOpen = (e) => {
+    console.log('open detail');
     setOpen(true);
     setJobId(e.currentTarget.id);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleApplyClose = () => {
+    setOpenApply(false);
+  };
+
+  const handleApply = (e) => {
+    // TODO Apply for the job
+    e.stopPropagation();
+    const jobId = e.currentTarget.parentNode.parentNode.id;
+    setJobId(jobId);
+    console.log('apply ' + jobId);
+    setOpenApply(true);
+    // TODO display apply method
+  };
+
+  const applyDialog = (jobId) => {
+    return (
+      <Dialog
+        open={openApply}
+        onClose={handleApplyClose}
+        aria-labelledby="apply-dialog-title"
+        aria-describedby="apply-dialog-description"
+      >
+        <DialogTitle id="apply-dialog-title">{'The apply method for the job is:'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="apply-dialog-description">APPLY METHOD GOES HERE</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleApplyClose} autoFocus>
+            Got it
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   };
 
   return (
@@ -60,6 +101,7 @@ export default function JobPanel(props) {
                 location={{ country: job.location, state: job.state, city: job.city }}
                 briefing={job.description}
                 hanldeClickOpen={handleClickOpen}
+                handleApply={handleApply}
                 socket={props.socket}
               />
             </Grid>
@@ -73,6 +115,7 @@ export default function JobPanel(props) {
       <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
         <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
       </Dialog>
+      {applyDialog(jobId)}
     </>
   );
 }

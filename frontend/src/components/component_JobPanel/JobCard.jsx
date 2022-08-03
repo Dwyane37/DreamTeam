@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
+
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -24,7 +24,7 @@ export default function JobCard(props) {
       case 'home':
         return (
           <CardActions className="job-card-action">
-            <Button size="small" onClick={handleApply} variant="outlined">
+            <Button size="small" onClick={props.handleApply} variant="outlined">
               Apply
             </Button>
             <div onClick={handleSave}>
@@ -36,7 +36,7 @@ export default function JobCard(props) {
       case 'saved':
         return (
           <CardActions className="job-card-action">
-            <Button size="small" variant="outlined" color="success" endIcon={<SendIcon />} onClick={handleApply}>
+            <Button size="small" variant="outlined" color="success" endIcon={<SendIcon />} onClick={props.handleApply}>
               Apply
             </Button>
 
@@ -79,17 +79,6 @@ export default function JobCard(props) {
         return null;
     }
   }
-
-  const handleApply = (e) => {
-    // TODO Apply for the job
-    e.stopPropagation();
-    console.log('apply');
-    props.socket?.emit('applyJob', {
-      senderName: sessionStorage.getItem('id'),
-      receiverName: '91272343673357427676270600691321',
-      jobID: 123,
-    });
-  };
 
   const handleSave = (e) => {
     // TODO Save the job
