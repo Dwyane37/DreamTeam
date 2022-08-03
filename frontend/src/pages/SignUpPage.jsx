@@ -57,11 +57,13 @@ export default function SignUp() {
         organisation: profileInfo.organisation,
       })
         .then((body) => {
+          setActiveStep(activeStep + 1);
           console.log(body);
         })
         .catch((e) => alert(e));
+    } else {
+      setActiveStep(activeStep + 1);
     }
-    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
