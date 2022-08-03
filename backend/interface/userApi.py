@@ -245,4 +245,7 @@ def checkfollow():
     data = {}
     data['type'] = type
     data['flag'] = flag
-    return data
+    message = errorMessage(200, data)
+    # deco = jwt.decode(token,
+    #                   token_key, algorithms='HS256', options={"varify_signature": False})
+    return json.dumps(message, default=lambda obj: obj.__dict__)
