@@ -14,6 +14,7 @@ import NavBar from '../components/component_NavBar/NavBar';
 import { apiGet, apiPost } from '../components/API';
 import JobPanel from '../components/component_JobPanel/JobPanel';
 import { useParams, useLocation } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 
 // import { getResume, submitResume } from '../../api/resume';
 
@@ -177,8 +178,8 @@ function ResumePage({ socket }) {
 
   useEffect(() => {
     apiGet('user/getResume', { resumeId }).then((res) => {
-      console.log(res.data);
-      setResumeData(res.data.data);
+      console.log(res.errormessage);
+      setResumeData(res.errormessage);
     });
   }, []);
 
@@ -226,9 +227,12 @@ function ResumePage({ socket }) {
   };
 
   const submit = () => {
-    apiPost('user/submitResume', { resumeid: id, resume: resumeData }).then((res) => {
-      console.log('提交成功');
-    });
+    console.log(resumeData);
+    apiPost('user/submitResume', { resumeid: id, resume: resumeData })
+      .then((res) => {
+        console.log('success');
+      })
+      .catch((e) => console.error(e));
   };
 
   const cancel = () => {
@@ -246,12 +250,13 @@ function ResumePage({ socket }) {
         reader.readAsDataURL(file);
         reader.onload = function (e) {
           let data = e.target.result;
-          apiPost('/api/upload_image', {
+          apiPost('user/upload_image', {
             user_id: id,
             image_base64: data,
           }).then((res) => {
+            console.log(res);
             let temp = { ...resumeData };
-            temp.userInfo.thumbnail = res.data;
+            temp.userInfo.thumbnail = res.errormessage;
             setResumeData({ ...temp });
           });
         };
@@ -379,14 +384,15 @@ function ResumePage({ socket }) {
             </Button>
           </div>
           <div className="content">
-            <img
-              src={
-                resumeData.userInfo?.thumbnail || 'https://pic4.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg'
-              }
-              alt=""
-              className="avatar"
+            <Avatar
+              variant="square"
+              alt="profile image"
+              src={resumeData.userInfo?.thumbnail}
               onClick={uploadAvatar}
+              className="avatar"
+              sx={{ width: 56, height: 56 }}
             />
+
             <div className="info_wrap">
               <div className="info_item">Full Name: {resumeData.userInfo?.name || 'n/a'}</div>
 
