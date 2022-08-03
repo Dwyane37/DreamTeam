@@ -305,7 +305,7 @@ def get_apply_list(id):
 def addNewjob(inputs):
     try:
         id = getuuid()
-        newJob = Internship(id=id, title=inputs.title, field=inputs.field, location=inputs.location,
+        newJob = Internship(id=id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
@@ -319,12 +319,15 @@ def addNewjob(inputs):
 
 def deletejob(inputs):
     try:
-        Job = Internship(id=inputs.id, title=inputs.title, field=inputs.field, location=inputs.location,
+        Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=1, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old job
+        Internship.query.filter_by(id=inputs.id).delete()
+        # add new job (deleted=1)
         db.session.add(Job)
         db.session.commit()
         return errorMessage(200, id)
@@ -333,12 +336,15 @@ def deletejob(inputs):
 
 def editjob(inputs):
     try:
-        Job = Internship(id=inputs.id, title=inputs.title, field=inputs.field, location=inputs.location,
+        Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old job
+        Internship.query.filter_by(id=inputs.id).delete()
+        # add new job
         db.session.add(Job)
         db.session.commit()
         return errorMessage(200, id)
@@ -370,6 +376,9 @@ def deletemeeting(inputs):
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old info
+        Meeting.query.filter_by(id=inputs.id).delete()
+        # add new info
         db.session.add(meeting)
         db.session.commit()
         return errorMessage(200, id)
@@ -385,8 +394,32 @@ def editmeeting(inputs):
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old info
+        Meeting.query.filter_by(id=inputs.id).delete()
+        # add new info
         db.session.add(meeting)
         db.session.commit()
         return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getmeetingsbyjobid(id):
+    try:
+        meetings = Meeting.query.filter_by(internship_id=id, deleted=0).all()
+        return meetings
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getmeeting(id):
+    try:
+        meeting = Meeting.query.filter_by(id=id, deleted=0).first
+        return meeting
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getinternsbyuserid(user_id):
+    try:
+        internships = Internship.query.filter_by(user_id=user_id, deleted=0).all()
+        return internships
     except Exception as e:
         return errorMessage(1, e)

@@ -45,6 +45,7 @@ class Internship(db.Model):
     # He
     description = Column(String(1000))
     working_right = Column(Integer)
+    company = Column(String(255))
 
     def __repr__(self):
         return '<Internship %r>' % self.id
