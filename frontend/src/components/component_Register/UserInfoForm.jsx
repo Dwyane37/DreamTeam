@@ -6,10 +6,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function ProfileInfo({ state, label }) {
-  const [name, setName] = React.useState({ firstname: '', lastname: '' });
   React.useEffect(() => {
-    state[1]({ ...state[0], name: `${name.firstname} ${name.lastname}` });
-  }, [name]);
+    state[1]({ ...state[0], name: `${state[0].firstname} ${state[0].lastname}` });
+  }, [state[0].firstname, state[0].lastname]);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -22,12 +21,12 @@ export default function ProfileInfo({ state, label }) {
             id="firstName"
             name="firstName"
             label="First name"
-            value={name.firstname}
+            value={state[0].name.split(' ')[0]}
             fullWidth
             autoComplete="given-name"
             variant="standard"
             onChange={(e) => {
-              setName({ ...name, firstname: e.target.value });
+              state[1]({ ...state[0], firstname: e.target.value });
             }}
           />
         </Grid>
@@ -37,12 +36,12 @@ export default function ProfileInfo({ state, label }) {
             id="lastName"
             name="lastName"
             label="Last name"
-            value={name.lastname}
+            value={state[0].name.split(' ')[1]}
             fullWidth
             autoComplete="family-name"
             variant="standard"
             onChange={(e) => {
-              setName({ ...name, lastname: e.target.value });
+              state[1]({ ...state[0], lastname: e.target.value });
             }}
           />
         </Grid>
@@ -52,7 +51,7 @@ export default function ProfileInfo({ state, label }) {
             id="organisation"
             name="organisation"
             label={label}
-            value={name.organisation}
+            value={state[0].organisation}
             fullWidth
             autoComplete="Organisation"
             variant="standard"

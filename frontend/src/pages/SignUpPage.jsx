@@ -46,7 +46,7 @@ export default function SignUp() {
 
   const [accType, setType] = React.useState('');
   const [signupInfo, setSignupInfo] = React.useState({ username: '', email: '', password: '' });
-  const [profileInfo, setProfileInfo] = React.useState({ name: '', organisation: '' });
+  const [profileInfo, setProfileInfo] = React.useState({ firstname: '', lastname: '', name: '', organisation: '' });
 
   const handleNext = (e) => {
     setActiveStep(activeStep + 1);
