@@ -33,6 +33,7 @@ export default function AddJobForm() {
   const [filter, setFilter] = React.useState(initFilter);
   const [openSessionEdit, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
+  const [company, setCompany] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [application, setApplication] = React.useState('');
   const [link, setLink] = React.useState('');
@@ -54,15 +55,16 @@ export default function AddJobForm() {
     e.preventDefault();
     const right = processCitizenshipArray(filter.citizenship);
     const attr = {
-      id: sessionStorage.getItem('id'),
+      user_id: sessionStorage.getItem('id'),
       title: title,
+      company: company,
       location: filter.country?.name || '', //e.g. "Australie"
       state: filter.state?.name || '', // e.g. "New Southe Wales"
       city: filter.city?.name || '', // e.g. Sydney
       field: filter.field?.label || '', //e.g. Science
       working_right: right || '0', //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
       description: description, //e.g. text text text
-      application: application,
+      apply_method: application,
       meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
     };
     console.log(attr);
@@ -150,6 +152,17 @@ export default function AddJobForm() {
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
+            }}
+          />
+        </FormControl>
+        <FormControl variant="standard">
+          <TextField
+            label="Company:"
+            variant="standard"
+            id="job_company"
+            value={company}
+            onChange={(e) => {
+              setCompany(e.target.value);
             }}
           />
         </FormControl>
