@@ -130,6 +130,7 @@ export default function JobCard(props) {
     e.stopPropagation();
     const jobID = e.currentTarget.id;
     console.log('delete');
+    apiPost('internship/del_internship', { id: jobID }).then((d) => console.log(d));
   };
 
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
