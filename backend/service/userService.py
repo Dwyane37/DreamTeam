@@ -311,3 +311,22 @@ def save_image_from_base64(user_id, base64_string):
     thumbnail_file_file = thumbnail_file_dir + f'/{user_id}.{base64_string[:20].split(";")[0].split("/")[-1]}'
     image.save(thumbnail_file_file)
     return errorMessage(200, "/user/" + thumbnail_file_file)
+
+def getUserIdentity(user_id):
+    try:
+        user = User.query.get(user_id)
+        return user.type
+
+    except Exception as e:
+        print(e)
+
+def checkIfFollow(id,user_id):
+    try:
+        follow = Follow.query.filter_by(following_id=user_id,follower_id=id).first()
+        if follow is None:
+            return False
+        else:
+            return True
+
+    except Exception as e:
+        print(e)

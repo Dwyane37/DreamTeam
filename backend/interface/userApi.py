@@ -235,3 +235,14 @@ def follower():
     # update 7.24: 修改返回结果格式
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+@user_opt.route("/checkfollow", methods=['GET'])
+def checkfollow():
+    id = request.values.get("id")
+    user_id = request.values.get("user_id")
+
+    type = getUserIdentity(user_id)
+    flag = checkIfFollow(id,user_id)
+    data = {}
+    data['type'] = type
+    data['flag'] = flag
+    return data
