@@ -151,7 +151,6 @@ export default function JobCard(props) {
         </Typography>
       </CardContent>
       {getCardAction(props.type)}
-      {/* </Card> */}
     </Paper>
   );
 }

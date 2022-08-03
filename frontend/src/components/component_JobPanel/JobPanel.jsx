@@ -40,7 +40,7 @@ export default function JobPanel(props) {
   return (
     <>
       <div className="job-panel">
-        <Grid container spacing={{ md: 3 }}>
+        <Grid container spacing={3}>
           {handleData.currentData().map((job, idx) => (
             <Grid
               item
