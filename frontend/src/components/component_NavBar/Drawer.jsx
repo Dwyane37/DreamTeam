@@ -39,10 +39,10 @@ export default function SideDrawer() {
     navigate('/saved-jobs');
   };
 
-  const navigateApplications = () => {
-    setState(false);
-    navigate('/applied-jobs');
-  };
+  // const navigateApplications = () => {
+  //   setState(false);
+  //   navigate('/applied-jobs');
+  // };
 
   const navigateCommentHistory = () => {
     setState(false);
@@ -61,14 +61,14 @@ export default function SideDrawer() {
               <ListItemText primary={'Saved Jobs'} />
             </ListItemButton>
           </ListItem>
-          <ListItem id="applied-job" disablePadding onClick={navigateApplications}>
+          {/* <ListItem id="applied-job" disablePadding onClick={navigateApplications}>
             <ListItemButton>
               <ListItemIcon>
                 <OutboxIcon />
               </ListItemIcon>
               <ListItemText primary={'Applied Jobs'} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
           <ListItem id="followed-employer" disablePadding onClick={navigateFollowedEmployers}>
             <ListItemButton>
               <ListItemIcon>
