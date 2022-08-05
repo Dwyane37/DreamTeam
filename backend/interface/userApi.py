@@ -27,6 +27,8 @@ def register():
     password = data['password']
     email = data['email']
     type = data['type']
+    nickname = data['nickname']
+    organisation = data['organisation']
     if type == 'student':
         type = 0
     else:
@@ -37,6 +39,8 @@ def register():
         return json.dumps(message, default=lambda obj: obj.__dict__)
     user = User(username=username, password=password, email=email,type=type)
     mesvalue = registerNewAccount(user)
+    resume = ResumeUser(user_id=mesvalue.errormessage, name=nickname, email=email, university=organisation)
+    addresume(resume)
     start_date = time.time() + 360000
     id = mesvalue.errormessage
     mes = {'id': id, 'exp': start_date}
@@ -231,3 +235,17 @@ def follower():
     # update 7.24: 修改返回结果格式
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+@user_opt.route("/checkfollow", methods=['GET'])
+def checkfollow():
+    id = request.values.get("id")
+    user_id = request.values.get("user_id")
+
+    type = getUserIdentity(user_id)
+    flag = checkIfFollow(id,user_id)
+    data = {}
+    data['type'] = type
+    data['flag'] = flag
+    message = errorMessage(200, data)
+    # deco = jwt.decode(token,
+    #                   token_key, algorithms='HS256', options={"varify_signature": False})
+    return json.dumps(message, default=lambda obj: obj.__dict__)

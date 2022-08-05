@@ -11,13 +11,12 @@ class User(db.Model):
     username = Column(String(255), nullable=False)
     password = Column(String(255), nullable=False)
     mobile = Column(Integer)
-    nickname = Column(String(255))
     type = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
     email = Column(String(255))
     deleted = Column(Integer)
-
+    nickname = Column(String(255))
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -41,9 +40,11 @@ class Internship(db.Model):
     field = Column(String(255))
     state = Column(String(255))
     city = Column(String(255))
+    applychannel = Column(String(1000))
     # He
     description = Column(String(1000))
     working_right = Column(Integer)
+    company = Column(String(255))
 
     def __repr__(self):
         return '<Internship %r>' % self.id
@@ -162,12 +163,15 @@ class Follow(db.Model):
 class Review(db.Model):
     __tablename__ = 'db_review'
     id = Column(String(255), primary_key=True)
-    user_id = Column(String(255))
-    internship_id = Column(String(255))
+    user_id = Column(String(255), ForeignKey(User.id))
+    internship_id = Column(String(255), ForeignKey(Internship.id))
+    # user_id = Column(String(255))
+    # internship_id = Column(String(255))
     content = Column(String(1000))
     deleted = Column(Integer)
     create_time = Column(TIMESTAMP)
     update_time = Column(TIMESTAMP)
+    parent_id = Column(String(255))
 
     def as_dict(obj):
         return dict((col.name, getattr(obj, col.name))

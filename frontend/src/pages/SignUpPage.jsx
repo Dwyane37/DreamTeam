@@ -19,29 +19,16 @@ import SelectAccount from '../components/component_Register/SelectAccount';
 import { useNavigate } from 'react-router-dom';
 import { apiPost } from '../components/API';
 
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         I-Student
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
 const steps = ['Select account type', 'Register your account', 'Enter your details'];
 
-function getStepContent(step, [state1, state2, state3]) {
+function getStepContent(step, [state1, state2, state3], accType) {
   switch (step) {
     case 0:
       return <SelectAccount state={state1} />;
     case 1:
       return <SignUpForm state={state2} />;
     case 2:
-      return <ProfileInfo state={state3} />;
+      return <ProfileInfo state={state3} label={accType === 'student' ? 'University' : 'Company'} />;
     default:
       throw new Error('Unknown step');
   }
@@ -59,17 +46,23 @@ export default function SignUp() {
 
   const [accType, setType] = React.useState('');
   const [signupInfo, setSignupInfo] = React.useState({ username: '', email: '', password: '' });
-  const [profileInfo, setProfileInfo] = React.useState({ name: '', school: '', major: '' });
+  const [profileInfo, setProfileInfo] = React.useState({ firstname: '', lastname: '', name: '', organisation: '' });
 
   const handleNext = (e) => {
-    setActiveStep(activeStep + 1);
-    if (e.target.value === 'Sign Up') {
-      apiPost('user/register', { ...signupInfo, type: accType })
+    if (activeStep === 2) {
+      apiPost('user/register', {
+        ...signupInfo,
+        type: accType,
+        nickname: profileInfo.name,
+        organisation: profileInfo.organisation,
+      })
         .then((body) => {
+          setActiveStep(activeStep + 1);
           console.log(body);
-          navigate('/login');
         })
         .catch((e) => alert(e));
+    } else {
+      setActiveStep(activeStep + 1);
     }
   };
 
@@ -80,7 +73,8 @@ export default function SignUp() {
   React.useEffect(() => {
     console.log(accType);
     console.log(signupInfo);
-  }, [accType, signupInfo]);
+    console.log(profileInfo);
+  }, [accType, signupInfo, profileInfo]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -129,11 +123,15 @@ export default function SignUp() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep, [
-                  [accType, setType],
-                  [signupInfo, setSignupInfo],
-                  [profileInfo, setProfileInfo],
-                ])}
+                {getStepContent(
+                  activeStep,
+                  [
+                    [accType, setType],
+                    [signupInfo, setSignupInfo],
+                    [profileInfo, setProfileInfo],
+                  ],
+                  accType
+                )}
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

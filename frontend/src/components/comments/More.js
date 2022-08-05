@@ -35,14 +35,6 @@ export default function More({ handleEdit, handleDelete, id }) {
       >
         <MenuItem
           onClick={() => {
-            handleEdit({ id: id, type: 'editing' });
-            setAnchorEl(null);
-          }}
-        >
-          Edit
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
             handleDelete(id);
             setAnchorEl(null);
           }}

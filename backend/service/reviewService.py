@@ -18,12 +18,13 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
 }
 
 
-def review_internship(id,review,internship_id):
+def review_internship(id,review,internship_id,parent_id):
     try:
         newReview = Review(id=getuuid(), user_id=id,
                            internship_id=internship_id,
                            content=review,
                            deleted=0,
+                           parent_id=parent_id,
                            create_time=getTime(datetime),
                            update_time=getTime(datetime))
         db.session.add(newReview)
@@ -35,6 +36,10 @@ def delete_review(id):
     try:
         review = Review.query.get(id)
         review.deleted = 1
+        res = Review.query.filter_by(parent_id=id).all()
+        if res is not None:
+            for rev in res:
+                delete_review(rev.id)
         db.session.commit()
     except Exception as e:
         print(e)
@@ -52,14 +57,19 @@ def getAllReviewsById(id):
     except Exception as e:
         print(e)
 
-# def getMovieReviewById(id):
-#     try:
-#
-#         res = Review.query.filter_by(movie_id=id).all()
-#         return res
-#
-#     except Exception as e:
-#         print(e)
+
+
+def getInternReviewById(id):
+    try:
+        res = db.session.query(Review.id,Review.user_id,Review.internship_id,Review.content,Review.update_time,Review.parent_id,
+                         ResumeUser.name, ResumeUser.thumbnail).outerjoin(Internship,Review.internship_id == Internship.id).outerjoin(
+            ResumeUser,ResumeUser.user_id == Review.user_id
+        ).filter(Internship.id==id)
+        # res = Review.query.filter_by(internship_id=id).all()
+        return res
+
+    except Exception as e:
+        print(e)
 #
 # def changelike(id, review_id):
 #     try:

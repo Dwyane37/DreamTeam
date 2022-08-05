@@ -106,13 +106,15 @@ def add():
     deco = jwt.decode(token, token_key, algorithms='HS256')
     id = deco['id']
     internship_id = request.values.get('internship')
+    print(id,internship_id)
     add_wishlist(id, internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
 @internship_opt.route('/unsave', methods=['GET'])
 def delete():
-    id = request.values.get("wishlist_id")
-    delete_wishlist(id)
+    user_id = request.values.get("user_id")
+    internship_id = request.values.get("internship_id")
+    delete_wishlist(user_id,internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
 @internship_opt.route("/getuserwishlist", methods=["GET"])
@@ -123,9 +125,9 @@ def getuserwishlist():
     # dict['data'] = res
     print(res)
     # res = [dict(zip(r.keys(),r)) for r in res]
-    res = [dict(zip(result.keys(), result)) for result in res]
-    for i in res:
-        print(i)
+    # res = [dict(zip(result.keys(), result)) for result in res]
+    # for i in res:
+    #     print(i)
     data = {}
     data['data'] = res
     data['errortype'] = 200
@@ -157,11 +159,14 @@ def getapplylist():
     data['errortype'] = 200
     return data
 
+
 # He
 @internship_opt.route("/add_internship", methods=['Post'], endpoint='add_internship')
 def add_internship():
     data = json.loads(request.data)
+    user_id = data['user_id']
     title = data['title']
+    company = data['company']
     field = data['field']
     location = data['location']
     state = data['state']
@@ -169,24 +174,11 @@ def add_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
-    if working_right == 'international student':
-        working_right = 0
-    else:
-        working_right = 1
-    internship = Internship(title=title, field=field, location=location, state=state, city=city,
+    internship = Internship(title=title, user_id=user_id, company=company, field=field, location=location, state=state,
+                            city=city,
                             working_right=working_right, description=description,
-                           )
+                            )
     mesvalue = addNewjob(internship)
-
-    # add meetings
-    for meeting in meetings:
-        datetime = meeting['datetime']
-        link = meeting['link']
-        meeting = Meeting(intership_id=id,
-                           datetime=datetime, link=link,
-                           deleted=0,
-                           )
-        save_meeting=addmeeting(meeting)
 
     start_date = time.time() + 3600
     id = mesvalue.errormessage
@@ -195,6 +187,15 @@ def add_internship():
     data = {}
     data['id'] = id
 
+    # add meetings
+    for meeting in meetings:
+        datetime = meeting['datetime']
+        link = meeting['link']
+        meeting = Meeting(intership_id=id,
+                          datetime=datetime, link=link,
+                          deleted=0,
+                          )
+        save_meeting = addmeeting(meeting)
 
     data['token'] = token
     message = errorMessage(200, data)
@@ -208,6 +209,8 @@ def add_internship():
 def edit_internship():
     data = json.loads(request.data)
     id = data['id']
+    company = data['company']
+    user_id = data['user_id']
     title = data['title']
     field = data['field']
     location = data['location']
@@ -216,13 +219,10 @@ def edit_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
-    if working_right == 'international student':
-        working_right = 0
-    else:
-        working_right = 1
-    internship = Internship(id=id, title=title, field=field, location=location, state=state, city=city,
-                           working_right=working_right, description=description,
-                           )
+    internship = Internship(id=id, user_id=user_id, company=company, title=title, field=field, location=location,
+                            state=state, city=city,
+                            working_right=working_right, description=description,
+                            )
     mesvalue = editjob(internship)
 
     # add meetings
@@ -230,10 +230,10 @@ def edit_internship():
         datetime = meeting['datetime']
         link = meeting['link']
         meeting = Meeting(intership_id=id,
-                             datetime=datetime, link=link,
-                             deleted=0,
-                             create_time=getTime(datetime),
-                             update_time=getTime(datetime))
+                          datetime=datetime, link=link,
+                          deleted=0,
+                          create_time=getTime(datetime),
+                          update_time=getTime(datetime))
         save_meeting = editmeeting(meeting)
     start_date = time.time() + 3600
     id = mesvalue.errormessage
@@ -254,23 +254,21 @@ def edit_internship():
 def del_internship():
     data = json.loads(request.data)
     id = data['id']
-    title = data['title']
-    field = data['field']
-    location = data['location']
-    state = data['state']
-    city = data['city']
-    working_right = data['working_right']
-    description = data['description']
-    meetings = data['meeting']
-    if working_right == 'international student':
-        working_right = 0
-    else:
-        working_right = 1
-    internship = Internship(id=id, title=title, field=field, location=location, state=state, city=city,
-                           working_right=working_right, description=description,
-                            )
-    mesvalue =deletejob(internship)
+    # title = data['title']
+    # field = data['field']
+    # location = data['location']
+    # state = data['state']
+    # city = data['city']
+    # working_right = data['working_right']
+    # description = data['description']
+    # meetings = data['meeting']
+    # internship = Internship(id=id, title=title, field=field, location=location, state=state, city=city,
+    #                        working_right=working_right, description=description,
+    #                         )
+    internship = searchJobById(id)
+    mesvalue = deletejob(internship)
     # del meetings
+    meetings = getmeetingsbyjobid(id)
     for meeting in meetings:
         datetime = meeting['datetime']
         link = meeting['link']
@@ -280,7 +278,9 @@ def del_internship():
                           create_time=getTime(datetime),
                           update_time=getTime(datetime))
         save_meeting = deletemeeting(meeting)
+
     start_date = time.time() + 3600
+    id = mesvalue.errormessage
     mes = {'id': id, 'exp': start_date}
     token = jwt.encode(mes, token_key, algorithm='HS256')
     data = {}
@@ -315,4 +315,15 @@ def del_meeting():
     # exptime = deco['exp']
 
     return json.dumps(message, default=lambda obj: obj.__dict__)
+
+
+@internship_opt.route("/get_all_intern", methods=['Get'], endpoint='get_all_intern')
+def get_all_intern():
+    data = json.loads(request.data)
+    user_id = data['user_id']
+    internships = getinternsbyuserid(user_id)
+    # add info session
+    for internship in internships:
+        internship['meetings'] = getmeetingsbyjobid(internship['id'])
+    return internships
 

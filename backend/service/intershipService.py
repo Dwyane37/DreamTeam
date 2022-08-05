@@ -7,6 +7,15 @@ from data.models import *
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
+DB_CONFIG = { #---根据在你电脑上的schema名字改
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "root",
+    "passwd": "zswjq997131",
+    # "db": "Sleep_project1",
+    "db": "intern",
+    "charset": "utf8"
+}
 def init():
     res = Internship.query.filter_by(deleted=0).order_by(desc("update_time")).all()
     for e in res:
@@ -171,7 +180,7 @@ def getRecommJobs(resume):
         list.append(temp.lower())
     descrip = field + " " + aim + " " + intro + " "
     descrip = descrip.lower()
-    recomm_index = get_recomm(descrip,list,5)
+    recomm_index = get_recomm(descrip,list,10)
     return_lst = [res[i-1] for i in recomm_index]
     return return_lst
 
@@ -192,7 +201,7 @@ def get_recomm(descrip,soup,num):
 def getCurrentJobs():
     try:
         res = Internship.query.order_by(desc(Internship.update_time)).all()
-        res = res[:10]
+        res = res[:5]
         return res
 
     except Exception as e:
@@ -201,7 +210,7 @@ def getCurrentJobs():
 def getHotJobs():
     try:
         res = Internship.query.order_by(Internship.view)
-        res = res[:10]
+        res = res[:5]
         return res
 
     except Exception as e:
@@ -209,14 +218,30 @@ def getHotJobs():
 
 def get_wish_list(id):
     # Movie.query.join(Wishlist).filter()
-    res = db.session.query(Internship.title, Collection.internship_id, Internship.user_id,
-                           Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
-        Collection.user_id == id,Collection.deleted==0).all()
-    return res
+    conn = pymysql.connect(
+        host=DB_CONFIG["host"],
+        port=DB_CONFIG["port"],
+        user=DB_CONFIG["user"],
+        passwd=DB_CONFIG["passwd"],
+        db=DB_CONFIG["db"],
+        charset=DB_CONFIG["charset"]
+    )
+    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+    sql = "SELECT db_internships.id, db_internships.title, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
+          "LEFT JOIN db_resume_user_info on db_internships.user_id = db_resume_user_info.user_id " \
+          "where db_collection.user_id = {} and db_collection.deleted = 0;".format(id)
+    # res = db.session.query(Internship.id,Internship.title, Internship.user_id,
+    #                        Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
+    #     Collection.user_id == id,Collection.deleted==0).all()
+    # return res
+    cursor.execute(sql)  # ASC
+    result = cursor.fetchall()
+    conn.close()
+    return result
 
-def delete_wishlist(id):
+def delete_wishlist(user_id,internship_id):
     try:
-        wishlist = Collection.query.get(id)
+        wishlist = Collection.query.filter_by(user_id=user_id,internship_id=internship_id).first()
         wishlist.deleted = 1
         db.session.commit()
     except Exception as e:
@@ -224,7 +249,7 @@ def delete_wishlist(id):
 
 def add_wishlist(id, internship_id):
     try:
-        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id)
+        wish = Collection.query.filter_by(user_id=id, internship_id=internship_id).first()
         if wish is None:
             wish = Collection(id=getuuid(),
                      user_id=id,
@@ -280,7 +305,7 @@ def get_apply_list(id):
 def addNewjob(inputs):
     try:
         id = getuuid()
-        newJob = Internship(id=id, title=inputs.title, field=inputs.field, location=inputs.location,
+        newJob = Internship(id=id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
@@ -294,12 +319,15 @@ def addNewjob(inputs):
 
 def deletejob(inputs):
     try:
-        Job = Internship(id=inputs.id, title=inputs.title, field=inputs.field, location=inputs.location,
+        Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=1, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old job
+        Internship.query.filter_by(id=inputs.id).delete()
+        # add new job (deleted=1)
         db.session.add(Job)
         db.session.commit()
         return errorMessage(200, id)
@@ -308,12 +336,15 @@ def deletejob(inputs):
 
 def editjob(inputs):
     try:
-        Job = Internship(id=inputs.id, title=inputs.title, field=inputs.field, location=inputs.location,
+        Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old job
+        Internship.query.filter_by(id=inputs.id).delete()
+        # add new job
         db.session.add(Job)
         db.session.commit()
         return errorMessage(200, id)
@@ -345,6 +376,9 @@ def deletemeeting(inputs):
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old info
+        Meeting.query.filter_by(id=inputs.id).delete()
+        # add new info
         db.session.add(meeting)
         db.session.commit()
         return errorMessage(200, id)
@@ -360,8 +394,32 @@ def editmeeting(inputs):
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        # delete old info
+        Meeting.query.filter_by(id=inputs.id).delete()
+        # add new info
         db.session.add(meeting)
         db.session.commit()
         return errorMessage(200, id)
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getmeetingsbyjobid(id):
+    try:
+        meetings = Meeting.query.filter_by(internship_id=id, deleted=0).all()
+        return meetings
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getmeeting(id):
+    try:
+        meeting = Meeting.query.filter_by(id=id, deleted=0).first
+        return meeting
+    except Exception as e:
+        return errorMessage(1, e)
+
+def getinternsbyuserid(user_id):
+    try:
+        internships = Internship.query.filter_by(user_id=user_id, deleted=0).all()
+        return internships
     except Exception as e:
         return errorMessage(1, e)

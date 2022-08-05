@@ -1,75 +1,70 @@
-import React, { useState } from 'react'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import React, { useState } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-import './my-dialog.css'
+import './my-dialog.css';
 
 function MyDialog(props) {
-  const { config } = props
+  const { config } = props;
 
-  const temp = {}
+  const temp = {};
   config.forEach((element) => {
-    temp[element.label] = ''
-  })
+    temp[element.label] = '';
+  });
 
-  const [inputData, setInputData] = useState([temp, ...props.data])
+  const [inputData, setInputData] = useState([temp, ...props.data]);
 
   const handleInput = (e, name, index) => {
-    inputData[index][name] = e.target.value
-    setInputData(inputData)
-  }
+    inputData[index][name] = e.target.value;
+    setInputData(inputData);
+  };
 
   const deleteItem = (index) => {
-    const tempData = [...inputData]
-    tempData.splice(index, 1)
-    setInputData([...tempData])
-    props.deleteItem(index)
-  }
+    const tempData = [...inputData];
+    tempData.splice(index, 1);
+    setInputData([...tempData]);
+    props.deleteItem(index);
+  };
 
   const addItem = (name) => {
-    const tempData = [...inputData]
-    tempData.unshift(temp)
-    setInputData([...tempData])
-  }
+    const tempData = [...inputData];
+    tempData.unshift(temp);
+    setInputData([...tempData]);
+  };
 
   const cancel = () => {
-    props.cancel()
-  }
+    props.cancel();
+  };
   const save = () => {
     const temp = inputData.filter((item) => {
-      let flag = false
+      let flag = false;
       Object.keys(item).forEach((key) => {
-        console.log(item[key])
+        console.log(item[key]);
         if (item[key]) {
-          flag = true
+          flag = true;
         }
-      })
-      return flag
-    })
+      });
+      return flag;
+    });
 
-    props.save(temp)
-  }
-  console.log(props.type)
+    props.save(temp);
+  };
+  console.log(props.type);
   return (
-    <div className='my_dialog'>
+    <div className="my_dialog">
       {inputData.map((element, index) => (
-        <div className='form' key={index}>
+        <div className="form" key={index}>
           {props.type !== 'userInfo' ? (
-            <div className='opearte'>
-              <Button
-                className='add'
-                variant='contained'
-                size='small'
-                onClick={() => addItem()}
-              >
+            <div className="opearte">
+              <Button className="add" variant="contained" size="small" onClick={() => addItem()}>
                 add
               </Button>
               {index ? (
                 <Button
-                  className='delete'
-                  variant='contained'
-                  size='small'
-                  color='error'
+                  className="delete"
+                  variant="contained"
+                  size="small"
+                  color="error"
                   onClick={() => deleteItem(index)}
                 >
                   delete
@@ -83,42 +78,31 @@ function MyDialog(props) {
           )}
           {config.map((item, idx) => {
             return (
-              <div className='form_item' key={item.label}>
-                <div className='label'>{item.label}</div>
+              <div className="form_item" key={item.label}>
+                <div className="label">{item.label}</div>
                 <TextField
-                  className='input'
-                  size='small'
+                  className="input"
+                  size="small"
                   onChange={(e) => handleInput(e, item.label, index)}
                   fullWidth
                   defaultValue={element[item.label]}
                 />
               </div>
-            )
+            );
           })}
         </div>
       ))}
 
-      <div className='footer'>
-        <Button
-          className='cancel'
-          variant='contained'
-          size='small'
-          color='error'
-          onClick={() => cancel()}
-        >
+      <div className="footer">
+        <Button className="cancel" variant="contained" size="small" color="error" onClick={() => cancel()}>
           cancel
         </Button>
-        <Button
-          className='save'
-          variant='contained'
-          size='small'
-          onClick={() => save()}
-        >
+        <Button className="save" variant="contained" size="small" onClick={() => save()}>
           save
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
-export default MyDialog
+export default MyDialog;

@@ -2,7 +2,8 @@ import React from 'react';
 // import Grid from '@mui/material/Grid';
 // import Button from '@mui/material/Button';
 import { TextField, Button, Grid } from '@mui/material';
-
+import SchoolIcon from '@mui/icons-material/School';
+import BusinessIcon from '@mui/icons-material/Business';
 export default function SelectAccount({ state }) {
   const update = (e) => {
     state[1](e.target.id);
@@ -17,6 +18,7 @@ export default function SelectAccount({ state }) {
           style={{ padding: '2rem 5rem' }}
           variant={state[0] === 'student' ? 'contained' : 'outlined'}
           onClick={update}
+          endIcon={<SchoolIcon />}
         >
           student
         </Button>
@@ -28,6 +30,7 @@ export default function SelectAccount({ state }) {
           style={{ padding: '2rem 5rem' }}
           variant={state[0] === 'company' ? 'contained' : 'outlined'}
           onClick={update}
+          endIcon={<BusinessIcon />}
         >
           company
         </Button>

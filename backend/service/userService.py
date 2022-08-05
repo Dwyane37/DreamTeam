@@ -38,6 +38,10 @@ def registerNewAccount(inputs):
     except Exception as e:
         return errorMessage(1, e)
 
+def addresume(resume):
+    db.session.add(resume)
+    db.session.commit()
+
 def getLoginusertype(id):
     try:
         user = User.query.get(id)
@@ -158,7 +162,6 @@ def update_resume(user_id, resume):
         ResumeSkill.query.filter_by(user_id=user_id).delete()
         ResumeAward.query.filter_by(user_id=user_id).delete()
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
-
         # 插入新数据
         for user_info in resume["userInfo"]:
             db.session.add(ResumeUser(
@@ -169,7 +172,6 @@ def update_resume(user_id, resume):
                 thumbnail=user_info["thumbnail"],
                 user_id=user_id
             ))
-
         for education in resume["education"]:
             db.session.add(ResumeEducation(
                 university=education["university"],
@@ -224,6 +226,7 @@ def update_resume(user_id, resume):
     # update 7.24: 修改返回结果格式
         return errorMessage(200, "ok")
     except Exception as e:
+        print(e)
         return errorMessage(1, str(e))
 
 
@@ -308,3 +311,22 @@ def save_image_from_base64(user_id, base64_string):
     thumbnail_file_file = thumbnail_file_dir + f'/{user_id}.{base64_string[:20].split(";")[0].split("/")[-1]}'
     image.save(thumbnail_file_file)
     return errorMessage(200, "/user/" + thumbnail_file_file)
+
+def getUserIdentity(user_id):
+    try:
+        user = User.query.get(user_id)
+        return user.type
+
+    except Exception as e:
+        print(e)
+
+def checkIfFollow(id,user_id):
+    try:
+        follow = Follow.query.filter_by(following_id=user_id,follower_id=id).first()
+        if follow is None:
+            return False
+        else:
+            return True
+
+    except Exception as e:
+        print(e)

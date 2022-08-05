@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import './ResumePage.css'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import TextField from '@mui/material/TextField'
-import Education from '../components/resume_component/education'
-import WorkExperience from '../components/resume_component/work-experience'
-import ProjectExperience from '../components/resume_component/project-experience'
-import Skill from '../components/resume_component/skill'
-import Awards from '../components/resume_component/awards'
-import ProjectDisplay from '../components/resume_component/project-display'
-import MyDialog from '../components/resume_component/my-dialog'
-import NavBar from '../components/component_NavBar/NavBar'
-import { apiGet, apiPost } from '../components/API'
-import JobPanel from '../components/component_JobPanel/JobPanel'
-import { useParams, useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import './ResumePage.css';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
+import Education from '../components/resume_component/education';
+import WorkExperience from '../components/resume_component/work-experience';
+import ProjectExperience from '../components/resume_component/project-experience';
+import Skill from '../components/resume_component/skill';
+import Awards from '../components/resume_component/awards';
+import ProjectDisplay from '../components/resume_component/project-display';
+import MyDialog from '../components/resume_component/my-dialog';
+import NavBar from '../components/component_NavBar/NavBar';
+import { apiGet, apiPost } from '../components/API';
+import JobPanel from '../components/component_JobPanel/JobPanel';
+import { useParams, useLocation } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 
 // import { getResume, submitResume } from '../../api/resume';
 
@@ -25,350 +26,326 @@ function ResumePage({ socket }) {
     projectExperience: [],
     skills: [],
     awards: [],
-    projectDisplay: []
-  })
+    projectDisplay: [],
+  });
 
   const [dialogConfig, setDialogConfig] = useState({
     userInfo: [
       {
-        label: 'name',
+        label: 'Name',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'university',
+        label: 'University',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'email',
+        label: 'Email',
         required: false,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'introduction',
+        label: 'About',
         required: false,
-        type: 'text'
-      }
+        type: 'text',
+      },
     ],
     education: [
       {
-        label: 'university',
+        label: 'University',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'start',
+        label: 'Start',
         required: true,
-        type: 'date'
+        type: 'date',
       },
       {
-        label: 'end',
+        label: 'End',
         required: true,
-        type: 'date'
+        type: 'date',
       },
       {
-        label: 'faculty',
+        label: 'Faculty',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'major',
+        label: 'Major',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'grades',
+        label: 'Grades',
         required: true,
-        type: 'text'
-      }
+        type: 'text',
+      },
     ],
     workExperience: [
       {
-        label: 'company',
+        label: 'Company',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'position',
+        label: 'Position',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'start',
+        label: 'Start',
         required: true,
-        type: 'date'
+        type: 'date',
       },
       {
-        label: 'end',
+        label: 'End',
         required: true,
-        type: 'date'
+        type: 'date',
       },
       {
-        label: 'description',
+        label: 'Description',
         required: true,
-        type: 'text'
-      }
+        type: 'text',
+      },
     ],
     projectExperience: [
       {
-        label: 'name',
+        label: 'Title',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'start',
+        label: 'Start',
         required: true,
-        type: 'date'
+        type: 'date',
       },
       {
-        label: 'end',
+        label: 'End',
         required: true,
-        type: 'date'
+        type: 'date',
       },
       {
-        label: 'description',
+        label: 'Description',
         required: true,
-        type: 'text'
-      }
+        type: 'text',
+      },
     ],
     skills: [
       {
-        label: 'skill',
+        label: 'Skill',
         required: true,
-        type: 'text'
-      }
+        type: 'text',
+      },
     ],
     awards: [
       {
-        label: 'title',
+        label: 'Title',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'description',
+        label: 'Description',
         required: true,
-        type: 'text'
-      }
+        type: 'text',
+      },
     ],
     projectDisplay: [
       {
-        label: 'name',
+        label: 'Title',
         required: true,
-        type: 'text'
+        type: 'text',
       },
       {
-        label: 'link',
+        label: 'Link',
         required: true,
-        type: 'text'
-      }
-    ]
-  })
-  const [open, setOpen] = useState(false)
+        type: 'text',
+      },
+    ],
+  });
+  const [open, setOpen] = useState(false);
 
-  const [userInfo, setUserInfo] = useState({})
-  const [openUserInfo, setOpenUserInfo] = useState(false)
-  const [type, setType] = useState('false')
-  const id = sessionStorage.getItem('id')
-  const { state } = useLocation()
-  const resumeId = state?.followId
-  const params = useParams()
-  // const resumeId = params.userId
+  const [userInfo, setUserInfo] = useState({});
+  const [openUserInfo, setOpenUserInfo] = useState(false);
+  const [type, setType] = useState('false');
+  const id = sessionStorage.getItem('id');
+  const { state } = useLocation();
+  // const resumeId = state?.followId
+  const params = useParams();
+  const resumeId = params.userId;
 
   useEffect(() => {
-    apiGet('user/getResume?resumeId=' + id || resumeId, {}).then((res) => {
-      setResumeData(res.data.data)
-    })
-    apiGet('user/getinfo').then((res) => {
-      console.log(res.data)
-    })
-  }, [])
+    apiGet('user/getResume', { resumeId }).then((res) => {
+      console.log(res.errormessage);
+      setResumeData(res.errormessage);
+    });
+  }, []);
 
   const handleClose = () => {
-    setOpen(false)
-    setOpenUserInfo(false)
-  }
+    setOpen(false);
+    setOpenUserInfo(false);
+  };
 
   const edit = (type) => {
-    setOpen(true)
-    setType(type)
-  }
+    setOpen(true);
+    setType(type);
+  };
 
   const handleUserInput = (e, type) => {
-    let temp = { ...userInfo }
-    temp[type] = e.target.value
-    setUserInfo(temp)
-  }
+    let temp = { ...userInfo };
+    temp[type] = e.target.value;
+    setUserInfo(temp);
+  };
 
   const editUserInfo = (type) => {
-    setOpenUserInfo(true)
-  }
+    setOpenUserInfo(true);
+  };
 
   const saveUserInfo = () => {
-    console.log(userInfo)
-    const temp = { ...resumeData }
-    temp.userInfo = userInfo
-    setResumeData({ ...temp })
-    setOpenUserInfo(false)
-  }
+    console.log(userInfo);
+    const temp = { ...resumeData };
+    temp.userInfo = userInfo;
+    setResumeData({ ...temp });
+    setOpenUserInfo(false);
+  };
 
   const deleteItem = (index) => {
-    const tempData = { ...resumeData }
-    tempData[type].splice(index - 1, 1)
-    console.log(tempData)
-    setResumeData({ ...tempData })
-    console.log(tempData)
-  }
+    const tempData = { ...resumeData };
+    tempData[type].splice(index - 1, 1);
+    console.log(tempData);
+    setResumeData({ ...tempData });
+    console.log(tempData);
+  };
 
   const save = (data) => {
-    const temp = { ...resumeData }
-    temp[type] = data
-    setResumeData({ ...temp })
-    setOpen(false)
-  }
+    const temp = { ...resumeData };
+    temp[type] = data;
+    setResumeData({ ...temp });
+    setOpen(false);
+  };
 
   const submit = () => {
-    apiPost('user/submitResume', { resumeid: id, resume: resumeData }).then(
-      (res) => {
-        console.log('提交成功')
-      }
-    )
-  }
+    console.log(resumeData);
+    apiPost('user/submitResume', { resumeid: id, resume: resumeData })
+      .then((res) => {
+        console.log('success');
+      })
+      .catch((e) => console.error(e));
+  };
 
   const cancel = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const uploadAvatar = () => {
-    const inputEl = document.createElement('input')
-    inputEl.type = 'file'
-    inputEl.click()
+    const inputEl = document.createElement('input');
+    inputEl.type = 'file';
+    inputEl.click();
     inputEl.onchange = (e) => {
-      const file = e.target.files[0]
+      const file = e.target.files[0];
       if (!!file) {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onload = function (e) {
-          let data = e.target.result
-          apiPost('/api/upload_image', {
+          let data = e.target.result;
+          apiPost('user/upload_image', {
             user_id: id,
-            image_base64: data
+            image_base64: data,
           }).then((res) => {
-            let temp = { ...resumeData }
-            temp.userInfo.thumbnail = res.data
-            setResumeData({ ...temp })
-          })
-        }
+            console.log(res);
+            let temp = { ...resumeData };
+            temp.userInfo.thumbnail = res.errormessage;
+            setResumeData({ ...temp });
+          });
+        };
       }
-    }
-  }
+    };
+  };
 
   const handleFollow = () => {
     if (state.isFollow) {
       apiGet('user/following', { userId: id }).then((res) => {
-        alert('follow success')
-      })
+        alert('follow success');
+      });
     } else {
       apiGet('user/following', { userId: id }).then((res) => {
-        alert('unFollow success')
-      })
+        alert('unFollow success');
+      });
     }
-  }
+  };
 
   const student_resume = (
     <div>
-      <div className='education resume_item'>
-        <div className='header'>
+      <div className="education resume_item">
+        <div className="header">
           <span>Education</span>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={() => edit('education')}
-          >
+          <Button variant="contained" size="small" onClick={() => edit('education')}>
             edit
           </Button>
         </div>
-        <div className='content'>
+        <div className="content">
           <Education education={resumeData.education} />
         </div>
       </div>
-      <div className='work_experience resume_item'>
-        <div className='header'>
+      <div className="work_experience resume_item">
+        <div className="header">
           <span>Work Experience</span>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={() => edit('workExperience')}
-          >
+          <Button variant="contained" size="small" onClick={() => edit('workExperience')}>
             edit
           </Button>
         </div>
-        <div className='content'>
+        <div className="content">
           <WorkExperience workExperience={resumeData.workExperience} />
         </div>
       </div>
-      <div className='project_experience resume_item'>
-        <div className='header'>
+      <div className="project_experience resume_item">
+        <div className="header">
           <span>Project Experience</span>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={() => edit('projectExperience')}
-          >
+          <Button variant="contained" size="small" onClick={() => edit('projectExperience')}>
             edit
           </Button>
         </div>
-        <div className='content'>
+        <div className="content">
           <ProjectExperience projectExperience={resumeData.projectExperience} />
         </div>
       </div>
-      <div className='skill resume_item'>
-        <div className='header'>
+      <div className="skill resume_item">
+        <div className="header">
           <span>Skills</span>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={() => edit('skills')}
-          >
+          <Button variant="contained" size="small" onClick={() => edit('skills')}>
             edit
           </Button>
         </div>
-        <div className='content'>
+        <div className="content">
           <Skill skill={resumeData.skills} />
         </div>
       </div>
-      <div className='Awards resume_item'>
-        <div className='header'>
-          <span>awards</span>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={() => edit('awards')}
-          >
+      <div className="Awards resume_item">
+        <div className="header">
+          <span>Awards</span>
+          <Button variant="contained" size="small" onClick={() => edit('awards')}>
             edit
           </Button>
         </div>
-        <div className='content'>
+        <div className="content">
           <Awards awards={resumeData.awards} />
         </div>
       </div>
-      <div className='project_display resume_item'>
-        <div className='header'>
+      <div className="project_display resume_item">
+        <div className="header">
           <span>Project Display</span>
-          <Button
-            variant='contained'
-            size='small'
-            onClick={() => edit('projectDisplay')}
-          >
+          <Button variant="contained" size="small" onClick={() => edit('projectDisplay')}>
             edit
           </Button>
         </div>
-        <div className='content'>
+        <div className="content">
           <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
         </div>
       </div>
     </div>
-  )
+  );
 
   const hr_detail = (
     <div>
@@ -387,85 +364,57 @@ function ResumePage({ socket }) {
       </div> */}
       <JobPanel />
     </div>
-  )
+  );
 
   return (
     <>
       <NavBar type={sessionStorage.getItem('type')} />
-      <div className='resume'>
-        <div className='user_info resume_item'>
-          <div className='header'>
+      <div className="resume">
+        <div className="user_info resume_item">
+          <div className="header">
             <div>
               {state?.followId && (
-                <Button
-                  variant='contained'
-                  size='small'
-                  onClick={() => handleFollow()}
-                >
+                <Button variant="contained" size="small" onClick={() => handleFollow()}>
                   {state?.isFollow ? 'UnFollow' : 'follow'}
                 </Button>
               )}
             </div>
-            <Button
-              variant='contained'
-              size='small'
-              onClick={() => editUserInfo()}
-            >
+            <Button variant="contained" size="small" onClick={() => editUserInfo()}>
               edit
             </Button>
           </div>
-          <div className='content'>
-            <img
-              src={
-                resumeData.userInfo?.thumbnail ||
-                'https://pic4.zhimg.com/50/v2-6afa72220d29f045c15217aa6b275808_hd.jpg'
-              }
-              alt=''
-              className='avatar'
+          <div className="content">
+            <Avatar
+              variant="square"
+              alt="profile image"
+              src={resumeData.userInfo?.thumbnail}
               onClick={uploadAvatar}
+              className="avatar"
+              sx={{ width: 56, height: 56 }}
             />
-            <div className='info_wrap'>
-              <div className='info_item'>
-                name: {resumeData.userInfo?.name || 'n/a'}
-              </div>
 
-              <div className='info_item'>
-                {sessionStorage.getItem('type') === '0'
-                  ? 'Unversity: '
-                  : 'Company: '}
+            <div className="info_wrap">
+              <div className="info_item">Full Name: {resumeData.userInfo?.name || 'n/a'}</div>
+
+              <div className="info_item">
+                {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}
                 {resumeData.userInfo?.unversity || 'n/a'}
               </div>
 
-              <div className='info_item'>
-                email: {resumeData.userInfo?.email || 'n/a'}
-              </div>
+              <div className="info_item">Contact Email: {resumeData.userInfo?.email || 'n/a'}</div>
             </div>
           </div>
-          <div className='introduction'>
-            {resumeData.userInfo?.introduction}
-          </div>
+          <div className="introduction">{resumeData.userInfo?.introduction}</div>
         </div>
         {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
 
-        <div className='resume_footer'>
-          <Button
-            className='save'
-            variant='contained'
-            size='small'
-            color='success'
-            onClick={() => submit()}
-          >
+        <div className="resume_footer">
+          <Button className="save" variant="contained" size="small" color="success" onClick={() => submit()}>
             save
           </Button>
         </div>
       </div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll='paper'
-        fullWidth
-        maxWidth='md'
-      >
+      <Dialog open={open} onClose={handleClose} scroll="paper" fullWidth maxWidth="md">
         <MyDialog
           config={dialogConfig[type]}
           save={save}
@@ -475,67 +424,56 @@ function ResumePage({ socket }) {
           type={type}
         ></MyDialog>
       </Dialog>
-      <Dialog
-        open={openUserInfo}
-        onClose={handleClose}
-        scroll='paper'
-        fullWidth
-        maxWidth='md'
-      >
-        <div className='user_form'>
-          <div className='form_item'>
-            <div className='label'>name</div>
+      <Dialog open={openUserInfo} onClose={handleClose} scroll="paper" fullWidth maxWidth="md">
+        <div className="user_form">
+          <div className="form_item">
+            <div className="label">Name:</div>
             <TextField
-              className='input'
-              size='small'
+              className="input"
+              size="small"
               onChange={(e) => handleUserInput(e, 'name')}
               fullWidth
               defaultValue={resumeData.userInfo.name}
             />
           </div>
-          <div className='form_item'>
-            <div className='label'>unversity</div>
+          <div className="form_item">
+            <div className="label"> {sessionStorage.getItem('type') === '0' ? 'Unversity: ' : 'Company: '}</div>
             <TextField
-              className='input'
-              size='small'
+              className="input"
+              size="small"
               onChange={(e) => handleUserInput(e, 'unversity')}
               fullWidth
               defaultValue={resumeData.userInfo.name}
             />
           </div>
-          <div className='form_item'>
-            <div className='label'>email</div>
+          <div className="form_item">
+            <div className="label">Contact Email:</div>
             <TextField
-              className='input'
-              size='small'
+              className="input"
+              size="small"
               onChange={(e) => handleUserInput(e, 'email')}
               fullWidth
               defaultValue={resumeData.userInfo.name}
             />
           </div>
-          <div className='footer'>
+          <div className="footer">
             <Button
-              className='cancel'
-              variant='contained'
-              size='small'
-              color='error'
+              className="cancel"
+              variant="contained"
+              size="small"
+              color="error"
               onClick={() => setOpenUserInfo(false)}
             >
               cancel
             </Button>
-            <Button
-              className='save'
-              variant='contained'
-              size='small'
-              onClick={() => saveUserInfo()}
-            >
+            <Button className="save" variant="contained" size="small" onClick={() => saveUserInfo()}>
               save
             </Button>
           </div>
         </div>
       </Dialog>
     </>
-  )
+  );
 }
 
-export default ResumePage
+export default ResumePage;

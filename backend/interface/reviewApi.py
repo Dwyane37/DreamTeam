@@ -15,16 +15,17 @@ review_opt = Blueprint('review_opt', __name__)
 @review_opt.route("/review",methods=['GET', 'POST'] )
 def review():
     data = json.loads(request.data)
-    token = data['params']['token']
+    token = data['token']
     deco = jwt.decode(token, token_key, algorithms='HS256')
     id = deco['id']
-    review = data['params']['review']
-    internship_id = data['params']['internship']
+    review = data['review']
+    internship_id = data['internship']
+    parent_id = data['parent_id']
     # message = checkIfUserReviewed(id,movie_id)
     # if message.errortype == 1:
     #     return json.dumps(message,default=lambda obj: obj.__dict__)
 
-    review_internship(id,review,internship_id)
+    review_internship(id,review,internship_id,parent_id)
 
     # gain experience
     # gain_experience(id)
@@ -43,21 +44,28 @@ def personreview():
     # deco = jwt.decode(token, token_key, algorithms='HS256')
     id = request.values.get('id')
     res = getAllReviewsById(id)
-    res = [dict(zip(result.keys(), result)) for result in res]
+    if res is not None:
+        res = [dict(zip(result.keys(), result)) for result in res]
+    else:
+        res = []
     data = {}
     data['data'] = res
     data['errortype'] = 200
     return data
 
-# @review_opt.route("/moviereview", methods=['GET'])
-# def moviereview():
-#     id = request.values.get("movie_id")
-#     res = getMovieReviewById(id)
-#     dict = {}
-#     for i in res:
-#         dict[repr(i.id)] = i.as_dict()
-#     return dict
-#
+@review_opt.route("/internshipreview", methods=['GET'])
+def internshipreview():
+    id = request.values.get("movie_id")
+    res = getInternReviewById(id)
+    data = {}
+    if res is not None:
+        res = [dict(zip(result.keys(), result)) for result in res]
+    else:
+        res = []
+    data['data'] = res
+    data['errortype'] = 200
+    return data
+
 # @review_opt.route("/like", methods=['GET'])
 # def like():
 #     token = request.values.get('token')

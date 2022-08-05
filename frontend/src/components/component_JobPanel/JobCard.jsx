@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 import * as React from 'react';
-import Card from '@mui/material/Card';
+
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
@@ -10,53 +9,34 @@ import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import { Paper } from '@mui/material';
-=======
-import * as React from 'react'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined'
-import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
-import DeleteIcon from '@mui/icons-material/Delete'
-import { Paper } from '@mui/material'
->>>>>>> WuHanqiu-patch-1
 
-import { apiGet } from '../API'
+import { apiGet, apiPost } from '../API';
 
-import './JobCard.css'
-import { useNavigate } from 'react-router-dom'
+import './JobCard.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function JobCard(props) {
-  const [save, setSave] = React.useState(false)
-  const navigate = useNavigate()
-
+  const [save, setSave] = React.useState(false);
+  const navigate = useNavigate();
 
   function getCardAction(type) {
     switch (type) {
       case 'home':
         return (
-<<<<<<< HEAD
           <CardActions className="job-card-action">
-            <Button size="small" onClick={handleApply} variant="outlined">
-=======
-          <CardActions className='job-card-action'>
-            <Button size='small' onClick={handleApply}>
->>>>>>> WuHanqiu-patch-1
+            <Button size="small" onClick={props.handleApply} variant="outlined">
               Apply
             </Button>
             <div onClick={handleSave}>
-              {!save && <BookmarkAddOutlinedIcon className='BookmarkIcon' />}
-              {save && <BookmarkAddedIcon className='BookmarkIcon' />}
+              {!save && <BookmarkAddOutlinedIcon className="BookmarkIcon" />}
+              {save && <BookmarkAddedIcon className="BookmarkIcon" />}
             </div>
           </CardActions>
-        )
+        );
       case 'saved':
         return (
-<<<<<<< HEAD
           <CardActions className="job-card-action">
-            <Button size="small" variant="outlined" color="success" endIcon={<SendIcon />} onClick={handleApply}>
+            <Button size="small" variant="outlined" color="success" endIcon={<SendIcon />} onClick={props.handleApply}>
               Apply
             </Button>
 
@@ -74,74 +54,57 @@ export default function JobCard(props) {
             {/* //   <BookmarkAddOutlinedIcon className="BookmarkIcon" /> */}
 
             {/* {save && <BookmarkAddedIcon className="BookmarkIcon" />} */}
-=======
-          <CardActions className='job-card-action'>
-            <Button size='small' onClick={handleApply}>
-              Apply
-            </Button>
-            <div onClick={handleUnsave}>
-              {!save && <BookmarkAddOutlinedIcon className='BookmarkIcon' />}
-              {save && <BookmarkAddedIcon className='BookmarkIcon' />}
-            </div>
->>>>>>> WuHanqiu-patch-1
           </CardActions>
-        )
+        );
       case 'myJob':
         return (
-          <CardActions className='myjob-card-action'>
-            <Button size='small' variant='outlined' onClick={handleEdit}>
+          <CardActions className="myjob-card-action">
+            <Button size="small" variant="outlined" onClick={handleEdit}>
               Edit
             </Button>
 
             <Button
-              className='delete-button-text'
-              size='small'
-              color='error'
-              variant='outlined'
+              className="delete-button-text"
+              size="small"
+              color="error"
+              variant="outlined"
               startIcon={<DeleteIcon />}
               onClick={handleDelete}
             >
               Delete
             </Button>
           </CardActions>
-        )
+        );
+      default:
+        return null;
     }
-  }
-
-  const handleApply = (e) => {
-    // TODO Apply for the job
-    e.stopPropagation()
-    console.log('apply')
-    props.socket?.emit('applyJob', {
-      senderName: sessionStorage.getItem('id'),
-      receiverName: '91272343673357427676270600691321',
-      jobID: 123
-    })
   }
 
   const handleSave = (e) => {
     // TODO Save the job
-    e.stopPropagation()
-    const jobId = e.currentTarget.parentNode.parentNode.id
+    e.stopPropagation();
+    const jobId = e.currentTarget.parentNode.parentNode.id;
     if (!save) {
       // haven't saved it yet
       apiGet('/internship/save', {
         token: sessionStorage.getItem('token'),
-        internship: jobId
+        internship: jobId,
       })
         .then((data) => {
-          console.log(data)
+          console.log(data);
         })
-        .catch((e) => alert(e))
-      setSave(true)
+        .catch((e) => alert(e));
+      setSave(true);
     }
-  }
+  };
 
   const handleUnsave = (e) => {
-<<<<<<< HEAD
     e.stopPropagation();
     const jobId = e.currentTarget.parentNode.parentNode.id;
-    console.log(jobId);
+    apiGet('/internship/unsave', { internship_id: jobId, user_id: sessionStorage.getItem('id') }).then((d) => {
+      alert('You have unsaved the job');
+      window.location.reload(false);
+    });
 
     setSave(!save);
   };
@@ -155,39 +118,21 @@ export default function JobCard(props) {
 
   const handleDelete = (e) => {
     e.stopPropagation();
+    const jobID = e.currentTarget.id;
     console.log('delete');
   };
-=======
-    e.stopPropagation()
-    const jobId = e.currentTarget.parentNode.parentNode.id
-    setSave(!save)
-  }
 
-  const handleEdit = (e) => {
-    console.log('edit')
-    navigate('/editjob')
-  }
-
-  const handleDelete = (e) => {
-    console.log('delete')
-  }
->>>>>>> WuHanqiu-patch-1
-
-  const location = `${props.location.city}, ${props.location.state} ${props.location.country}`
+  const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
 
   return (
-    <Paper
-      id={props.jobID}
-      onClick={props.hanldeClickOpen}
-      className='job-card'
-    >
+    <Paper id={props.jobID} onClick={props.hanldeClickOpen} className="job-card">
       {/* <Card id={props.jobID} className="job-card" variant="outlined" onClick={props.hanldeClickOpen}> */}
       <CardContent>
-        <Typography variant='h5' component='div'>
+        <Typography variant="h5" component="div">
           {props.title}
         </Typography>
         <Typography sx={{ mb: 1.5 }}>{props.company}</Typography>
-        <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {location}
         </Typography>
         <Typography paragraph={true} noWrap={true}>
@@ -195,7 +140,6 @@ export default function JobCard(props) {
         </Typography>
       </CardContent>
       {getCardAction(props.type)}
-      {/* </Card> */}
     </Paper>
-  )
+  );
 }
