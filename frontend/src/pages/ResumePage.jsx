@@ -171,7 +171,7 @@ function ResumePage({ socket }) {
   const [openUserInfo, setOpenUserInfo] = useState(false)
   const [type, setType] = useState('false')
   // 进来用户type
-  const [inUserType, setInUserType] = useState(1)
+  const [inUserType, setInUserType] = useState(null)
   const id = sessionStorage.getItem('id')
   // 当前登录用户type
   const userType = sessionStorage.getItem('type')
@@ -189,7 +189,7 @@ function ResumePage({ socket }) {
     if (id !== resumeId) {
       apiGet('user/checkfollow', { id, userr_id: resumeId }).then((res) => {
         console.log(res.errormessage)
-        // setInUserType(res.errormessage.type)
+        setInUserType(res.errormessage.type)
       })
     }
   }, [])
