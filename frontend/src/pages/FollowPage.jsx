@@ -7,30 +7,30 @@ import { useNavigate } from 'react-router-dom';
 
 const FollowPage = ({ socket }) => {
   const [followList, setFollowList] = useState([
-    {
-      avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
-      nickname: 'aliy',
-      company: 'google',
-      isFollow: true,
-      isFan: true,
-      id: 2169683494,
-    },
-    {
-      avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
-      nickname: 'tom',
-      company: 'google',
-      isFollow: true,
-      isFan: true,
-      id: 2169683495,
-    },
-    {
-      avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
-      nickname: 'bob',
-      company: 'google',
-      isFollow: true,
-      isFan: true,
-      id: 2169683496,
-    },
+//     {
+//       avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
+//       nickname: 'aliy',
+//       company: 'google',
+//       isFollow: true,
+//       isFan: true,
+//       id: 2169683494,
+//     },
+//     {
+//       avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
+//       nickname: 'tom',
+//       company: 'google',
+//       isFollow: true,
+//       isFan: true,
+//       id: 2169683495,
+//     },
+//     {
+//       avatar: 'https://p.qqan.com/up/2022-6/16546520684299711.jpg',
+//       nickname: 'bob',
+//       company: 'google',
+//       isFollow: true,
+//       isFan: true,
+//       id: 2169683496,
+//     },
   ]);
   const navigate = useNavigate();
 
@@ -50,8 +50,8 @@ const FollowPage = ({ socket }) => {
     });
   };
 
-  const handleUnfollow = (e, followingId, index) => {
-    e.stopPropagation();
+  const handleUnfollow = (followingId, index) => {
+//     e.stopPropagation();
     const result = apiGet('/user/dislike', {
       followingId,
       followerId: id,

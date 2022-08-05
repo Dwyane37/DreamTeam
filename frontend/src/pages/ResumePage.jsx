@@ -259,15 +259,15 @@ function ResumePage({ socket }) {
         reader.readAsDataURL(file)
         reader.onload = function (e) {
           let data = e.target.result
-          let temp = { ...resumeData }
-          temp.userInfo.thumbnail = data
+          let temp = { ...userInfo }
+          temp.thumbnail = data
           apiPost('user/upload_image', {
             user_id: id,
             image_base64: data
           }).then((res) => {
             console.log(res)
 
-            setResumeData({ ...temp })
+            setUserInfo({ ...temp })
           })
         }
       }
