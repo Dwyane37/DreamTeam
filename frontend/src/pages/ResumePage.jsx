@@ -474,7 +474,7 @@ function ResumePage({ socket }) {
         {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
 
         <div className='resume_footer'>
-          {id === resumeId && (
+          {id === resumeId && inUserType == 0 && (
             <Button
               className='save'
               variant='contained'
@@ -518,7 +518,7 @@ function ResumePage({ socket }) {
               size='small'
               onChange={(e) => handleUserInput(e, 'name')}
               fullWidth
-              defaultValue={resumeData.userInfo.name}
+              defaultValue={userInfo.name}
             />
           </div>
           <div className='form_item'>
@@ -533,7 +533,7 @@ function ResumePage({ socket }) {
               size='small'
               onChange={(e) => handleUserInput(e, 'unversity')}
               fullWidth
-              defaultValue={resumeData.userInfo.name}
+              defaultValue={userInfo.name}
             />
           </div>
           <div className='form_item'>
@@ -543,7 +543,7 @@ function ResumePage({ socket }) {
               size='small'
               onChange={(e) => handleUserInput(e, 'email')}
               fullWidth
-              defaultValue={resumeData.userInfo.name}
+              defaultValue={userInfo.name}
             />
           </div>
           <div className='footer'>
