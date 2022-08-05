@@ -186,12 +186,10 @@ function ResumePage({ socket }) {
       setResumeData(res.errormessage)
       setUserInfo(res.errormessage.userInfo[0])
     })
-    if (id !== resumeId) {
-      apiGet('user/checkfollow', { id, userr_id: resumeId }).then((res) => {
+      apiGet('user/checkfollow', { id, user_id: resumeId }).then((res) => {
         console.log(res.errormessage)
         setInUserType(res.errormessage.type)
       })
-    }
   }, [])
 
   const handleClose = () => {
@@ -261,13 +259,14 @@ function ResumePage({ socket }) {
         reader.readAsDataURL(file)
         reader.onload = function (e) {
           let data = e.target.result
+          let temp = { ...resumeData }
+          temp.userInfo.thumbnail = data
           apiPost('user/upload_image', {
             user_id: id,
             image_base64: data
           }).then((res) => {
             console.log(res)
-            let temp = { ...resumeData }
-            temp.userInfo.thumbnail = res.errormessage
+
             setResumeData({ ...temp })
           })
         }
@@ -471,7 +470,7 @@ function ResumePage({ socket }) {
             {resumeData.userInfo?.introduction}
           </div>
         </div>
-        {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
+        {inUserType=='0' ? student_resume : hr_detail}
 
         <div className='resume_footer'>
           {id === resumeId && inUserType == 0 && (
@@ -518,7 +517,7 @@ function ResumePage({ socket }) {
               size='small'
               onChange={(e) => handleUserInput(e, 'name')}
               fullWidth
-              defaultValue={userInfo.name}
+              defaultValue={userInfo?.name}
             />
           </div>
           <div className='form_item'>
@@ -533,7 +532,7 @@ function ResumePage({ socket }) {
               size='small'
               onChange={(e) => handleUserInput(e, 'unversity')}
               fullWidth
-              defaultValue={userInfo.name}
+              defaultValue={userInfo?.name}
             />
           </div>
           <div className='form_item'>
@@ -543,7 +542,7 @@ function ResumePage({ socket }) {
               size='small'
               onChange={(e) => handleUserInput(e, 'email')}
               fullWidth
-              defaultValue={userInfo.name}
+              defaultValue={userInfo?.name}
             />
           </div>
           <div className='footer'>
