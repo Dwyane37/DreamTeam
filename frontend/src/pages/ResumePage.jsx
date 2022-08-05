@@ -170,7 +170,11 @@ function ResumePage({ socket }) {
   const [userInfo, setUserInfo] = useState({})
   const [openUserInfo, setOpenUserInfo] = useState(false)
   const [type, setType] = useState('false')
+  // 进来用户type
+  const [inUserType, setInUserType] = useState(1)
   const id = sessionStorage.getItem('id')
+  // 当前登录用户type
+  const userType = sessionStorage.getItem('type')
   const { state } = useLocation()
   const params = useParams()
   const resumeId = params.userId
@@ -185,6 +189,7 @@ function ResumePage({ socket }) {
     if (id !== resumeId) {
       apiGet('user/checkfollow', { id, userr_id: resumeId }).then((res) => {
         console.log(res.errormessage)
+        // setInUserType(res.errormessage.type)
       })
     }
   }, [])
@@ -415,7 +420,7 @@ function ResumePage({ socket }) {
         <div className='user_info resume_item'>
           <div className='header'>
             <div>
-              {state?.followId && (
+              {userType == 1 && id != resumeId && inUserType == 1 && (
                 <Button
                   variant='contained'
                   size='small'
@@ -469,15 +474,17 @@ function ResumePage({ socket }) {
         {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
 
         <div className='resume_footer'>
-          <Button
-            className='save'
-            variant='contained'
-            size='small'
-            color='success'
-            onClick={() => submit()}
-          >
-            save
-          </Button>
+          {id === resumeId && (
+            <Button
+              className='save'
+              variant='contained'
+              size='small'
+              color='success'
+              onClick={() => submit()}
+            >
+              save
+            </Button>
+          )}
         </div>
       </div>
       <Dialog
