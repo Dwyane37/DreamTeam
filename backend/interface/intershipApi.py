@@ -167,7 +167,7 @@ def add_internship():
     print(data)
     user_id = data['id']
     title = data['title']
-    company = '1'
+    company = data['company']
     field = data['field']
     location = data['location']
     state = data['state']

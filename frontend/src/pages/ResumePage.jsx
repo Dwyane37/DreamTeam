@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ResumePage.css';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import { Dialog, Button, Paper } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Education from '../components/resume_component/education';
 import WorkExperience from '../components/resume_component/work-experience';
@@ -298,7 +297,7 @@ function ResumePage({ socket }) {
   };
 
   const student_resume = (
-    <div>
+    <Paper>
       <div className="education resume_item">
         <div className="header">
           <span>Education</span>
@@ -377,7 +376,7 @@ function ResumePage({ socket }) {
           <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
         </div>
       </div>
-    </div>
+    </Paper>
   );
 
   const hr_detail = (
@@ -404,7 +403,7 @@ function ResumePage({ socket }) {
     <>
       <NavBar type={sessionStorage.getItem('type')} />
       <div className="resume">
-        <div className="user_info resume_item">
+        <Paper className="user_info resume_item">
           <div className="header">
             <div>
               {id != resumeId && inUserType == 1 && (
@@ -440,8 +439,11 @@ function ResumePage({ socket }) {
               <div className="info_item">Contact Email: {userInfo?.email || 'n/a'}</div>
             </div>
           </div>
-          <div className="introduction">{resumeData.userInfo?.introduction}</div>
-        </div>
+          <div className="introduction">
+            <h3>About</h3>
+            <p>{resumeData.userInfo?.introduction}</p>
+          </div>
+        </Paper>
         {inUserType == '1' && id !== resumeId ? hr_detail : inUserType == '0' ? student_resume : null}
 
         <div className="resume_footer">
@@ -492,6 +494,16 @@ function ResumePage({ socket }) {
               onChange={(e) => handleUserInput(e, 'email')}
               fullWidth
               defaultValue={userInfo?.email}
+            />
+          </div>
+          <div className="form_item">
+            <div className="label">About:</div>
+            <TextField
+              className="input"
+              size="small"
+              onChange={(e) => handleUserInput(e, 'introduction')}
+              fullWidth
+              defaultValue={userInfo?.introduction}
             />
           </div>
           <div className="footer">

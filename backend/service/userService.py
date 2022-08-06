@@ -168,6 +168,7 @@ def update_resume(user_id, resume):
             name=resume["userInfo"]["name"],
             university=resume["userInfo"]["university"],
             email=resume["userInfo"]["email"],
+            introduction=resume["userInfo"]["introduction"],
             # update 7.24 新增加一个 头像字段，写入
             thumbnail=resume["userInfo"]["thumbnail"],
             user_id=user_id

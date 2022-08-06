@@ -20,7 +20,7 @@ function getJobDetail(jobs, id) {
 
 export default function JobPanel(props) {
   const [page, setPage] = React.useState(1);
-  const PER_PAGE = 10;
+  const PER_PAGE = 9;
   const jobs = props.jobs || [];
   const count = Math.ceil(jobs?.length / PER_PAGE);
   const handleData = usePagination(jobs, PER_PAGE);
@@ -100,6 +100,7 @@ export default function JobPanel(props) {
               key={idx}
             >
               <JobCard
+                refresh={props.refresh}
                 className="job-card"
                 type={props.type}
                 jobID={job.id}

@@ -103,7 +103,7 @@ export default function JobCard(props) {
     const jobId = e.currentTarget.parentNode.parentNode.id;
     apiGet('/internship/unsave', { internship_id: jobId, user_id: sessionStorage.getItem('id') }).then((d) => {
       alert('You have unsaved the job');
-      window.location.reload(false);
+      props.refresh((prev) => !prev);
     });
 
     setSave(!save);
@@ -120,7 +120,9 @@ export default function JobCard(props) {
     e.stopPropagation();
     const jobID = e.currentTarget.parentNode.parentNode.id;
     console.log('delete ' + jobID);
-    apiPost('internship/del_internship', { id: jobID });
+    apiGet('internship/del_internship', { id: jobID }).then((res) => {
+      props.refresh((prev) => !prev);
+    });
   };
 
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
