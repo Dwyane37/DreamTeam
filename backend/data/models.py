@@ -220,7 +220,7 @@ class Meeting(db.Model):
     __tablename__ = 'db_meetings'
     id = Column(String(255), primary_key=True)
     internship_id = Column(String(255))
-    datetime = Column(TIMESTAMP)
+    datetime = Column(String(255))
     link = Column(String(1000))
     deleted = Column(Integer)
 

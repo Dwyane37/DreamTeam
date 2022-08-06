@@ -175,7 +175,7 @@ def add_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
-    applychannel = data['applychannel']
+    applychannel = '1'
     internship = Internship(title=title, user_id=user_id, company=company, field=field, location=location, state=state,
                             city=city,applychannel=applychannel,
                             working_right=working_right, description=description,
@@ -183,12 +183,11 @@ def add_internship():
     mesvalue = addNewjob(internship)
 
     # start_date = time.time() + 3600
-    # id = mesvalue.errormessage
+    id = mesvalue.errormessage
     # mes = {'id': id, 'exp': start_date}
     # token = jwt.encode(mes, token_key, algorithm='HS256')
     data = {}
     data['id'] = id
-
     # add meetings
     for meeting in meetings:
         datetime = meeting['datetime']
@@ -227,19 +226,20 @@ def edit_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
-    applychannel = data['applychannel']
+    applychannel = '1'
     delete_all(id)
     internship = Internship(id=id, user_id=user_id, company=company, title=title, field=field, location=location,
                             state=state, city=city,applychannel=applychannel,
                             working_right=working_right, description=description,deleted=0
                             )
-    addNewjob(internship)
+    message = addNewjob(internship)
+    id = message.errormessage
     # editjob(internship)
     # add meetings
     for meeting in meetings:
         time = meeting['datetime']
         link = meeting['link']
-        meeting = Meeting(id=getuuid(),internship_id=id,
+        meeting = Meeting(internship_id=id,
                           datetime=time, link=link,
                           deleted=0)
         addmeeting(meeting)
