@@ -48,7 +48,7 @@ function ResumePage({ socket }) {
         type: 'text',
       },
       {
-        label: 'About',
+        label: 'introduction',
         required: false,
         type: 'text',
       },
