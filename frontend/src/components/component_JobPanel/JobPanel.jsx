@@ -1,73 +1,78 @@
-import * as React from 'react';
-import JobCard from './JobCard';
-import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
-import Box from '@mui/material/Box';
-import './JobPanel.css';
-import usePagination from './usePagination';
-import { Dialog, Button } from '@mui/material';
-import JobDetail from '../compopnent_JobDetail/JobDetail';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import * as React from 'react'
+import JobCard from './JobCard'
+import Grid from '@mui/material/Grid'
+import Pagination from '@mui/material/Pagination'
+import Box from '@mui/material/Box'
+import './JobPanel.css'
+import usePagination from './usePagination'
+import { Dialog, Button } from '@mui/material'
+import JobDetail from '../compopnent_JobDetail/JobDetail'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
 function getJobDetail(jobs, id) {
-  const job = jobs.find((job) => job.id == id);
-  return job;
+  const job = jobs.find((job) => job.id == id)
+  return job
 }
 
 export default function JobPanel(props) {
-  const [page, setPage] = React.useState(1);
-  const PER_PAGE = 10;
-  const count = Math.ceil(props.jobs.length / PER_PAGE);
-  const handleData = usePagination(props.jobs, PER_PAGE);
+  const [page, setPage] = React.useState(1)
+  const PER_PAGE = 10
+  const jobs = props.jobs || []
+  const count = Math.ceil(jobs?.length / PER_PAGE)
+  const handleData = usePagination(jobs, PER_PAGE)
 
   const handlePageChange = (e, p) => {
-    setPage(p);
-    handleData.jump(p);
-    window.scrollTo({ top: 0 });
-  };
+    setPage(p)
+    handleData.jump(p)
+    window.scrollTo({ top: 0 })
+  }
 
-  const [open, setOpen] = React.useState(false);
-  const [openApply, setOpenApply] = React.useState(false);
-  const [jobId, setJobId] = React.useState(null);
+  const [open, setOpen] = React.useState(false)
+  const [openApply, setOpenApply] = React.useState(false)
+  const [jobId, setJobId] = React.useState(null)
 
   const handleClickOpen = (e) => {
-    console.log('open detail');
-    setOpen(true);
-    setJobId(e.currentTarget.id);
-  };
+    console.log('open detail')
+    setOpen(true)
+    setJobId(e.currentTarget.id)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleApplyClose = () => {
-    setOpenApply(false);
-  };
+    setOpenApply(false)
+  }
 
   const handleApply = (e) => {
     // TODO Apply for the job
-    e.stopPropagation();
-    const jobId = e.currentTarget.parentNode.parentNode.id;
-    setJobId(jobId);
-    console.log('apply ' + jobId);
-    setOpenApply(true);
+    e.stopPropagation()
+    const jobId = e.currentTarget.parentNode.parentNode.id
+    setJobId(jobId)
+    console.log('apply ' + jobId)
+    setOpenApply(true)
     // TODO display apply method
-  };
+  }
 
   const applyDialog = (jobId) => {
     return (
       <Dialog
         open={openApply}
         onClose={handleApplyClose}
-        aria-labelledby="apply-dialog-title"
-        aria-describedby="apply-dialog-description"
+        aria-labelledby='apply-dialog-title'
+        aria-describedby='apply-dialog-description'
       >
-        <DialogTitle id="apply-dialog-title">{'The apply method for the job is:'}</DialogTitle>
+        <DialogTitle id='apply-dialog-title'>
+          {'The apply method for the job is:'}
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText id="apply-dialog-description">APPLY METHOD GOES HERE</DialogContentText>
+          <DialogContentText id='apply-dialog-description'>
+            APPLY METHOD GOES HERE
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleApplyClose} autoFocus>
@@ -75,12 +80,12 @@ export default function JobPanel(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    );
-  };
+    )
+  }
 
   return (
     <>
-      <div className="job-panel">
+      <div className='job-panel'>
         <Grid container spacing={3}>
           {handleData.currentData().map((job, idx) => (
             <Grid
@@ -92,13 +97,17 @@ export default function JobPanel(props) {
               key={idx}
             >
               <JobCard
-                className="job-card"
+                className='job-card'
                 type={props.type}
                 jobID={job.id}
                 key={idx}
                 title={job.title}
                 company={job.company}
-                location={{ country: job.location, state: job.state, city: job.city }}
+                location={{
+                  country: job.location,
+                  state: job.state,
+                  city: job.city
+                }}
                 briefing={job.description}
                 hanldeClickOpen={handleClickOpen}
                 handleApply={handleApply}
@@ -108,14 +117,19 @@ export default function JobPanel(props) {
           ))}
         </Grid>
 
-        <Box className="pagination">
-          <Pagination count={count} page={page} onChange={handlePageChange} shape="rounded" />
+        <Box className='pagination'>
+          <Pagination
+            count={count}
+            page={page}
+            onChange={handlePageChange}
+            shape='rounded'
+          />
         </Box>
       </div>
-      <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
-        <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
+      <Dialog open={open} onClose={handleClose} scroll='paper' maxWidth='lg'>
+        <JobDetail handleClose={handleClose} job={getJobDetail(jobs, jobId)} />
       </Dialog>
       {applyDialog(jobId)}
     </>
-  );
+  )
 }

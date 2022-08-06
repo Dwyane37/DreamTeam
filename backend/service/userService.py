@@ -59,6 +59,7 @@ def checkInfoCorrect(username, password):
             return errorMessage(1, "username or password is incorrect")
         return errorMessage(200, "ok")
     except Exception as e:
+        print(e)
         return errorMessage(1, e)
 
 def getUserId(username):
@@ -163,15 +164,15 @@ def update_resume(user_id, resume):
         ResumeAward.query.filter_by(user_id=user_id).delete()
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
         # 插入新数据
-        for user_info in resume["userInfo"]:
-            db.session.add(ResumeUser(
-                name=user_info["name"],
-                university=user_info["university"],
-                email=user_info["email"],
-                # update 7.24 新增加一个 头像字段，写入
-                thumbnail=user_info["thumbnail"],
-                user_id=user_id
-            ))
+        db.session.add(ResumeUser(
+            name=resume["userInfo"]["name"],
+            university=resume["userInfo"]["university"],
+            email=resume["userInfo"]["email"],
+            # update 7.24 新增加一个 头像字段，写入
+            thumbnail=resume["userInfo"]["thumbnail"],
+            user_id=user_id
+        ))
+        print("here")
         for education in resume["education"]:
             db.session.add(ResumeEducation(
                 university=education["university"],
@@ -179,8 +180,8 @@ def update_resume(user_id, resume):
                 end=education["end"],
                 faculty=education["faculty"],
                 major=education["major"],
-                grades=education["grades"],
-                degree=education["degree"],
+                grades=6,
+                degree="",
                 user_id=user_id
             ))
 
@@ -196,7 +197,7 @@ def update_resume(user_id, resume):
 
         for project in resume["projectExperience"]:
             db.session.add(ResumeProjectExperience(
-                name=project["name"],
+                name=project["title"],
                 start=project["start"],
                 end=project["end"],
                 description=project["description"],
@@ -218,7 +219,7 @@ def update_resume(user_id, resume):
 
         for project in resume["projectDisplay"]:
             db.session.add(ResumeProjectDisplay(
-                name=project["name"],
+                name=project["title"],
                 link=project["link"],
                 user_id=user_id
             ))
@@ -234,7 +235,7 @@ def query_resume(user_id):
     try:
         user = User.query.filter_by(id=user_id).first()
         body = {
-            "userInfo": [x.to_dict() for x in user.users],
+            "userInfo": [x.to_dict() for x in user.users][0],
             "education": [x.to_dict() for x in user.educations],
             "workExperience": [x.to_dict() for x in user.works],
             "projectExperience": [x.to_dict() for x in user.projects],
@@ -245,6 +246,7 @@ def query_resume(user_id):
     # update 7.24: 修改返回结果格式
         return errorMessage(200, body)
     except Exception as e:
+        print(e)
         return errorMessage(1, str(e))
 
 

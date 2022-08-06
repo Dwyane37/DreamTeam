@@ -16,7 +16,8 @@ class User(db.Model):
     update_time = Column(TIMESTAMP)
     email = Column(String(255))
     deleted = Column(Integer)
-    nickname = Column(String(255))
+    # nickname = Column(String(255))
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -65,7 +66,7 @@ class ResumeUser(db.Model):
     users = db.relationship('User', backref='users')
     introduction = Column(String(1000))
     # TODO 7.24 新增加一个 头像字段
-    thumbnail = Column(String(255))
+    thumbnail = Column(TEXT(10000))
 
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
