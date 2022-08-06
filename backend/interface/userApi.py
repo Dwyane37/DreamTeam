@@ -184,6 +184,7 @@ def query_image(user_id):
 def change_resume():
     resumeid = request.json["resumeid"]
     resume = request.json["resume"]
+    print(resumeid,resume)
     message = update_resume(resumeid, resume)
     # update 7.24: 修改返回结果格式
     return json.dumps(message, default=lambda obj: obj.__dict__)
@@ -239,7 +240,7 @@ def follower():
 def checkfollow():
     id = request.values.get("id")
     user_id = request.values.get("user_id")
-
+    print(id,user_id)
     type = getUserIdentity(user_id)
     flag = checkIfFollow(id,user_id)
     data = {}
