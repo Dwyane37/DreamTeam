@@ -321,6 +321,7 @@ def addNewjob(inputs):
         newJob = Internship(id=id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
+                            applychannel=inputs.applychannel,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
@@ -368,16 +369,12 @@ def editjob(inputs):
 def addmeeting(inputs):
     try:
         id = getuuid()
-        meeting = Meeting(id=id, intership_id=inputs.intership_id,
-                           datetime=inputs.datetime, link=inputs.link,
-                           deleted=0,
-                           create_time=getTime(datetime),
-                           update_time=getTime(datetime),
-                           )
+        meeting = Meeting(id=id,internship_id=inputs.internship_id,datetime=inputs.datetime, link=inputs.link,deleted=0)
         db.session.add(meeting)
         db.session.commit()
-        return errorMessage(200, id)
+
     except Exception as e:
+        print(e)
         return errorMessage(1, e)
 
 
@@ -469,6 +466,16 @@ def deleteInternshipAndMeeting(id):
         for meet in meetings:
             meet.deleted = 1
             db.session.commit()
+
+    except Exception as e:
+        print(e)
+
+def delete_all(id):
+    try:
+        Meeting.query.filter_by(internship_id=id).delete()
+        db.session.commit()
+        Internship.query.filter_by(id=id).delete()
+        db.session.commit()
 
     except Exception as e:
         print(e)

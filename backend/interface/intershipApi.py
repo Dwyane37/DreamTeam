@@ -175,16 +175,17 @@ def add_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
+    applychannel = data['applychannel']
     internship = Internship(title=title, user_id=user_id, company=company, field=field, location=location, state=state,
-                            city=city,
+                            city=city,applychannel=applychannel,
                             working_right=working_right, description=description,
                             )
     mesvalue = addNewjob(internship)
 
-    start_date = time.time() + 3600
-    id = mesvalue.errormessage
-    mes = {'id': id, 'exp': start_date}
-    token = jwt.encode(mes, token_key, algorithm='HS256')
+    # start_date = time.time() + 3600
+    # id = mesvalue.errormessage
+    # mes = {'id': id, 'exp': start_date}
+    # token = jwt.encode(mes, token_key, algorithm='HS256')
     data = {}
     data['id'] = id
 
@@ -196,13 +197,13 @@ def add_internship():
                           datetime=datetime, link=link,
                           deleted=0,
                           )
-        save_meeting = addmeeting(meeting)
+        addmeeting(meeting)
 
-    data['token'] = token
-    message = errorMessage(200, data)
-    deco = jwt.decode(token,
-                      token_key, algorithms='HS256', options={"varify_signature": False})
-    exptime = deco['exp']
+    # data['token'] = token
+    message = errorMessage(200, "ok")
+    # deco = jwt.decode(token,
+    #                   token_key, algorithms='HS256', options={"varify_signature": False})
+    # exptime = deco['exp']
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 @internship_opt.route("/getinternship",methods=['GET'])
@@ -215,7 +216,8 @@ def getinternship():
 def edit_internship():
     data = json.loads(request.data)
     id = data['id']
-    company = "1"
+    print(data)
+    company = data['company']
     user_id = data['user_id']
     title = data['title']
     field = data['field']
@@ -225,34 +227,25 @@ def edit_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
+    applychannel = data['applychannel']
+    delete_all(id)
     internship = Internship(id=id, user_id=user_id, company=company, title=title, field=field, location=location,
-                            state=state, city=city,
-                            working_right=working_right, description=description,
+                            state=state, city=city,applychannel=applychannel,
+                            working_right=working_right, description=description,deleted=0
                             )
-    mesvalue = editjob(internship)
-
+    addNewjob(internship)
+    # editjob(internship)
     # add meetings
     for meeting in meetings:
-        datetime = meeting['datetime']
+        time = meeting['datetime']
         link = meeting['link']
-        meeting = Meeting(intership_id=id,
-                          datetime=datetime, link=link,
-                          deleted=0,
-                          create_time=getTime(datetime),
-                          update_time=getTime(datetime))
-        save_meeting = editmeeting(meeting)
-    start_date = time.time() + 3600
-    id = mesvalue.errormessage
-    mes = {'id': id, 'exp': start_date}
-    token = jwt.encode(mes, token_key, algorithm='HS256')
-    data = {}
-    data['id'] = id
+        meeting = Meeting(id=getuuid(),internship_id=id,
+                          datetime=time, link=link,
+                          deleted=0)
+        addmeeting(meeting)
 
-    data['token'] = token
-    message = errorMessage(200, data)
-    deco = jwt.decode(token,
-                      token_key, algorithms='HS256', options={"varify_signature": False})
-    exptime = deco['exp']
+    message = errorMessage(200, "ok")
+
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
