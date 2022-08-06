@@ -326,11 +326,17 @@ def del_meeting():
 
 @internship_opt.route("/get_all_intern", methods=['Get'], endpoint='get_all_intern')
 def get_all_intern():
-    data = json.loads(request.data)
-    user_id = data['user_id']
-    internships = getinternsbyuserid(user_id)
+
+    id = request.values.get("id")
+    internships = getinternsbyuserid(id)
     # add info session
-    for internship in internships:
-        internship['meetings'] = getmeetingsbyjobid(internship['id'])
-    return internships
+    # for internship in internships:
+    #     internship['meetings'] = getmeetingsbyjobid(internship['id'])
+    res = {}
+    data = []
+    for i in internships:
+        data.append(i.as_dict())
+    res['errortype'] = 200
+    res['data'] = data
+    return res
 
