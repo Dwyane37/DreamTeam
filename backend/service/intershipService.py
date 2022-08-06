@@ -149,6 +149,8 @@ def searchJobById(id):
     try:
         click(id)
         internship = Internship.query.filter_by(id=id, deleted=0).first()
+        internship.deleted = 0
+        db.session.commit()
         return internship
     except Exception as e:
         print(e)
@@ -455,5 +457,18 @@ def getInternshipById(id):
         data['meetings'] = meetings
         data['errortype'] = 200
         return data
+    except Exception as e:
+        print(e)
+
+def deleteInternshipAndMeeting(id):
+    try:
+        internship = Internship.query.get(id)
+        internship.deleted = 1
+        db.session.commit()
+        meetings = Meeting.query.filter_by(internship_id=id).all()
+        for meet in meetings:
+            meet.deleted = 1
+            db.session.commit()
+
     except Exception as e:
         print(e)

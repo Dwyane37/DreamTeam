@@ -215,7 +215,7 @@ def getinternship():
 def edit_internship():
     data = json.loads(request.data)
     id = data['id']
-    company = data['company']
+    company = "1"
     user_id = data['user_id']
     title = data['title']
     field = data['field']
@@ -257,10 +257,9 @@ def edit_internship():
 
 
 
-@internship_opt.route("/del_internship", methods=['Post'], endpoint='del_internship')
+@internship_opt.route("/del_internship", methods=['GET'], endpoint='del_internship')
 def del_internship():
-    data = json.loads(request.data)
-    id = data['id']
+    id = request.values.get("id")
     # title = data['title']
     # field = data['field']
     # location = data['location']
@@ -272,33 +271,36 @@ def del_internship():
     # internship = Internship(id=id, title=title, field=field, location=location, state=state, city=city,
     #                        working_right=working_right, description=description,
     #                         )
-    internship = searchJobById(id)
-    mesvalue = deletejob(internship)
+    # internship = searchJobById(id)
+    # mesvalue = deletejob(internship)
+
+    deleteInternshipAndMeeting(id)
+
     # del meetings
-    meetings = getmeetingsbyjobid(id)
-    for meeting in meetings:
-        datetime = meeting['datetime']
-        link = meeting['link']
-        meeting = Meeting(intership_id=id,
-                          datetime=datetime, link=link,
-                          deleted=1,
-                          create_time=getTime(datetime),
-                          update_time=getTime(datetime))
-        save_meeting = deletemeeting(meeting)
+    # meetings = getmeetingsbyjobid(id)
+    # for meeting in meetings:
+    #     datetime = meeting['datetime']
+    #     link = meeting['link']
+    #     meeting = Meeting(intership_id=id,
+    #                       datetime=datetime, link=link,
+    #                       deleted=1,
+    #                       create_time=getTime(datetime),
+    #                       update_time=getTime(datetime))
+    #     save_meeting = deletemeeting(meeting)
+    #
+    # start_date = time.time() + 3600
+    # id = mesvalue.errormessage
+    # mes = {'id': id, 'exp': start_date}
+    # token = jwt.encode(mes, token_key, algorithm='HS256')
+    # data = {}
+    # data['id'] = id
+    # data['token'] = token
+    # message = errorMessage(200, data)
+    # deco = jwt.decode(token,
+    #                   token_key, algorithms='HS256', options={"varify_signature": False})
+    # exptime = deco['exp']
 
-    start_date = time.time() + 3600
-    id = mesvalue.errormessage
-    mes = {'id': id, 'exp': start_date}
-    token = jwt.encode(mes, token_key, algorithm='HS256')
-    data = {}
-    data['id'] = id
-    data['token'] = token
-    message = errorMessage(200, data)
-    deco = jwt.decode(token,
-                      token_key, algorithms='HS256', options={"varify_signature": False})
-    exptime = deco['exp']
-
-    return json.dumps(message, default=lambda obj: obj.__dict__)
+    return json.dumps(errorMessage(200, "ok"), default=lambda obj: obj.__dict__)
 
 
 @internship_opt.route("/del_meeting", methods=['Post'], endpoint='del_meeting')
