@@ -165,11 +165,11 @@ def update_resume(user_id, resume):
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
         # 插入新数据
         db.session.add(ResumeUser(
-            name=resume["userInfo"]["name"],
-            university=resume["userInfo"]["university"],
-            email=resume["userInfo"]["email"],
+            name=resume["userInfo"]["Name"],
+            university=resume["userInfo"]["University"],
+            email=resume["userInfo"]["Email"],
             # update 7.24 新增加一个 头像字段，写入
-            thumbnail=resume["userInfo"]["thumbnail"],
+            thumbnail=resume["userInfo"]["Thumbnail"],
             user_id=user_id
         ))
         print("here")
@@ -219,8 +219,8 @@ def update_resume(user_id, resume):
 
         for project in resume["projectDisplay"]:
             db.session.add(ResumeProjectDisplay(
-                name=project["name"],
-                link=project["link"],
+                name=project["Title"],
+                link=project["Link"],
                 user_id=user_id
             ))
         db.session.commit()

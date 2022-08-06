@@ -203,7 +203,7 @@ function ResumePage({ socket }) {
   }
 
   const handleUserInput = (e, type) => {
-    console.log(type);
+    console.log(type)
     let temp = { ...userInfo }
     temp[type] = e.target.value
     setUserInfo(temp)
@@ -216,9 +216,11 @@ function ResumePage({ socket }) {
   const saveUserInfo = () => {
     console.log(userInfo)
     const temp = { ...resumeData }
-    temp.userInfo = userInfo
+    temp.userInfo = { Thumbnail: '', ...userInfo }
+    console.log(temp)
     setResumeData({ ...temp })
     setOpenUserInfo(false)
+    setUserInfo({ Thumbnail: '', ...userInfo })
   }
 
   const deleteItem = (index) => {
@@ -523,14 +525,12 @@ function ResumePage({ socket }) {
           <div className='form_item'>
             <div className='label'>
               {' '}
-              {sessionStorage.getItem('type') === '0'
-                ? 'Unversity: '
-                : 'Company: '}
+              {inUserType == '0' ? 'Unversity: ' : 'Company: '}
             </div>
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'Unversity')}
+              onChange={(e) => handleUserInput(e, 'University')}
               fullWidth
               defaultValue={userInfo?.Unversity}
             />
