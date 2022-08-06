@@ -32,17 +32,17 @@ function ResumePage({ socket }) {
   const [dialogConfig, setDialogConfig] = useState({
     userInfo: [
       {
-        label: 'Name',
+        label: 'name',
         required: true,
         type: 'text'
       },
       {
-        label: 'University',
+        label: 'university',
         required: true,
         type: 'text'
       },
       {
-        label: 'Email',
+        label: 'email',
         required: false,
         type: 'text'
       },
@@ -54,112 +54,112 @@ function ResumePage({ socket }) {
     ],
     education: [
       {
-        label: 'University',
+        label: 'university',
         required: true,
         type: 'text'
       },
       {
-        label: 'Start',
+        label: 'start',
         required: true,
         type: 'date'
       },
       {
-        label: 'End',
+        label: 'end',
         required: true,
         type: 'date'
       },
       {
-        label: 'Faculty',
+        label: 'faculty',
         required: true,
         type: 'text'
       },
       {
-        label: 'Major',
+        label: 'major',
         required: true,
         type: 'text'
       },
       {
-        label: 'Grades',
+        label: 'grades',
         required: true,
         type: 'text'
       }
     ],
     workExperience: [
       {
-        label: 'Company',
+        label: 'company',
         required: true,
         type: 'text'
       },
       {
-        label: 'Position',
+        label: 'position',
         required: true,
         type: 'text'
       },
       {
-        label: 'Start',
+        label: 'start',
         required: true,
         type: 'date'
       },
       {
-        label: 'End',
+        label: 'end',
         required: true,
         type: 'date'
       },
       {
-        label: 'Description',
+        label: 'description',
         required: true,
         type: 'text'
       }
     ],
     projectExperience: [
       {
-        label: 'Title',
+        label: 'title',
         required: true,
         type: 'text'
       },
       {
-        label: 'Start',
+        label: 'start',
         required: true,
         type: 'date'
       },
       {
-        label: 'End',
+        label: 'end',
         required: true,
         type: 'date'
       },
       {
-        label: 'Description',
+        label: 'description',
         required: true,
         type: 'text'
       }
     ],
     skills: [
       {
-        label: 'Skill',
+        label: 'skill',
         required: true,
         type: 'text'
       }
     ],
     awards: [
       {
-        label: 'Title',
+        label: 'title',
         required: true,
         type: 'text'
       },
       {
-        label: 'Description',
+        label: 'description',
         required: true,
         type: 'text'
       }
     ],
     projectDisplay: [
       {
-        label: 'Title',
+        label: 'title',
         required: true,
         type: 'text'
       },
       {
-        label: 'Link',
+        label: 'link',
         required: true,
         type: 'text'
       }
@@ -184,7 +184,7 @@ function ResumePage({ socket }) {
     apiGet('user/getResume', { resumeId }).then((res) => {
       console.log(res.errormessage)
       setResumeData(res.errormessage)
-      setUserInfo(res.errormessage.userInfo[0])
+      setUserInfo(res.errormessage.userInfo)
     })
     apiGet('user/checkfollow', { id, user_id: resumeId }).then((res) => {
       console.log(res.errormessage)
@@ -216,11 +216,11 @@ function ResumePage({ socket }) {
   const saveUserInfo = () => {
     console.log(userInfo)
     const temp = { ...resumeData }
-    temp.userInfo = { Thumbnail: '', ...userInfo }
+    temp.userInfo = { thumbnail: '', ...userInfo }
     console.log(temp)
     setResumeData({ ...temp })
     setOpenUserInfo(false)
-    setUserInfo({ Thumbnail: '', ...userInfo })
+    setUserInfo({ thumbnail: '', ...userInfo })
   }
 
   const deleteItem = (index) => {
@@ -264,13 +264,17 @@ function ResumePage({ socket }) {
           let data = e.target.result
 
           let temp = { ...userInfo }
-          temp.Thumbnail = data
-          apiPost('user/upload_image', {
-            user_id: id,
-            image_base64: data
-          }).then((res) => {
-            setUserInfo({ ...temp })
-          })
+          let temp2 = { ...resumeData }
+          temp.thumbnail = data
+          temp2.userInfo = { ...userInfo, thumbnail:data}
+          setUserInfo({ ...temp })
+          setResumeData({ ...temp2 })
+//           apiPost('user/upload_image', {
+//             user_id: id,
+//             image_base64: data
+//           }).then((res) => {
+//             setUserInfo({ ...temp })
+//           })
         }
       }
     }
@@ -453,23 +457,23 @@ function ResumePage({ socket }) {
 
             <div className='info_wrap'>
               <div className='info_item'>
-                Full Name: {userInfo?.Name || 'n/a'}
+                Full Name: {userInfo?.name || 'n/a'}
               </div>
 
               <div className='info_item'>
                 {sessionStorage.getItem('type') === '0'
                   ? 'University: '
                   : 'Company: '}
-                {userInfo?.University || 'n/a'}
+                {userInfo?.university || 'n/a'}
               </div>
 
               <div className='info_item'>
-                Contact Email: {userInfo?.Email || 'n/a'}
+                Contact Email: {userInfo?.email || 'n/a'}
               </div>
             </div>
           </div>
           <div className='introduction'>
-            {resumeData.userInfo?.Introduction}
+            {resumeData.userInfo?.introduction}
           </div>
         </div>
         {inUserType == '0' ? student_resume : hr_detail}
@@ -517,7 +521,7 @@ function ResumePage({ socket }) {
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'Name')}
+              onChange={(e) => handleUserInput(e, 'name')}
               fullWidth
               defaultValue={userInfo?.name}
             />
@@ -530,9 +534,9 @@ function ResumePage({ socket }) {
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'University')}
+              onChange={(e) => handleUserInput(e, 'university')}
               fullWidth
-              defaultValue={userInfo?.University}
+              defaultValue={userInfo?.university}
             />
           </div>
           <div className='form_item'>
@@ -540,9 +544,9 @@ function ResumePage({ socket }) {
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'Email')}
+              onChange={(e) => handleUserInput(e, 'email')}
               fullWidth
-              defaultValue={userInfo?.Email}
+              defaultValue={userInfo?.email}
             />
           </div>
           <div className='footer'>
