@@ -426,13 +426,21 @@ def getinternsbyuserid(user_id):
 
 def getInternshipById(id):
     try:
-        internship = Internship.query.get(id)
+        internship = db.session.query(Internship.id,Internship.title,
+        Internship.content,Internship.type,Internship.create_time,
+        Internship.update_time,Internship.deleted,Internship.view,
+        Internship.location,Internship.field,Internship.state,
+        Internship.city,Internship.description,Internship.working_right,
+        Internship.applychannel,Internship.company,ResumeUser.user_id,ResumeUser.thumbnail,ResumeUser.name).outerjoin(
+            ResumeUser,ResumeUser.user_id==Internship.user_id
+        ).filter(Internship.id==id)
+        res = [dict(zip(result.keys(), result)) for result in internship]
         meetings = Meeting.query.filter_by(internship_id=id).all()
+        print(res)
         print(meetings)
-        internship = internship.as_dict()
         meetings = [x.as_dict() for x in meetings]
         data = {}
-        data['internship'] = internship
+        data['internship'] = res
         data['meetings'] = meetings
         data['errortype'] = 200
         return data

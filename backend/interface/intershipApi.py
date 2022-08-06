@@ -152,8 +152,8 @@ def getapplylist():
     # dict = {}
     # dict['data'] = res
     res = [dict(zip(result.keys(), result)) for result in res]
-    for i in res:
-        print(i)
+    # for i in res:
+    #     print(i)
     data = {}
     data['data'] = res
     data['errortype'] = 200
