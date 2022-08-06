@@ -129,13 +129,6 @@ export default function NavBar(props) {
     console.log(notifications);
   }, []);
 
-  React.useEffect(() => {
-    props.socket?.on('getApplication', (data) => {
-      console.log(data.msg);
-      setNotifications((prev) => [...prev, data.msg]);
-    });
-  }, [props.socket]);
-
   // Search
 
   const processCitizenshipArray = (arr) => {
@@ -206,7 +199,7 @@ export default function NavBar(props) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="start"
               aria-label="notifications"
@@ -217,7 +210,7 @@ export default function NavBar(props) {
               <Badge badgeContent={notifications.length} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
 
             <IconButton
               size="large"

@@ -47,7 +47,7 @@ export default function RecommenderPanel(props) {
       </Paper>
 
       <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="ld">
-        <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
+        <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} jobId={jobId} />
       </Dialog>
     </>
   );

@@ -33,6 +33,7 @@ export default function AddJobForm() {
   const [filter, setFilter] = React.useState(initFilter);
   const [openSessionEdit, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
+  const [company, setCompany] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [application, setApplication] = React.useState('');
   const [link, setLink] = React.useState('');
@@ -152,6 +153,15 @@ export default function AddJobForm() {
               setTitle(e.target.value);
             }}
           />
+          <TextField
+            label="Company:"
+            variant="standard"
+            id="Job_company_input"
+            value={company}
+            onChange={(e) => {
+              setCompany(e.target.value);
+            }}
+          />
         </FormControl>
         <RegionFilter label="defineLocation" updateFilter={[filter, setFilter]} />
         <FieldFilter label="defineField" updateFilter={[filter, setFilter]} />
@@ -166,7 +176,7 @@ export default function AddJobForm() {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
-          style={{ background: "#ebf4f9"}}
+          style={{ background: '#ebf4f9' }}
         />
         <p>Apply Method</p>
         <TextareaAutosize
@@ -178,7 +188,7 @@ export default function AddJobForm() {
           onChange={(e) => {
             setApplication(e.target.value);
           }}
-          style={{ background: "#ebf4f9"}}
+          style={{ background: '#ebf4f9' }}
         />
       </Box>
 

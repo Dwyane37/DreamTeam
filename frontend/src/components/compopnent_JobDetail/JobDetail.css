@@ -65,3 +65,13 @@
 .faq {
   padding: 14px;
 }
+
+.avatar {
+  margin-right: 2rem;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

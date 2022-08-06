@@ -31,7 +31,7 @@ export default function PopularJobPanel(props) {
         {/* </div> */}
       </Paper>
       <Dialog open={open} onClose={handleClose} scroll="paper" maxWidth="lg">
-        <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} />
+        <JobDetail handleClose={handleClose} job={getJobDetail(props.jobs, jobId)} jobId={jobId} />
       </Dialog>
     </>
   );

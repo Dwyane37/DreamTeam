@@ -18,6 +18,7 @@ class Data(object):
     PORT = '3306'
     DATABASE = 'intern'
     USERNAME = 'root'
+
     PASSWORD = '123456'
     DB_URI='mysql+pymysql://{username}:{password}@{host}:{port}/{db}'.format(username=USERNAME,password=PASSWORD,
                                                                        port=PORT,host=HOSTNAME,db=DATABASE)

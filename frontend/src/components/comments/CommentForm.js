@@ -21,10 +21,16 @@ const CommentForm = ({ handleSubmit, submitLabel, hasCancelButton = false, handl
       />
       {hasCancelButton && (
         <Button className="comment-form-cancel-button" variant="contained" onClick={handleCancel}>
-          Cancel
+          cancel
         </Button>
       )}
-      <Button type="submit" variant="contained" value={text} disabled={isTextareaDisabled}>
+      <Button
+        className="comment-form-button"
+        type="submit"
+        variant="contained"
+        value={text}
+        disabled={isTextareaDisabled}
+      >
         {submitLabel}
       </Button>
     </form>
