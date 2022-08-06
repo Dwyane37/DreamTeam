@@ -160,13 +160,16 @@ def searchResume(id):
     except Exception as e:
         print(e)
 
-def getRecommJobs(resume):
+def getRecommJobs(id):
     resumeedu = ResumeEducation.query.filter_by(user_id=id).first()
+    print("############",resumeedu.id)
     position = ResumeWorkExperience.query.filter_by(user_id=id).first()
     resume = ResumeUser.query.filter_by(user_id=id).first()
     if resumeedu is None or position is None or resume is None:
+        print("herer-----------------")
         return []
     field = resumeedu.major
+    print(field)
     aim = position.position
     intro = resume.introduction
     res = Internship.query.all()
@@ -178,10 +181,18 @@ def getRecommJobs(resume):
             if e.city != "":
                 temp = temp + " " + e.city
         list.append(temp.lower())
-    descrip = field + " " + aim + " " + intro + " "
+    print(list)
+    if field is not None:
+        descrip = field + " "
+    if aim is not None:
+        descrip = descrip + aim + " "
+    if intro is not None:
+        descrip = descrip + intro
     descrip = descrip.lower()
+    print(descrip)
     recomm_index = get_recomm(descrip,list,10)
     return_lst = [res[i-1] for i in recomm_index]
+    print(return_lst)
     return return_lst
 
 def get_recomm(descrip,soup,num):
