@@ -74,7 +74,7 @@ export default function AddJobForm() {
       field: filter.field?.label || '', //e.g. Science
       working_right: right || '0', //e.g. 125, each digit represent a working_right item, 1:first item, 2:second item, 5:fifth item
       description: description, //e.g. text text text
-      application: application,
+      applychannel: application,
       meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
     };
     console.log(attr);
@@ -83,6 +83,7 @@ export default function AddJobForm() {
       .then((body) => {
         console.log(body);
         clearAll();
+        navigate('/dashboard');
       })
       .catch((e) => alert(e));
   };
