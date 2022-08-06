@@ -5,10 +5,11 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import { apiPost } from '../API';
 
-import InputLabel from '@mui/material/InputLabel';
+import { Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
@@ -42,6 +43,15 @@ export default function AddJobForm() {
   const [editItemIdx, setEditItemIdx] = React.useState(null);
   //const [aaaa, setaaaa] = React.useState(new Date(datetime));
 
+  const clearAll = () => {
+    setFilter(initFilter);
+    setTitle('');
+    setCompany('');
+    setDescription('');
+    setApplication('');
+    setSessions([]);
+  };
+
   const processCitizenshipArray = (arr) => {
     if (arr) {
       const ids = arr.map((item) => item.id);
@@ -57,6 +67,7 @@ export default function AddJobForm() {
     const attr = {
       id: sessionStorage.getItem('id'),
       title: title,
+      company: company,
       location: filter.country?.name || '', //e.g. "Australie"
       state: filter.state?.name || '', // e.g. "New Southe Wales"
       city: filter.city?.name || '', // e.g. Sydney
@@ -71,6 +82,7 @@ export default function AddJobForm() {
     apiPost('internship/add_internship', attr)
       .then((body) => {
         console.log(body);
+        clearAll();
       })
       .catch((e) => alert(e));
   };
@@ -142,7 +154,7 @@ export default function AddJobForm() {
         post(e);
       }}
     >
-      <Box className="JobInformationForm">
+      <Paper className="JobInformationForm">
         <FormControl variant="standard">
           <TextField
             label="Title:"
@@ -190,14 +202,16 @@ export default function AddJobForm() {
           }}
           style={{ background: '#ebf4f9' }}
         />
-      </Box>
+      </Paper>
 
       <JobBigButton variant="outlined" onClick={createSession}>
         Create an Info Session
       </JobBigButton>
 
+      <Divider className="divider" variant="middle" />
+
       {openSessionEdit && (
-        <Box className="createSession">
+        <Paper className="createSession">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDateTimePicker
               label="Choose Date and Time"
@@ -225,12 +239,12 @@ export default function AddJobForm() {
               {editItemIdx ? 'Save' : 'Create'}
             </JobSmallButton>
           </Stack>
-        </Box>
+        </Paper>
       )}
 
       {sessions &&
         sessions.map((session, idx) => (
-          <Box key={idx} id={idx} className="SessionInfo">
+          <Paper key={idx} id={idx} className="SessionInfo">
             <SessionInfo value={session.datetime} id="Job_session_time" readOnly multiline />
             <SessionInfo value={session.link} id="Job_session_link" readOnly multiline />
             <ButtonGroup id={idx} variant="text" aria-label="text button group">
@@ -239,7 +253,7 @@ export default function AddJobForm() {
                 Delete
               </Button>
             </ButtonGroup>
-          </Box>
+          </Paper>
         ))}
 
       <Box className="PostForm">

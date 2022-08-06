@@ -2,26 +2,30 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
-import { useNavigate } from 'react-router-dom';
-import { apiPost } from '../API';
+import { useNavigate, useParams } from 'react-router-dom';
+import { apiGet, apiPost } from '../API';
 
-import InputLabel from '@mui/material/InputLabel';
+import { Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { SessionInfo, JobBigButton, JobSmallButton } from '../component_AddJobForm/AddJobFormStyle';
+import { SessionInfo, JobBigButton, JobSmallButton } from './AddJobFormStyle';
 import FieldFilter from '../component_Filter/FieldFilter';
 import RegionFilter from '../component_Filter/RegionFilter';
 import CitizenshipFilter from '../component_Filter/CitizenshipFilter';
 
-import '../component_AddJobForm/AddJobForm.css';
+import './AddJobForm.css';
 
-export default function EditJobForm() {
+export default function AddJobForm() {
+  const params = useParams();
+  const jobId = params.jobId;
+
   const navigate = useNavigate();
   const initFilter = {
     country: null,
@@ -33,13 +37,35 @@ export default function EditJobForm() {
   const [filter, setFilter] = React.useState(initFilter);
   const [openSessionEdit, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
+  const [company, setCompany] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [application, setApplication] = React.useState('');
   const [link, setLink] = React.useState('');
   const [datetime, setDatetime] = React.useState(new Date());
-  const [sessions, setSessions] = React.useState([]);
   const [editItemIdx, setEditItemIdx] = React.useState(null);
+
+  const [sessions, setSessions] = React.useState([]);
+
   //const [aaaa, setaaaa] = React.useState(new Date(datetime));
+  React.useEffect(() => {
+    apiGet('internship/getinternship', { id: jobId }).then((res) => {
+      const job = res.internship[0];
+      setTitle(job.title);
+      setCompany(job.company);
+      setDescription(job.description);
+      setApplication(job.applychannel);
+      setSessions(res.meetings);
+    });
+  }, []);
+
+  const clearAll = () => {
+    setFilter(initFilter);
+    setTitle('');
+    setCompany('');
+    setDescription('');
+    setApplication('');
+    setSessions([]);
+  };
 
   const processCitizenshipArray = (arr) => {
     if (arr) {
@@ -54,8 +80,10 @@ export default function EditJobForm() {
     e.preventDefault();
     const right = processCitizenshipArray(filter.citizenship);
     const attr = {
-      id: sessionStorage.getItem('id'),
+      id: jobId,
+      user_id: sessionStorage.getItem('id'),
       title: title,
+      company: company,
       location: filter.country?.name || '', //e.g. "Australie"
       state: filter.state?.name || '', // e.g. "New Southe Wales"
       city: filter.city?.name || '', // e.g. Sydney
@@ -67,9 +95,10 @@ export default function EditJobForm() {
     };
     console.log(attr);
 
-    apiPost('internship/add_internship', attr)
+    apiPost('internship/edit_internship', attr)
       .then((body) => {
         console.log(body);
+        clearAll();
       })
       .catch((e) => alert(e));
   };
@@ -141,7 +170,7 @@ export default function EditJobForm() {
         post(e);
       }}
     >
-      <Box className="JobInformationForm">
+      <Paper className="JobInformationForm">
         <FormControl variant="standard">
           <TextField
             label="Title:"
@@ -150,6 +179,15 @@ export default function EditJobForm() {
             value={title}
             onChange={(e) => {
               setTitle(e.target.value);
+            }}
+          />
+          <TextField
+            label="Company:"
+            variant="standard"
+            id="Job_company_input"
+            value={company}
+            onChange={(e) => {
+              setCompany(e.target.value);
             }}
           />
         </FormControl>
@@ -166,7 +204,7 @@ export default function EditJobForm() {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
-          style={{ background: "#ebf4f9"}}
+          style={{ background: '#ebf4f9' }}
         />
         <p>Apply Method</p>
         <TextareaAutosize
@@ -178,16 +216,18 @@ export default function EditJobForm() {
           onChange={(e) => {
             setApplication(e.target.value);
           }}
-          style={{ background: "#ebf4f9"}}
+          style={{ background: '#ebf4f9' }}
         />
-      </Box>
+      </Paper>
 
       <JobBigButton variant="outlined" onClick={createSession}>
         Create an Info Session
       </JobBigButton>
 
+      <Divider className="divider" variant="middle" />
+
       {openSessionEdit && (
-        <Box className="createSession">
+        <Paper className="createSession">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDateTimePicker
               label="Choose Date and Time"
@@ -215,12 +255,12 @@ export default function EditJobForm() {
               {editItemIdx ? 'Save' : 'Create'}
             </JobSmallButton>
           </Stack>
-        </Box>
+        </Paper>
       )}
 
       {sessions &&
         sessions.map((session, idx) => (
-          <Box key={idx} id={idx} className="SessionInfo">
+          <Paper key={idx} id={idx} className="SessionInfo">
             <SessionInfo value={session.datetime} id="Job_session_time" readOnly multiline />
             <SessionInfo value={session.link} id="Job_session_link" readOnly multiline />
             <ButtonGroup id={idx} variant="text" aria-label="text button group">
@@ -229,12 +269,12 @@ export default function EditJobForm() {
                 Delete
               </Button>
             </ButtonGroup>
-          </Box>
+          </Paper>
         ))}
 
       <Box className="PostForm">
         <JobSmallButton type="submit" variant="outlined">
-          Post
+          Save Changes
         </JobSmallButton>
       </Box>
     </Box>

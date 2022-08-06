@@ -1,9 +1,8 @@
-import EditJobForm from '../components/component_EditJobForm/EditJobForm';
+import EditJobForm from '../components/component_AddJobForm/EditJobForm';
 import React from 'react';
 import { Button } from '@mui/material';
 import './EditJobPage.css';
 import { useNavigate } from 'react-router-dom';
-
 
 function EditJobPage() {
   const navigate = useNavigate();

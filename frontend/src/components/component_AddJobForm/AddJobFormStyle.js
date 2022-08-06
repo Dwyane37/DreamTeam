@@ -130,10 +130,12 @@ export const SessionInfo = styled(InputBase)(({ theme }) => ({
 export const JobSmallButton = styled(Button)({
   textTransform: 'none',
   width: '7vw',
+  margin: '1rem 0',
 });
 
 export const JobBigButton = styled(Button)({
   textTransform: 'none',
   width: '35vw',
+  margin: '3rem 0',
   //margin: '10px',
 });
