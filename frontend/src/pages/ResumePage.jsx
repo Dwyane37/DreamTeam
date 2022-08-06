@@ -285,12 +285,14 @@ function ResumePage({ socket }) {
 
   const handleFollow = () => {
     if (isFollow) {
-      apiGet('user/following', { userId: id }).then((res) => {
+      apiGet('/user/dislike', { followerId: id, followingId: resumeId }).then((res) => {
         alert('Unfollow success');
+        setIsFollow(false);
       });
     } else {
-      apiGet('user/following', { userId: id }).then((res) => {
+      apiGet('/user/like', { followerId: id, followingId: resumeId }).then((res) => {
         alert('Follow success');
+        setIsFollow(true);
       });
     }
   };
@@ -379,7 +381,7 @@ function ResumePage({ socket }) {
   );
 
   const hr_detail = (
-    <div>
+    <div className="hr_detail">
       {/* <div className='header'>
         <span>Introduction</span>
         <Button
@@ -393,6 +395,7 @@ function ResumePage({ socket }) {
       <div className='content'>
         <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
       </div> */}
+      <h3>Jobs</h3>
       <JobPanel jobs={dummyJobs} />
     </div>
   );
