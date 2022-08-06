@@ -164,9 +164,10 @@ def getapplylist():
 @internship_opt.route("/add_internship", methods=['Post'], endpoint='add_internship')
 def add_internship():
     data = json.loads(request.data)
-    user_id = data['user_id']
+    print(data)
+    user_id = data['id']
     title = data['title']
-    company = data['company']
+    company = '1'
     field = data['field']
     location = data['location']
     state = data['state']
@@ -191,7 +192,7 @@ def add_internship():
     for meeting in meetings:
         datetime = meeting['datetime']
         link = meeting['link']
-        meeting = Meeting(intership_id=id,
+        meeting = Meeting(internship_id=id,
                           datetime=datetime, link=link,
                           deleted=0,
                           )
