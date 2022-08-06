@@ -29,9 +29,12 @@ export default function DashboardPage({ socket }) {
   }, [logedIn]);
 
   React.useEffect(() => {
-    apiGet('internship/get_all_intern', { id: sessionStorage.getItem('id') }).then((res) =>
-      setJobs(Object.values(res.data))
-    );
+    apiGet('internship/get_all_intern', { id: sessionStorage.getItem('id') }).then((res) => {
+      const temp = Object.values(res.data);
+      temp.sort((a, b) => new Date(a.update_time).getTime() - new Date(b.update_time).getTime());
+      console.log(temp.reverse());
+      setJobs(temp);
+    });
   }, [refresh]);
 
   return (
