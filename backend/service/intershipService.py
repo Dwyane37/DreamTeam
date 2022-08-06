@@ -11,7 +11,7 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
     "host": "127.0.0.1",
     "port": 3306,
     "user": "root",
-    "passwd": "zswjq997131",
+    "passwd": "root",
     # "db": "Sleep_project1",
     "db": "intern",
     "charset": "utf8"
@@ -308,9 +308,11 @@ def addNewjob(inputs):
         newJob = Internship(id=id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
+                            applychannel = inputs.applychannel,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
+        print(inputs.user_id)
         db.session.add(newJob)
         db.session.commit()
         return errorMessage(200, id)
@@ -319,35 +321,39 @@ def addNewjob(inputs):
 
 def deletejob(inputs):
     try:
-        Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
-                            state=inputs.state, city=inputs.city,
-                            deleted=1, working_right=inputs.working_right, description=inputs.description,
-                            create_time=getTime(datetime),
-                            update_time=getTime(datetime),
-                            )
         # delete old job
-        Internship.query.filter_by(id=inputs.id).delete()
-        # add new job (deleted=1)
-        db.session.add(Job)
+        old = Internship.query.get(inputs.id)
+        old.deleted = 1
         db.session.commit()
-        return errorMessage(200, id)
+        return errorMessage(200, inputs.id)
     except Exception as e:
         return errorMessage(1, e)
 
 def editjob(inputs):
     try:
-        Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
-                            state=inputs.state, city=inputs.city,
-                            deleted=0, working_right=inputs.working_right, description=inputs.description,
-                            create_time=getTime(datetime),
-                            update_time=getTime(datetime),
-                            )
-        # delete old job
-        Internship.query.filter_by(id=inputs.id).delete()
+        # update old job
+        new = Internship.query.get(inputs.id)
+        new.user_id=inputs.user_id
+        new.company=inputs.company
+        new.title=inputs.title
+        new.field=inputs.field
+        new.location=inputs.location
+        new.state=inputs.state, 
+        new.city=inputs.city
+        new.applychannel=inputs.applychannel
+        new.working_right=inputs.working_right
+        new.description=inputs.description
+        new.update_time=getTime(datetime)
         # add new job
-        db.session.add(Job)
+        # Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
+        #                     state=inputs.state, city=inputs.city, applychannel=inputs.applychannel,
+        #                     deleted=0, working_right=inputs.working_right, description=inputs.description,
+        #                     create_time=getTime(datetime),
+        #                     update_time=getTime(datetime),
+        #                     )
+        # db.session.add(Job)
         db.session.commit()
-        return errorMessage(200, id)
+        return errorMessage(200, inputs.id)
     except Exception as e:
         return errorMessage(1, e)
 
@@ -355,13 +361,11 @@ def editjob(inputs):
 def addmeeting(inputs):
     try:
         id = getuuid()
-        meeting = Meeting(id=id, intership_id=inputs.intership_id,
+        newmeeting = Meeting(id=id, internship_id=inputs.internship_id,
                            datetime=inputs.datetime, link=inputs.link,
                            deleted=0,
-                           create_time=getTime(datetime),
-                           update_time=getTime(datetime),
                            )
-        db.session.add(meeting)
+        db.session.add(newmeeting)
         db.session.commit()
         return errorMessage(200, id)
     except Exception as e:
@@ -370,16 +374,8 @@ def addmeeting(inputs):
 
 def deletemeeting(inputs):
     try:
-        meeting = Meeting(id=inputs.id, intership_id=inputs.intership_id,
-                            datetime=inputs.datetime, link=inputs.link,
-                            deleted=1,
-                            create_time=getTime(datetime),
-                            update_time=getTime(datetime),
-                            )
-        # delete old info
-        Meeting.query.filter_by(id=inputs.id).delete()
-        # add new info
-        db.session.add(meeting)
+        old = Meeting.query.get(inputs.id)
+        old.deleted = 1
         db.session.commit()
         return errorMessage(200, id)
     except Exception as e:
@@ -388,16 +384,9 @@ def deletemeeting(inputs):
 
 def editmeeting(inputs):
     try:
-        meeting = Meeting(id=inputs.id, intership_id=inputs.intership_id,
-                            datetime=inputs.datetime, link=inputs.link,
-                            deleted=0,
-                            create_time=getTime(datetime),
-                            update_time=getTime(datetime),
-                            )
-        # delete old info
-        Meeting.query.filter_by(id=inputs.id).delete()
-        # add new info
-        db.session.add(meeting)
+        new = Internship.query.get(inputs.internship_id)
+        new.datetime=inputs.datetime
+        new.link=inputs.link
         db.session.commit()
         return errorMessage(200, id)
     except Exception as e:
@@ -406,6 +395,7 @@ def editmeeting(inputs):
 def getmeetingsbyjobid(id):
     try:
         meetings = Meeting.query.filter_by(internship_id=id, deleted=0).all()
+        # print(meetings)
         return meetings
     except Exception as e:
         return errorMessage(1, e)
