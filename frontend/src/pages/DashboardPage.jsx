@@ -7,10 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { dummyJobs } from '../components/assets';
 
 import './Dashboard.css';
+import { apiGet } from '../components/API';
 
 export default function DashboardPage({ socket }) {
   const navigate = useNavigate();
   const [logedIn, setLogedIn] = React.useState(false);
+  const [jobs, setJobs] = React.useState([]);
   function AddJob() {
     navigate('/addjob');
   }
@@ -25,6 +27,12 @@ export default function DashboardPage({ socket }) {
     socket?.emit('newUser', sessionStorage.getItem('id'));
   }, [logedIn]);
 
+  React.useEffect(() => {
+    apiGet('internship/get_all_intern', { id: sessionStorage.getItem('id') }).then((res) =>
+      setJobs(Object.values(res.data))
+    );
+  }, []);
+
   return (
     logedIn && (
       <div>
@@ -35,7 +43,7 @@ export default function DashboardPage({ socket }) {
             Add a Job Post
           </Button>
           <div className="jobSection">
-            <JobPanel jobs={dummyJobs} type="myJob" />
+            <JobPanel jobs={jobs} type="myJob" />
           </div>
         </div>
       </div>
