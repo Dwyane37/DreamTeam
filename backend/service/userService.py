@@ -59,6 +59,7 @@ def checkInfoCorrect(username, password):
             return errorMessage(1, "username or password is incorrect")
         return errorMessage(200, "ok")
     except Exception as e:
+        print(e)
         return errorMessage(1, e)
 
 def getUserId(username):
@@ -163,56 +164,56 @@ def update_resume(user_id, resume):
         ResumeAward.query.filter_by(user_id=user_id).delete()
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
         # 插入新数据
-        for user_info in resume["userInfo"]:
-            db.session.add(ResumeUser(
-                name=user_info["name"],
-                university=user_info["university"],
-                email=user_info["email"],
-                # update 7.24 新增加一个 头像字段，写入
-                thumbnail=user_info["thumbnail"],
-                user_id=user_id
-            ))
+        db.session.add(ResumeUser(
+            name=resume["userInfo"]["name"],
+            university=resume["userInfo"]["university"],
+            email=resume["userInfo"]["email"],
+            # update 7.24 新增加一个 头像字段，写入
+            thumbnail=resume["userInfo"]["thumbnail"],
+            user_id=user_id
+        ))
+        print("here")
         for education in resume["education"]:
             db.session.add(ResumeEducation(
-                university=education["university"],
-                start=education["start"],
-                end=education["end"],
-                faculty=education["faculty"],
-                major=education["major"],
-                grades=education["grades"],
-                degree=education["degree"],
+                university=education["University"],
+                start=education["Start"],
+                end=education["End"],
+                faculty=education["Faculty"],
+                major=education["Major"],
+                grades=6,
+                degree="",
                 user_id=user_id
             ))
 
         for work in resume["workExperience"]:
             db.session.add(ResumeWorkExperience(
-                company=work["company"],
-                position=work["position"],
-                start=work["start"],
-                end=work["end"],
-                description=work["description"],
+                company=work["Company"],
+                position=work["Position"],
+                start=work["Start"],
+                end=work["End"],
+                description=work["Description"],
                 user_id=user_id
             ))
 
         for project in resume["projectExperience"]:
             db.session.add(ResumeProjectExperience(
-                name=project["name"],
-                start=project["start"],
-                end=project["end"],
-                description=project["description"],
+                name=project["Title"],
+                start=project["Start"],
+                end=project["End"],
+                description=project["Description"],
                 user_id=user_id
             ))
 
         for skill in resume["skills"]:
             db.session.add(ResumeSkill(
-                skill=skill["skill"],
+                skill=skill["Skill"],
                 user_id=user_id
             ))
 
         for award in resume["awards"]:
             db.session.add(ResumeAward(
-                title=award["title"],
-                description=award["description"],
+                title=award["Title"],
+                description=award["Description"],
                 user_id=user_id
             ))
 

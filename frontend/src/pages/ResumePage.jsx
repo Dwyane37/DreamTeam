@@ -170,10 +170,10 @@ function ResumePage({ socket }) {
   const [userInfo, setUserInfo] = useState({})
   const [openUserInfo, setOpenUserInfo] = useState(false)
   const [type, setType] = useState('false')
-  // 进来用户type
+  // user type
   const [inUserType, setInUserType] = useState(null)
   const id = sessionStorage.getItem('id')
-  // 当前登录用户type
+  // currently logged in user's type
   const userType = sessionStorage.getItem('type')
   const { state } = useLocation()
   const params = useParams()
