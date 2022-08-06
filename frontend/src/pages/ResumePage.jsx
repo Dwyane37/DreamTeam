@@ -154,7 +154,7 @@ function ResumePage({ socket }) {
     ],
     projectDisplay: [
       {
-        label: 'title',
+        label: 'name',
         required: true,
         type: 'text'
       },
