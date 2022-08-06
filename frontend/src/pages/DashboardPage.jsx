@@ -13,6 +13,7 @@ export default function DashboardPage({ socket }) {
   const navigate = useNavigate();
   const [logedIn, setLogedIn] = React.useState(false);
   const [jobs, setJobs] = React.useState([]);
+  const [refresh, setRefresh] = React.useState(false);
   function AddJob() {
     navigate('/addjob');
   }
@@ -31,7 +32,7 @@ export default function DashboardPage({ socket }) {
     apiGet('internship/get_all_intern', { id: sessionStorage.getItem('id') }).then((res) =>
       setJobs(Object.values(res.data))
     );
-  }, []);
+  }, [refresh]);
 
   return (
     logedIn && (
@@ -43,7 +44,7 @@ export default function DashboardPage({ socket }) {
             Add a Job Post
           </Button>
           <div className="jobSection">
-            <JobPanel jobs={jobs} type="myJob" />
+            <JobPanel jobs={jobs} type="myJob" refresh={setRefresh} />
           </div>
         </div>
       </div>

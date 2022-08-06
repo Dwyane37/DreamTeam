@@ -100,6 +100,7 @@ export default function JobPanel(props) {
               key={idx}
             >
               <JobCard
+                refresh={props.refresh}
                 className="job-card"
                 type={props.type}
                 jobID={job.id}
