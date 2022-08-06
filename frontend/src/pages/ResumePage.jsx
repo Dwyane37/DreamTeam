@@ -186,12 +186,10 @@ function ResumePage({ socket }) {
       setResumeData(res.errormessage)
       setUserInfo(res.errormessage.userInfo[0])
     })
-    if (id !== resumeId) {
-      apiGet('user/checkfollow', { id, userr_id: resumeId }).then((res) => {
-        console.log(res.errormessage)
-        setInUserType(res.errormessage.type)
-      })
-    }
+    apiGet('user/checkfollow', { id, user_id: resumeId }).then((res) => {
+      console.log(res.errormessage)
+      setInUserType(res.errormessage.type)
+    })
   }, [])
 
   const handleClose = () => {
@@ -205,6 +203,7 @@ function ResumePage({ socket }) {
   }
 
   const handleUserInput = (e, type) => {
+    console.log(type);
     let temp = { ...userInfo }
     temp[type] = e.target.value
     setUserInfo(temp)
@@ -263,7 +262,7 @@ function ResumePage({ socket }) {
           let data = e.target.result
 
           let temp = { ...userInfo }
-          temp.thumbnail = data
+          temp.Thumbnail = data
           apiPost('user/upload_image', {
             user_id: id,
             image_base64: data
@@ -452,26 +451,26 @@ function ResumePage({ socket }) {
 
             <div className='info_wrap'>
               <div className='info_item'>
-                Full Name: {userInfo?.name || 'n/a'}
+                Full Name: {userInfo?.Name || 'n/a'}
               </div>
 
               <div className='info_item'>
                 {sessionStorage.getItem('type') === '0'
                   ? 'Unversity: '
                   : 'Company: '}
-                {userInfo?.university || 'n/a'}
+                {userInfo?.University || 'n/a'}
               </div>
 
               <div className='info_item'>
-                Contact Email: {userInfo?.email || 'n/a'}
+                Contact Email: {userInfo?.Email || 'n/a'}
               </div>
             </div>
           </div>
           <div className='introduction'>
-            {resumeData.userInfo?.introduction}
+            {resumeData.userInfo?.Introduction}
           </div>
         </div>
-        {sessionStorage.getItem('type') === '0' ? student_resume : hr_detail}
+        {inUserType == '0' ? student_resume : hr_detail}
 
         <div className='resume_footer'>
           {id === resumeId && inUserType == 0 && (
@@ -516,9 +515,9 @@ function ResumePage({ socket }) {
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'name')}
+              onChange={(e) => handleUserInput(e, 'Name')}
               fullWidth
-              defaultValue={userInfo.name}
+              defaultValue={userInfo?.name}
             />
           </div>
           <div className='form_item'>
@@ -531,9 +530,9 @@ function ResumePage({ socket }) {
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'unversity')}
+              onChange={(e) => handleUserInput(e, 'Unversity')}
               fullWidth
-              defaultValue={userInfo.name}
+              defaultValue={userInfo?.Unversity}
             />
           </div>
           <div className='form_item'>
@@ -541,9 +540,9 @@ function ResumePage({ socket }) {
             <TextField
               className='input'
               size='small'
-              onChange={(e) => handleUserInput(e, 'email')}
+              onChange={(e) => handleUserInput(e, 'Email')}
               fullWidth
-              defaultValue={userInfo.name}
+              defaultValue={userInfo?.Email}
             />
           </div>
           <div className='footer'>

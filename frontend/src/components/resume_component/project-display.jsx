@@ -10,8 +10,8 @@ function ProjectDisplay(props) {
         projectDisplay.map((item, index) => (
           <div className='project_display_item' key={index}>
             <div className='header'>
-              <span className='title item'>{item.name}: </span>
-              <span className='description'>{item.link}</span>
+              <span className='title item'>{item.Name}: </span>
+              <span className='description'>{item.Link}</span>
             </div>
           </div>
         ))}
