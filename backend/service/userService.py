@@ -219,7 +219,7 @@ def update_resume(user_id, resume):
 
         for project in resume["projectDisplay"]:
             db.session.add(ResumeProjectDisplay(
-                name=project["title"],
+                name=project["name"],
                 link=project["link"],
                 user_id=user_id
             ))
