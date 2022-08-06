@@ -35,7 +35,7 @@ function App() {
           <Route path="/home" element={<HomePage socket={socket} />} />
           <Route path="/settings" element={<SettingsPage socket={socket} />} />
           <Route path="/addjob" element={<AddJobPage />} />
-          <Route path="/editjob" element={<EditJobPage />} />
+          <Route path="/editjob/:jobId" element={<EditJobPage />} />
           <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
           <Route path="/saved-jobs" element={<SavedJobs socket={socket} />} />
           <Route path="/applied-jobs" element={<AppliedJobs socket={socket} />} />

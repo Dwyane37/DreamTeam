@@ -111,15 +111,16 @@ export default function JobCard(props) {
 
   const handleEdit = (e) => {
     e.stopPropagation();
-
+    const jobID = e.currentTarget.parentNode.parentNode.id;
     console.log('edit');
-    navigate('/editjob');
+    navigate(`/editjob/${jobID}`);
   };
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    const jobID = e.currentTarget.id;
-    console.log('delete');
+    const jobID = e.currentTarget.parentNode.parentNode.id;
+    console.log('delete ' + jobID);
+    apiPost('internship/del_internship', { id: jobID });
   };
 
   const location = `${props.location.city}, ${props.location.state} ${props.location.country}`;
@@ -128,14 +129,16 @@ export default function JobCard(props) {
     <Paper id={props.jobID} onClick={props.hanldeClickOpen} className="job-card">
       {/* <Card id={props.jobID} className="job-card" variant="outlined" onClick={props.hanldeClickOpen}> */}
       <CardContent>
-        <Typography variant="h5" component="div">
+        <Typography variant="h8" component="div">
           {props.title}
         </Typography>
-        <Typography sx={{ mb: 1.5 }}>{props.company}</Typography>
+        <Typography variant="body1" sx={{ mb: 1.5 }}>
+          {props.company}
+        </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {location}
         </Typography>
-        <Typography paragraph={true} noWrap={true}>
+        <Typography variant="body" paragraph={true} noWrap={true}>
           {props.briefing}
         </Typography>
       </CardContent>
