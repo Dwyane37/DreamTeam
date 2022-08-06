@@ -9,15 +9,15 @@ function Education(props) {
         education.map((item, index) => (
           <div className='education_item' key={index}>
             <div className='header'>
-              <span className='university item'>{item.University}</span>
-              <span className='degree item'>{item.Degree}</span>
-              <span className='faculty item '>{item.Faculty}</span>
+              <span className='university item'>{item.university}</span>
+              <span className='degree item'>{item.degree}</span>
+              <span className='faculty item '>{item.faculty}</span>
               <span className='date item'>
-                {item.Start}-{item.End}
+                {item.start}-{item.end}
               </span>
             </div>
-            <p className='major'>major: {item.Major}</p>
-            <p className='grades'>grades: {item.Grades}</p>
+            <p className='major'>major: {item.major}</p>
+            <p className='grades'>grades: {item.grades}</p>
           </div>
         ))}
     </div>

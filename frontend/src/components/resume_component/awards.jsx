@@ -10,8 +10,8 @@ function Awards(props) {
         awards.map((item, index) => (
           <div className='awards_item' key={index}>
             <div className='header'>
-              <span className='title item'>{item.Title}: </span>
-              <span className='description'>{item.Description}</span>
+              <span className='title item'>{item.title}: </span>
+              <span className='description'>{item.description}</span>
             </div>
           </div>
         ))}

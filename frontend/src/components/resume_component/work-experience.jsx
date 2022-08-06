@@ -10,13 +10,13 @@ function WorkExperience(props) {
         workExperience.map((item, index) => (
           <div className='work_experience_item' key={index}>
             <div className='header'>
-              <span className='company item'>{item.Company}</span>
-              <span className='position item'>{item.Position}</span>
+              <span className='company item'>{item.company}</span>
+              <span className='position item'>{item.position}</span>
               <span className='date item'>
                 {item.start}-{item.end}
               </span>
             </div>
-            <p className='description'>{item.Description}</p>
+            <p className='description'>{item.description}</p>
           </div>
         ))}
     </div>

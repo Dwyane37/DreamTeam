@@ -10,7 +10,7 @@ function Skill(props) {
         skill.map((item, index) => (
           <div className="skill_item" key={index}>
             <p className="skill_name">
-              {index + 1}. {item.Skill}
+              {index + 1}. {item.skill}
             </p>
           </div>
         ))}

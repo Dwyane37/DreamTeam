@@ -165,21 +165,21 @@ def update_resume(user_id, resume):
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
         # 插入新数据
         db.session.add(ResumeUser(
-            name=resume["userInfo"]["Name"],
-            university=resume["userInfo"]["University"],
-            email=resume["userInfo"]["Email"],
+            name=resume["userInfo"]["name"],
+            university=resume["userInfo"]["university"],
+            email=resume["userInfo"]["email"],
             # update 7.24 新增加一个 头像字段，写入
-            thumbnail=resume["userInfo"]["Thumbnail"],
+            thumbnail=resume["userInfo"]["thumbnail"],
             user_id=user_id
         ))
         print("here")
         for education in resume["education"]:
             db.session.add(ResumeEducation(
-                university=education["University"],
-                start=education["Start"],
-                end=education["End"],
-                faculty=education["Faculty"],
-                major=education["Major"],
+                university=education["university"],
+                start=education["start"],
+                end=education["end"],
+                faculty=education["faculty"],
+                major=education["major"],
                 grades=6,
                 degree="",
                 user_id=user_id
@@ -187,40 +187,40 @@ def update_resume(user_id, resume):
 
         for work in resume["workExperience"]:
             db.session.add(ResumeWorkExperience(
-                company=work["Company"],
-                position=work["Position"],
-                start=work["Start"],
-                end=work["End"],
-                description=work["Description"],
+                company=work["company"],
+                position=work["position"],
+                start=work["start"],
+                end=work["end"],
+                description=work["description"],
                 user_id=user_id
             ))
 
         for project in resume["projectExperience"]:
             db.session.add(ResumeProjectExperience(
-                name=project["Title"],
-                start=project["Start"],
-                end=project["End"],
-                description=project["Description"],
+                name=project["title"],
+                start=project["start"],
+                end=project["end"],
+                description=project["description"],
                 user_id=user_id
             ))
 
         for skill in resume["skills"]:
             db.session.add(ResumeSkill(
-                skill=skill["Skill"],
+                skill=skill["skill"],
                 user_id=user_id
             ))
 
         for award in resume["awards"]:
             db.session.add(ResumeAward(
-                title=award["Title"],
-                description=award["Description"],
+                title=award["title"],
+                description=award["description"],
                 user_id=user_id
             ))
 
         for project in resume["projectDisplay"]:
             db.session.add(ResumeProjectDisplay(
-                name=project["Title"],
-                link=project["Link"],
+                name=project["title"],
+                link=project["link"],
                 user_id=user_id
             ))
         db.session.commit()
@@ -235,7 +235,7 @@ def query_resume(user_id):
     try:
         user = User.query.filter_by(id=user_id).first()
         body = {
-            "userInfo": [x.to_dict() for x in user.users],
+            "userInfo": [x.to_dict() for x in user.users][0],
             "education": [x.to_dict() for x in user.educations],
             "workExperience": [x.to_dict() for x in user.works],
             "projectExperience": [x.to_dict() for x in user.projects],
@@ -246,6 +246,7 @@ def query_resume(user_id):
     # update 7.24: 修改返回结果格式
         return errorMessage(200, body)
     except Exception as e:
+        print(e)
         return errorMessage(1, str(e))
 
 

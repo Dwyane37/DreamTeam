@@ -10,12 +10,12 @@ function ProjectExperience(props) {
         projectExperience.map((item, index) => (
           <div className='project_experience_item' key={index}>
             <div className='header'>
-              <span className='company item'>{item.Name}</span>
+              <span className='company item'>{item.name}</span>
               <span className='date item'>
-                {item.Start}-{item.End}
+                {item.start}-{item.end}
               </span>
             </div>
-            <p className='description'>{item.Description}</p>
+            <p className='description'>{item.description}</p>
           </div>
         ))}
     </div>
