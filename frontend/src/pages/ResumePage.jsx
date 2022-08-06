@@ -440,7 +440,10 @@ function ResumePage({ socket }) {
               <div className="info_item">Contact Email: {userInfo?.email || 'n/a'}</div>
             </div>
           </div>
-          <div className="introduction">{resumeData.userInfo?.introduction}</div>
+          <div className="introduction">
+            <h3>About</h3>
+            <p>{resumeData.userInfo?.introduction}</p>
+          </div>
         </div>
         {inUserType == '1' && id !== resumeId ? hr_detail : inUserType == '0' ? student_resume : null}
 
@@ -492,6 +495,16 @@ function ResumePage({ socket }) {
               onChange={(e) => handleUserInput(e, 'email')}
               fullWidth
               defaultValue={userInfo?.email}
+            />
+          </div>
+          <div className="form_item">
+            <div className="label">About:</div>
+            <TextField
+              className="input"
+              size="small"
+              onChange={(e) => handleUserInput(e, 'introduction')}
+              fullWidth
+              defaultValue={userInfo?.introduction}
             />
           </div>
           <div className="footer">
