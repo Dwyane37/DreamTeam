@@ -458,7 +458,7 @@ function ResumePage({ socket }) {
 
               <div className='info_item'>
                 {sessionStorage.getItem('type') === '0'
-                  ? 'Unversity: '
+                  ? 'University: '
                   : 'Company: '}
                 {userInfo?.University || 'n/a'}
               </div>
@@ -525,14 +525,14 @@ function ResumePage({ socket }) {
           <div className='form_item'>
             <div className='label'>
               {' '}
-              {inUserType == '0' ? 'Unversity: ' : 'Company: '}
+              {inUserType == '0' ? 'University: ' : 'Company: '}
             </div>
             <TextField
               className='input'
               size='small'
               onChange={(e) => handleUserInput(e, 'University')}
               fullWidth
-              defaultValue={userInfo?.Unversity}
+              defaultValue={userInfo?.University}
             />
           </div>
           <div className='form_item'>
