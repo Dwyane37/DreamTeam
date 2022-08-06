@@ -13,13 +13,13 @@
   margin-top: 40px;
 }
 
-.form {
+.comment-form {
   display: flex;
-  flex-direction: row !important;
-  justify-content: space-between !important;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: rgb(243, 243, 243);
   border-radius: 8px;
-  padding: 1rem 1.5rem !important;
+  padding: 1rem 1.5rem;
 }
 
 .comment-form-textarea {

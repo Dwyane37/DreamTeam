@@ -12,7 +12,7 @@ const CommentForm = ({ handleSubmit, submitLabel, hasCancelButton = false, handl
     setText('');
   };
   return (
-    <form className="form" onSubmit={onSubmit}>
+    <form className="comment-form" onSubmit={onSubmit}>
       <input
         className="comment-form-textarea"
         value={text}
