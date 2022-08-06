@@ -18,11 +18,7 @@ class Data(object):
     PORT = '3306'
     DATABASE = 'intern'
     USERNAME = 'root'
-<<<<<<< HEAD
     PASSWORD = 'zswjq997131'
-=======
-    PASSWORD = 'root'
->>>>>>> f858884e7ed7064836848d2bb24cd18c04c254a1
     DB_URI='mysql+pymysql://{username}:{password}@{host}:{port}/{db}'.format(username=USERNAME,password=PASSWORD,
                                                                        port=PORT,host=HOSTNAME,db=DATABASE)
     SQLALCHEMY_DATABASE_URI=DB_URI
