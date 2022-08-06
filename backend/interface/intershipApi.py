@@ -204,6 +204,11 @@ def add_internship():
     exptime = deco['exp']
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+@internship_opt.route("/getinternship",methods=['GET'])
+def getinternship():
+    id = request.values.get("id")
+    data = getInternshipById(id)
+    return data
 
 @internship_opt.route("/edit_internship", methods=['Post'], endpoint='edit_internship')
 def edit_internship():
@@ -248,6 +253,7 @@ def edit_internship():
                       token_key, algorithms='HS256', options={"varify_signature": False})
     exptime = deco['exp']
     return json.dumps(message, default=lambda obj: obj.__dict__)
+
 
 
 @internship_opt.route("/del_internship", methods=['Post'], endpoint='del_internship')

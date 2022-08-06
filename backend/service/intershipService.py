@@ -423,3 +423,18 @@ def getinternsbyuserid(user_id):
         return internships
     except Exception as e:
         return errorMessage(1, e)
+
+def getInternshipById(id):
+    try:
+        internship = Internship.query.get(id)
+        meetings = Meeting.query.filter_by(internship_id=id).all()
+        print(meetings)
+        internship = internship.as_dict()
+        meetings = [x.as_dict() for x in meetings]
+        data = {}
+        data['internship'] = internship
+        data['meetings'] = meetings
+        data['errortype'] = 200
+        return data
+    except Exception as e:
+        print(e)
