@@ -281,12 +281,6 @@ function ResumePage({ socket }) {
           temp2.userInfo = { ...userInfo, thumbnail: data };
           setUserInfo({ ...temp });
           setResumeData({ ...temp2 });
-          //           apiPost('user/upload_image', {
-          //             user_id: id,
-          //             image_base64: data
-          //           }).then((res) => {
-          //             setUserInfo({ ...temp })
-          //           })
         };
       }
     };
