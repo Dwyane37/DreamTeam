@@ -48,12 +48,9 @@ const Comments = ({ internshipId, currentUserId }) => {
 
   useEffect(() => {
     getCommentsApi(internshipId).then((data) => {
-      console.log('get all comments');
-      console.log(data.data);
       setBackendComments(data.data);
       const root = data.data.filter((backendComment) => backendComment.parent_id === null);
       setRootComments(root);
-      console.log('change');
     });
   }, [change]);
 
