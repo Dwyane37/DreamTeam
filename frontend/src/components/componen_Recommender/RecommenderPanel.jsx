@@ -21,7 +21,7 @@ export default function RecommenderPanel(props) {
 
   const [open, setOpen] = React.useState(false);
   const [jobId, setJobId] = React.useState(null);
-  const [currentDisplay, setCurrentDisplay] = React.useState(props.jobs.slice(0, 2));
+  const [currentDisplay, setCurrentDisplay] = React.useState([]);
 
   const handleClickOpen = (e) => {
     setOpen(true);
@@ -32,6 +32,9 @@ export default function RecommenderPanel(props) {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    handleRefresh(props.jobs);
+  }, []);
   return (
     <>
       {/* <div className="recommender-panel"> */}

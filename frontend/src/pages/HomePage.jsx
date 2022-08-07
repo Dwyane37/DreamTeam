@@ -30,14 +30,20 @@ export default function HomePage({ socket }) {
   }, [logedIn]);
 
   React.useEffect(() => {
+    apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
+      .then((data) => {
+        getRecommend(data.data);
+      })
+      .catch((e) => alert(e));
     apiGet('internship/gethotjobs', null)
-      .then((data) => getHotJobs(data.data))
+      .then((data) => {
+        getHotJobs(data.data);
+      })
       .catch((e) => alert(e));
     apiCall('internship/home', null)
-      .then((data) => getJobs(data.data))
-      .catch((e) => alert(e));
-    apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
-      .then((data) => getRecommend(data.data))
+      .then((data) => {
+        getJobs(data.data);
+      })
       .catch((e) => alert(e));
   }, [refresh]);
 
