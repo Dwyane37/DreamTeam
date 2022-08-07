@@ -29,11 +29,12 @@ io.on('connection', (socket) => {
     console.log(onlineUsers);
   });
 
-  socket.on('applyJob', ({ senderName, receiverName, jobID }) => {
+  socket.on('newJob', ({ senderName, receiverName, jobID }) => {
+    console.log('receive');
+    console.log(onlineUsers);
     const receiver = getUser(receiverName);
-    const msg = `${senderName} applied your job ${jobID}`;
-    io.to(receiver.socketId).emit('getApplication', {
-      msg,
+    io.to(receiver?.socketId).emit('getNotification', {
+      sender: senderName,
     });
   });
 

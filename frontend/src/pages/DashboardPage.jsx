@@ -14,6 +14,7 @@ export default function DashboardPage({ socket }) {
   const [logedIn, setLogedIn] = React.useState(false);
   const [jobs, setJobs] = React.useState([]);
   const [refresh, setRefresh] = React.useState(false);
+
   function AddJob() {
     navigate('/addjob');
   }

@@ -25,6 +25,10 @@ import SideDrawer from './Drawer';
 
 // #########################
 export default function NavBar(props) {
+  React.useEffect(() => {
+    props.socket?.emit('newUser', sessionStorage.getItem('id'));
+  }, []);
+
   const type = props.type;
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,27 +69,12 @@ export default function NavBar(props) {
   };
   const menuId = 'account-menu';
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      id={menuId}
-      keepMounted
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-      // anchorOrigin={{
-      //   vertical: 'top',
-      //   horizontal: 'right',
-      // }}
-      // transformOrigin={{
-      //   vertical: 'top',
-      //   horizontal: 'right',
-      // }}
-    >
+    <Menu anchorEl={anchorEl} id={menuId} keepMounted open={isMenuOpen} onClose={handleMenuClose}>
       <MenuItem onClick={navigateProfile}>
         <AccountBoxIcon /> Profile
       </MenuItem>
 
       <MenuItem onClick={navigateSettings}>
-        {' '}
         <SettingsIcon />
         Settings
       </MenuItem>
@@ -123,11 +112,6 @@ export default function NavBar(props) {
       <Button variant="contained">Mark As Read</Button>
     </Menu>
   );
-
-  React.useEffect(() => {
-    setNotifications(['notification 1', 'notification 2']);
-    console.log(notifications);
-  }, []);
 
   // Search
 

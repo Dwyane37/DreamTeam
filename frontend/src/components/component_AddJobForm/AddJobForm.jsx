@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import { apiPost } from '../API';
+import { apiGet, apiPost } from '../API';
 
 import { Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -83,6 +83,18 @@ export default function AddJobForm() {
       .then((body) => {
         console.log(body);
         clearAll();
+
+        // get follower list
+        apiGet('user/follower', { userId: sessionStorage.getItem('id') }).then((res) => {
+          // const followers;
+          res.errormessage.map((user) => {
+            socket?.emit('newJob', {
+              senderName: sessionStorage.getItem('id'),
+              receiverName: user.id,
+            });
+          });
+        });
+
         navigate('/dashboard');
       })
       .catch((e) => alert(e));
