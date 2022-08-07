@@ -136,13 +136,14 @@ def getuserwishlist():
 @internship_opt.route("/apply", methods=["GET"])
 def apply():
     id = request.values.get("id")
-    internship_id = request.values.get("internship_id")
-    message = checkIfApplied(id,internship_id)
-    if message.errortype == 1:
-        return json.dumps(message, default=lambda obj: obj.__dict__)
-    apply_internship(id, internship_id)
+    # internship_id = request.values.get("internship_id")
+    # message = checkIfApplied(id,internship_id)
+    # if message.errortype == 1:
+    #     return json.dumps(message, default=lambda obj: obj.__dict__)
+    channel = apply_internship(id)
 
-    return json.dumps(errorMessage(200, "ok"),default=lambda obj: obj.__dict__)
+
+    return json.dumps(errorMessage(200, channel),default=lambda obj: obj.__dict__)
 
 
 @internship_opt.route("/getapplylist", methods=["GET"])
@@ -175,7 +176,7 @@ def add_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
-    applychannel = '1'
+    applychannel = data['applychannel']
     internship = Internship(title=title, user_id=user_id, company=company, field=field, location=location, state=state,
                             city=city,applychannel=applychannel,
                             working_right=working_right, description=description,
@@ -200,9 +201,9 @@ def add_internship():
 
     # data['token'] = token
     message = errorMessage(200, "ok")
-    # deco = jwt.decode(token,
-    #                   token_key, algorithms='HS256', options={"varify_signature": False})
-    # exptime = deco['exp']
+
+    # send notification
+    sendNotification(user_id, id)
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 @internship_opt.route("/getinternship",methods=['GET'])
@@ -226,7 +227,7 @@ def edit_internship():
     working_right = data['working_right']
     description = data['description']
     meetings = data['meeting']
-    applychannel = '1'
+    applychannel = data['applychannel']
     delete_all(id)
     internship = Internship(id=id, user_id=user_id, company=company, title=title, field=field, location=location,
                             state=state, city=city,applychannel=applychannel,
@@ -329,9 +330,38 @@ def get_all_intern():
     #     internship['meetings'] = getmeetingsbyjobid(internship['id'])
     res = {}
     data = []
-    for i in internships:
-        data.append(i.as_dict())
+    if internships is not None:
+        for i in internships:
+            data.append(i.as_dict())
+
     res['errortype'] = 200
     res['data'] = data
     return res
 
+@internship_opt.route("/getnotification", methods=['GET'])
+def getnotification():
+    token = request.values.get("token")
+    deco = jwt.decode(token, token_key, algorithms='HS256')
+    id = deco['id']
+    res = getAllNotification(id)
+    dict = {}
+    if res is not None:
+        res = [i.as_dict() for i in res]
+    else:
+        res = []
+    dict['data'] = res
+    dict['errortype'] = 200
+    return dict
+
+@internship_opt.route("/getnotificationnum", methods=['GET'])
+def getnotificationNum():
+    id = request.values.get("id")
+    num = getNotificationNum(id)
+
+    return json.dumps(errorMessage(200, num), default=lambda obj: obj.__dict__)
+
+@internship_opt.route("/readnotification", methods=['GET'])
+def readnotification():
+    id = request.values.get("id")
+    readnotice(id)
+    return json.dumps(errorMessage(200, "ok"), default=lambda obj: obj.__dict__)

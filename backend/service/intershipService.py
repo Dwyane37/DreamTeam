@@ -242,7 +242,7 @@ def get_wish_list(id):
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     sql = "SELECT db_internships.id, db_internships.title, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
           "LEFT JOIN db_resume_user_info on db_internships.user_id = db_resume_user_info.user_id " \
-          "where db_collection.user_id = {} and db_collection.deleted = 0;".format(id)
+          "where db_collection.user_id = {} and db_collection.deleted = 0 and db_internships.deleted=0;".format(id)
     # res = db.session.query(Internship.id,Internship.title, Internship.user_id,
     #                        Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
     #     Collection.user_id == id,Collection.deleted==0).all()
@@ -290,16 +290,10 @@ def checkIfApplied(id,internship_id):
     except Exception as e:
         print(e)
 
-def apply_internship(id, internship_id):
+def apply_internship(id):
     try:
-        apply = Apply(id=getuuid(),
-                      user_id=id,
-                      internship_id=internship_id,
-                      create_time=getTime(datetime),
-                      update_time=getTime(datetime),
-                      deleted=0)
-        db.session.add(apply)
-        db.session.commit()
+        internship = Internship.query.get(id)
+        return internship.applychannel
 
     except Exception as e:
         print(e)
@@ -479,3 +473,43 @@ def delete_all(id):
 
     except Exception as e:
         print(e)
+
+def sendNotification(id, internship_id):
+    try:
+        internship = Internship.query.get(internship_id)
+        resume = ResumeUser.query.get(id)
+        res = Follow.query.filter_by(following_id=id).all()
+
+        for user in res:
+            idx = user.following_id
+            notice = Notice(id=getuuid(),is_read=0,user_id=idx,following_id=id,deleted=0,internship_id=internship_id,internship_name=internship.title,name=resume.name,create_time=getTime(datetime))
+            db.session.add(notice)
+            db.session.commit()
+
+    except Exception as e:
+        print(e)
+
+def getAllNotification(id):
+    try:
+        res = Notice.query.filter_by(user_id=id).order_by(Notice.create_time.desc()).all()
+        return res
+
+    except Exception as e:
+        print(e)
+
+def getNotificationNum(id):
+    try:
+        res = db.session.query(Notice).filter(Notice.user_id==id,Notice.is_read==0).count()
+        return res
+
+    except Exception as e:
+        print(e)
+
+def readnotice(id):
+    try:
+        notice = Notice.query.get(id)
+        notice.is_read = 1
+        db.session.commit()
+    except Exception as e:
+        print(e)
+
