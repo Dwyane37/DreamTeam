@@ -23,12 +23,7 @@ const Comments = ({ internshipId, currentUserId }) => {
       .sort((a, b) => new Date(a.update_time).getTime() - new Date(b.update_time).getTime());
 
   const addComment = (text, parentId) => {
-    createCommentApi(text, internshipId, parentId).then((comment) => {
-      // getCommentsApi(internshipId).then((data) => {
-      //   setBackendComments(Object.values(data));
-      // });
-      setChange(!change);
-      // setBackendComments([comment, ...backendComments]);
+    createCommentApi(text, internshipId, parentId, setChange).then((comment) => {
       setActiveComment(null);
     });
   };
@@ -47,22 +42,18 @@ const Comments = ({ internshipId, currentUserId }) => {
   };
   const deleteComment = (commentId) => {
     if (window.confirm('Are you sure you want to remove comment?')) {
-      deleteCommentApi(commentId).then(() => {
-        setChange(!change);
-        // getCommentsApi(internshipId).then((data) => {
-        //   setBackendComments(Object.values(data));
-        // });
-        // const updatedBackendComments = backendComments.filter((backendComment) => backendComment.id !== commentId);
-        // setBackendComments(updatedBackendComments);
-      });
+      deleteCommentApi(commentId, setChange);
     }
   };
 
   useEffect(() => {
     getCommentsApi(internshipId).then((data) => {
+      console.log('get all comments');
+      console.log(data.data);
       setBackendComments(data.data);
       const root = data.data.filter((backendComment) => backendComment.parent_id === null);
       setRootComments(root);
+      console.log('change');
     });
   }, [change]);
 

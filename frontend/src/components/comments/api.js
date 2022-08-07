@@ -41,14 +41,14 @@ export const getComments = async (internshipId) => {
   // ];
 };
 
-export const createComment = async (text, internshipId, parentId = null) => {
+export const createComment = async (text, internshipId, parentId = null, setChange) => {
   apiPost('review/review', {
     token: sessionStorage.getItem('token'),
     review: text,
     internship: internshipId,
     parent_id: parentId,
   })
-    .then((d) => console.log(d.data))
+    .then((d) => setChange((prev) => !prev))
     .catch((e) => alert(e));
 
   // return {
@@ -65,9 +65,9 @@ export const updateComment = async (text) => {
   return { text };
 };
 
-export const deleteComment = async (commentId) => {
+export const deleteComment = async (commentId, setChange) => {
   apiGet('review/deletereview', { id: commentId })
-    .then((d) => console.log(d.data))
+    .then((d) => setChange((prev) => !prev))
     .catch((e) => alert(e));
   return {};
 };
