@@ -81,7 +81,7 @@ class ResumeEducation(db.Model):
     end = Column(String(255))
     faculty = Column(String(255))
     major = Column(String(255))
-    grades = Column(FLOAT)
+    grades = Column(String(255))
     degree = Column(String(255))
     user_id = db.Column(String(255), db.ForeignKey('db_user.id'))
     educations = db.relationship('User', backref='educations')
@@ -226,6 +226,25 @@ class Meeting(db.Model):
 
     def __repr__(self):
         return '<Meeting %r>' % self.id
+
+    def as_dict(obj):
+        return dict((col.name, getattr(obj, col.name))
+                    for col in class_mapper(obj.__class__).mapped_table.c)
+
+class Notice(db.Model):
+    __tablename__ = 'db_notice'
+    id = Column(String(255), primary_key=True)
+    internship_id = Column(String(255))
+    content = Column(String(1000))
+    user_id = Column(String(255))
+    following_id = Column(String(255))
+    internship_name = Column(Integer)
+    deleted = Column(Integer)
+    is_read = Column(Integer)
+    name = Column(String(255))
+    create_time = Column(TIMESTAMP)
+    def __repr__(self):
+        return '<Notice %r>' % self.id
 
     def as_dict(obj):
         return dict((col.name, getattr(obj, col.name))

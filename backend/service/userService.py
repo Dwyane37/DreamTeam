@@ -181,7 +181,7 @@ def update_resume(user_id, resume):
                 end=education["end"],
                 faculty=education["faculty"],
                 major=education["major"],
-                grades=6,
+                grades=education['grades'],
                 degree="",
                 user_id=user_id
             ))
