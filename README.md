@@ -8,6 +8,7 @@ team member: z5330307
 team member: z5211485
 team member: z5253472
 
+Please see the detailed report in the document folder
 # Run Backend Server
 
 - Navigate to backend folder
