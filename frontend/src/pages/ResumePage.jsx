@@ -198,7 +198,6 @@ function ResumePage({ socket }) {
     apiGet('internship/get_all_intern', { id: resumeId }).then((res) => {
       const temp = Object.values(res.data);
       temp.sort((a, b) => new Date(a.update_time).getTime() - new Date(b.update_time).getTime());
-      console.log(temp.reverse());
       setJobs(temp);
     });
   }, []);
@@ -227,7 +226,7 @@ function ResumePage({ socket }) {
   const saveUserInfo = () => {
     console.log(userInfo);
     const temp = { ...resumeData };
-    temp.userInfo = { thumbnail: '', ...userInfo };
+    temp.userInfo = { ...userInfo };
     console.log(temp);
     setResumeData({ ...temp });
     setOpenUserInfo(false);
@@ -266,6 +265,7 @@ function ResumePage({ socket }) {
     const inputEl = document.createElement('input');
     inputEl.type = 'file';
     inputEl.click();
+    console.log(inputEl);
     inputEl.onchange = (e) => {
       console.log(e);
       const file = e.target.files[0];
@@ -274,7 +274,7 @@ function ResumePage({ socket }) {
         reader.readAsDataURL(file);
         reader.onload = function (e) {
           let data = e.target.result;
-
+          console.log(data);
           let temp = { ...userInfo };
           let temp2 = { ...resumeData };
           temp.thumbnail = data;
