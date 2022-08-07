@@ -253,6 +253,7 @@ function ResumePage({ socket }) {
     apiPost('user/submitResume', { resumeid: id, resume: resumeData })
       .then((res) => {
         console.log('success');
+        alert('Profile updated');
       })
       .catch((e) => console.error(e));
   };
