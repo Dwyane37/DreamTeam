@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import './AddJobPage.css';
 import { useNavigate } from 'react-router-dom';
 
-function AddJobPage() {
+function AddJobPage({ socket }) {
   const navigate = useNavigate();
   return (
     <div className="AddJobMain">
@@ -18,7 +18,7 @@ function AddJobPage() {
         Return
       </Button>
       <h1>Add a job</h1>
-      <AddJobForm />
+      <AddJobForm socket={socket} />
     </div>
   );
 }

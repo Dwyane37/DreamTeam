@@ -22,7 +22,7 @@ import CitizenshipFilter from '../component_Filter/CitizenshipFilter';
 
 import './AddJobForm.css';
 
-export default function AddJobForm() {
+export default function AddJobForm({ socket }) {
   const navigate = useNavigate();
   const initFilter = {
     country: null,
@@ -63,6 +63,8 @@ export default function AddJobForm() {
 
   const post = (e) => {
     e.preventDefault();
+    // get follower list
+
     const right = processCitizenshipArray(filter.citizenship);
     const attr = {
       id: sessionStorage.getItem('id'),
@@ -83,8 +85,6 @@ export default function AddJobForm() {
       .then((body) => {
         console.log(body);
         clearAll();
-
-        // get follower list
         apiGet('user/follower', { userId: sessionStorage.getItem('id') }).then((res) => {
           // const followers;
           res.errormessage.map((user) => {
@@ -94,7 +94,6 @@ export default function AddJobForm() {
             });
           });
         });
-
         navigate('/dashboard');
       })
       .catch((e) => alert(e));

@@ -16,6 +16,16 @@ export default function DashboardPage({ socket }) {
   const [refresh, setRefresh] = React.useState(false);
 
   function AddJob() {
+    // // get follower list
+    // apiGet('user/follower', { userId: sessionStorage.getItem('id') }).then((res) => {
+    //   // const followers;
+    //   res.errormessage.map((user) => {
+    //     socket?.emit('newJob', {
+    //       senderName: sessionStorage.getItem('id'),
+    //       receiverName: user.id,
+    //     });
+    //   });
+    // });
     navigate('/addjob');
   }
   React.useEffect(() => {
