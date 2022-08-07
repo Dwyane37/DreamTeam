@@ -179,18 +179,27 @@ function ResumePage({ socket }) {
   const { state } = useLocation();
   const params = useParams();
   const resumeId = params.userId;
-  console.log(resumeId, id);
+  // console.log(resumeId, id);
+  const [jobs, setJobs] = React.useState([]);
+
+  React.useEffect(() => {}, []);
 
   useEffect(() => {
     apiGet('user/getResume', { resumeId }).then((res) => {
-      console.log(res.errormessage);
+      // console.log(res.errormessage);
       setResumeData(res.errormessage);
       setUserInfo(res.errormessage.userInfo);
     });
     apiGet('user/checkfollow', { id, user_id: resumeId }).then((res) => {
-      console.log(res.errormessage);
+      // console.log(res.errormessage);
       setInUserType(res.errormessage.type);
       setIsFollow(res.errormessage.flag);
+    });
+    apiGet('internship/get_all_intern', { id: resumeId }).then((res) => {
+      const temp = Object.values(res.data);
+      temp.sort((a, b) => new Date(a.update_time).getTime() - new Date(b.update_time).getTime());
+      console.log(temp.reverse());
+      setJobs(temp);
     });
   }, []);
 
@@ -258,6 +267,7 @@ function ResumePage({ socket }) {
     inputEl.type = 'file';
     inputEl.click();
     inputEl.onchange = (e) => {
+      console.log(e);
       const file = e.target.files[0];
       if (!!file) {
         const reader = new FileReader();
@@ -381,21 +391,8 @@ function ResumePage({ socket }) {
 
   const hr_detail = (
     <div className="hr_detail">
-      {/* <div className='header'>
-        <span>Introduction</span>
-        <Button
-          variant='contained'
-          size='small'
-          onClick={() => edit('projectDisplay')}
-        >
-          edit
-        </Button>
-      </div>
-      <div className='content'>
-        <ProjectDisplay projectDisplay={resumeData.projectDisplay} />
-      </div> */}
       <h3>Jobs</h3>
-      <JobPanel jobs={dummyJobs} />
+      <JobPanel jobs={jobs} />
     </div>
   );
 
@@ -423,6 +420,8 @@ function ResumePage({ socket }) {
               variant="square"
               alt="profile image"
               src={userInfo?.thumbnail}
+              // src="../logo.svg"
+              // src="../../public/logo512.png"
               onClick={uploadAvatar}
               className="avatar"
               sx={{ width: 56, height: 56 }}
