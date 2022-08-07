@@ -1,5 +1,6 @@
 import jwt
 
+from service.intershipService import click
 from service.userService import *
 from flask import Blueprint
 from flask import request
@@ -209,6 +210,7 @@ def add_internship():
 @internship_opt.route("/getinternship",methods=['GET'])
 def getinternship():
     id = request.values.get("id")
+    click(id)
     data = getInternshipById(id)
     return data
 
