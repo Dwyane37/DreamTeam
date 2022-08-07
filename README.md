@@ -10,14 +10,17 @@ team member: z5253472
 
 # Run Backend Server
 
+- Navigate to backend folder
 - Enter `python application.py` or `python3 application.py`
 
 # Run Socket Server
 
+- Navigate to socket folder
 - Enter `npm install` once
 - Enter `npm start`
 
 # Run React App
 
+- Navigate to frontend folder
 - Enter `npm install` once
 - Enter `npm start`
