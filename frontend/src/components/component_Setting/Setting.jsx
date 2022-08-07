@@ -86,7 +86,7 @@ export default function Settings() {
             <label htmlFor="accountEmail">Email</label>
             <TextField id="accountEmail" variant="outlined" value={accountInfo.email || ''} readOnly={true} />
           </div>
-          <div className="settingItem">
+          {/* <div className="settingItem">
             <label htmlFor="accountMobile">Mobile</label>
             <TextField
               id="accountMobile"
@@ -96,7 +96,7 @@ export default function Settings() {
                 setAccountInfo({ ...accountInfo, mobile: e.target.value });
               }}
             />
-          </div>
+          </div> */}
           <div className="settingItem">
             <label htmlFor="accountType">Account Type</label>
             <TextField
@@ -106,7 +106,7 @@ export default function Settings() {
               readOnly={true}
             />
           </div>
-          <Button variant="contained">Save</Button>
+          {/* <Button variant="contained">Save</Button> */}
         </div>
       </Box>
 
