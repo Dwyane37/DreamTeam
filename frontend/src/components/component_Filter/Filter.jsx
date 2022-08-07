@@ -25,7 +25,7 @@ export default function Filter(props) {
   };
 
   const handleApply = () => {
-    console.log(filter);
+    // console.log(filter);
     setAnchorEl(null);
   };
 
