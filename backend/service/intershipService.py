@@ -11,7 +11,7 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
     "host": "127.0.0.1",
     "port": 3306,
     "user": "root",
-    "passwd": "zswjq997131",
+    "passwd": "123456",
     # "db": "Sleep_project1",
     "db": "intern",
     "charset": "utf8"
@@ -240,7 +240,7 @@ def get_wish_list(id):
         charset=DB_CONFIG["charset"]
     )
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-    sql = "SELECT db_internships.id, db_internships.title,db_internships.company,db_internships.location, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
+    sql = "SELECT db_internships.id, db_internships.title,db_internships.state,db_internships.city,db_internships.company,db_internships.location, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
           "LEFT JOIN db_resume_user_info on db_internships.user_id = db_resume_user_info.user_id " \
           "where db_collection.user_id = {} and db_collection.deleted = 0 and db_internships.deleted=0;".format(id)
     # res = db.session.query(Internship.id,Internship.title, Internship.user_id,
