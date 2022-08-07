@@ -34,6 +34,7 @@ export default function NavBar(props) {
   const location = useLocation();
   const [keyword, setKeyword] = React.useState('');
   const setJobFunc = props.handleJobFetch;
+  const [cancelSearch, setCancalSearch] = React.useState(false);
 
   const initFilter = {
     country: null,
@@ -83,36 +84,6 @@ export default function NavBar(props) {
     </Menu>
   );
 
-  // notification display
-  const [anchorElNotify, setAnchorElNotify] = React.useState(null);
-
-  const isNotifyOpen = Boolean(anchorElNotify);
-
-  const handleNotificationOpen = (event) => {
-    setAnchorElNotify(event.currentTarget);
-  };
-
-  const handleNotificationClose = () => {
-    setAnchorElNotify(null);
-  };
-  const [notifications, setNotifications] = React.useState([]);
-
-  const notificationId = 'notifications';
-  const renderNotification = (
-    <Menu
-      anchorEl={anchorElNotify}
-      id={notificationId}
-      keepMounted
-      open={isNotifyOpen}
-      onClose={handleNotificationClose}
-    >
-      {notifications.map((notification, idx) => (
-        <Paper key={idx}>{notification}</Paper>
-      ))}
-      <Button variant="contained">Mark As Read</Button>
-    </Menu>
-  );
-
   // Search
 
   const processCitizenshipArray = (arr) => {
@@ -124,26 +95,23 @@ export default function NavBar(props) {
     return '';
   };
   const handleSearch = () => {
-    if (!keyword) {
-      alert('Cannot leave search box empty');
-    } else {
-      const right = processCitizenshipArray(filter.citizenship);
-      const attr = {
-        key: keyword,
-        location: filter.country?.name || '',
-        state: filter.state?.name || '',
-        city: filter.city?.name || '',
-        field: filter.field?.label || '',
-        right: right || '',
-      };
-      console.log(attr);
-      apiGet('internship/search', attr)
-        .then((data) => {
-          setJobFunc(data.data);
-        })
-        .catch((e) => alert(e));
-      clear();
-    }
+    const right = processCitizenshipArray(filter.citizenship);
+    const attr = {
+      key: keyword,
+      location: filter.country?.name || '',
+      state: filter.state?.name || '',
+      city: filter.city?.name || '',
+      field: filter.field?.label || '',
+      right: right || '',
+    };
+    console.log(attr);
+    apiGet('internship/search', attr)
+      .then((data) => {
+        setJobFunc(data.data);
+        setCancalSearch(true);
+      })
+      .catch((e) => alert(e));
+    clear();
   };
 
   const clear = () => {
@@ -155,7 +123,7 @@ export default function NavBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#6096ba' }}>
         <Toolbar>
-          <SideDrawer />
+          {type === '0' ? <SideDrawer /> : null}
           <div>
             <Typography variant="h6" noWrap component="div" onClick={navigateHome}>
               I-Student
@@ -175,9 +143,21 @@ export default function NavBar(props) {
                 />
               </Search>
               <Filter handleFilter={[filter, setFilter]} />
-              <Button style={{ color: 'white', marginLeft: '1rem' }} onClick={handleSearch}>
+              <Button variant="contained" style={{ marginLeft: '1rem', color: 'white' }} onClick={handleSearch}>
                 Search
               </Button>
+              {cancelSearch && (
+                <Button
+                  // variant="outlined"
+                  style={{ color: 'white', marginLeft: '1rem' }}
+                  onClick={() => {
+                    props.setRefresh((prev) => !prev);
+                    setCancalSearch(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </>
           ) : null}
 
@@ -211,7 +191,6 @@ export default function NavBar(props) {
         </Toolbar>
       </AppBar>
       {renderMenu}
-      {renderNotification}
     </Box>
   );
 }

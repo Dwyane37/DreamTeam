@@ -18,7 +18,7 @@ export default function HomePage({ socket }) {
   const [hotJobs, getHotJobs] = React.useState([]);
   const [recommend, getRecommend] = React.useState([]);
   const [logedIn, setLogedIn] = React.useState(false);
-
+  const [refresh, setRefresh] = React.useState(false);
   React.useEffect(() => {
     if (!sessionStorage.getItem('token')) {
       alert('Your are not logged in');
@@ -39,7 +39,7 @@ export default function HomePage({ socket }) {
     apiGet('internship/recommand', { token: sessionStorage.getItem('token') })
       .then((data) => getRecommend(data.data))
       .catch((e) => alert(e));
-  }, []);
+  }, [refresh]);
 
   const mdTheme = createTheme();
 
@@ -49,7 +49,12 @@ export default function HomePage({ socket }) {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <CssBaseline />
 
-          <NavBar type={sessionStorage.getItem('type')} handleJobFetch={getJobs} socket={socket} />
+          <NavBar
+            type={sessionStorage.getItem('type')}
+            handleJobFetch={getJobs}
+            socket={socket}
+            setRefresh={setRefresh}
+          />
           <Box className="home-content-container">
             <Box className="home-main-panel">
               {/* <div className="home-sort-button">
