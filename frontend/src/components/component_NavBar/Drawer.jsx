@@ -81,7 +81,7 @@ export default function SideDrawer() {
       )}
 
       <Divider />
-      <List>
+      {/* <List>
         <ListItem disablePadding onClick={navigateCommentHistory}>
           <ListItemButton>
             <ListItemIcon>
@@ -90,7 +90,7 @@ export default function SideDrawer() {
             <ListItemText primary={'Comment History'} />
           </ListItemButton>
         </ListItem>
-      </List>
+      </List> */}
     </Box>
   );
 
