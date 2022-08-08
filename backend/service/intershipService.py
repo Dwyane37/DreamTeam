@@ -346,7 +346,7 @@ def deletejob(inputs):
 def editjob(inputs):
     try:
         Job = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
-                            state=inputs.state, city=inputs.city,view=0,
+                            state=inputs.state, city=inputs.city,view=0,applychannel=inputs.applychannel,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
@@ -356,7 +356,7 @@ def editjob(inputs):
         # add new job
         db.session.add(Job)
         db.session.commit()
-        return errorMessage(200, id)
+        return errorMessage(200, inputs.id)
     except Exception as e:
         return errorMessage(1, e)
 
