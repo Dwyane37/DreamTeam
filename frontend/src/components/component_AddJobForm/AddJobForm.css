@@ -58,3 +58,8 @@
   margin: 2rem 0;
   background-color: red;
 }
+
+.sessionButton {
+  display: flex;
+  justify-content: space-around;
+}

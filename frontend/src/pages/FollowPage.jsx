@@ -81,7 +81,9 @@ const FollowPage = ({ socket }) => {
                   sx={{ width: 56, height: 56 }}
                 />
                 <div className="info">
-                  <div className="nickname">{item.username}</div>
+                  <div className="nickname" onClick={() => toProfile(item.id)}>
+                    {item.username}
+                  </div>
                   <div className="company">{item.company}</div>
                 </div>
               </div>
