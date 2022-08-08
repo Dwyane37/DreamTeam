@@ -1,0 +1,1222 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "paths": {
+        "/internship/add_internship": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_add_internship",
+                "parameters": [
+                    {
+                        "description": "title",
+                        "name": "title",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "field",
+                        "name": "field",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "location",
+                        "name": "location",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "state",
+                        "name": "state",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "city",
+                        "name": "city",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "working_right",
+                        "name": "working_right",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "description",
+                        "name": "description",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "meetings",
+                        "name": "meetings",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/apply": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_apply",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "internship_id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/del_internship": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_del_internship",
+                "parameters": [
+                    {
+                        "description": "title",
+                        "name": "title",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "field",
+                        "name": "field",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "location",
+                        "name": "location",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "state",
+                        "name": "state",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "city",
+                        "name": "city",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "working_right",
+                        "name": "working_right",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "description",
+                        "name": "description",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "meetings",
+                        "name": "meetings",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/del_meeting": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_del_meeting",
+                "parameters": [
+                    {
+                        "description": "id",
+                        "name": "id",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "datetime",
+                        "name": "datetime",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "link",
+                        "name": "link",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/edit_internship": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_edit_internship",
+                "parameters": [
+                    {
+                        "description": "title",
+                        "name": "title",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "field",
+                        "name": "field",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "location",
+                        "name": "location",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "state",
+                        "name": "state",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "city",
+                        "name": "city",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "working_right",
+                        "name": "working_right",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "description",
+                        "name": "description",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "meetings",
+                        "name": "meetings",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/getapplylist": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_getapplylist",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/getcurrentjobs": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_getcurrentjobs",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/gethotjobs": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_gethotjobs",
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/getuserwishlist": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_getuserwishlist",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/home": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_initpage",
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/recommand": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_recommand",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/save": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_add",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/search": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_search_internship",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "field",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "right",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "city",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/unsave": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_delete",
+                "parameters": [
+                    {
+                        "name": "wishlist_id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internship/view": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_view",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/internshipreview": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_internshipreview",
+                "parameters": [
+                    {
+                        "name": "movie_id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/review/deletereview": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_deletereview",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/review/personreview": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_personreview",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/review/review": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_review",
+                "parameters": [
+                    {
+                        "description": "token",
+                        "name": "token",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "review",
+                        "name": "review",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "internship",
+                        "name": "internship",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/changepassword": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_changepassword",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "old_password",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "new_password",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/dislike": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_dislike",
+                "parameters": [
+                    {
+                        "name": "followingId",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "followerId",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/follower": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_follower",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/following": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_following",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/forget": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_forget",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/getResume": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_get_resume",
+                "parameters": [
+                    {
+                        "name": "resumeId",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/getinfo": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_getinfo",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/like": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_like",
+                "parameters": [
+                    {
+                        "name": "followingId",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "followerId",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/login": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_login",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/logout": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_logout",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/register": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_register",
+                "parameters": [
+                    {
+                        "description": "password",
+                        "name": "password",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "email",
+                        "name": "email",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "type",
+                        "name": "type",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "username",
+                        "name": "username",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/resetpassword": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "get_resetpassword",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/submitResume": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_change_resume",
+                "parameters": [
+                    {
+                        "description": "resumeid",
+                        "name": "resumeid",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "resume",
+                        "name": "resume",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        },
+        "/user/upload_image": {
+            "post": {
+                "responses": {
+                    "404": {
+                        "description": "404 Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "operationId": "post_upload_image",
+                "parameters": [
+                    {
+                        "description": "user_id",
+                        "name": "user_id",
+                        "type": "string",
+                        "in": "query"
+                    },
+                    {
+                        "description": "image_base64",
+                        "name": "image_base64",
+                        "type": "string",
+                        "in": "query"
+                    }
+                ],
+                "tags": [
+                    "default"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "API",
+        "version": "1.0"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "default",
+            "description": "Default namespace"
+        }
+    ],
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    },
+    "host": "127.0.0.1:5500"
+}
