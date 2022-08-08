@@ -8,7 +8,7 @@
 - team member: z5211485
 - team member: z5253472
 
-Please see the detailed report in the document 
+Please see the detailed report in the document COMP9323_Project_Documentation
 
 
 # Run Backend Server
