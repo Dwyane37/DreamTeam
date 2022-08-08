@@ -17,7 +17,6 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
     "charset": "utf8"
 }
 
-
 def review_internship(id,review,internship_id,parent_id):
     try:
         newReview = Review(id=getuuid(), user_id=id,
@@ -45,7 +44,6 @@ def delete_review(id):
         print(e)
 
 def getAllReviewsById(id):
-
     try:
         res = db.session.query(Internship.title, Internship.user_id, Internship.content,
                                Internship.id,
@@ -57,115 +55,13 @@ def getAllReviewsById(id):
     except Exception as e:
         print(e)
 
-
-
 def getInternReviewById(id):
     try:
         res = db.session.query(Review.id,Review.user_id,Review.internship_id,Review.content,Review.update_time,Review.parent_id,
                          ResumeUser.name, ResumeUser.thumbnail).outerjoin(Internship,Review.internship_id == Internship.id).outerjoin(
             ResumeUser,ResumeUser.user_id == Review.user_id
         ).filter(Internship.id==id,Review.deleted==0)
-        # res = Review.query.filter_by(internship_id=id).all()
         return res
 
     except Exception as e:
         print(e)
-#
-# def changelike(id, review_id):
-#     try:
-#         tmup = Thumbup.query.filter_by(user_id=id, review_id=review_id).first()
-#         if tmup is None:
-#             newtmup = Thumbup(id=getuuid(),
-#                               user_id=id,
-#                               review_id=review_id,
-#                               deleted=0)
-#             rev = Review.query.get(review_id)
-#             rev.likes = rev.likes + 1
-#             db.session.add(newtmup)
-#             db.session.commit()
-#
-#         elif tmup.deleted == 0:
-#             tmup.deleted = 1
-#             db.session.commit()
-#             review = Review.query.get(review_id)
-#             review.likes = review.likes - 1
-#             db.session.commit()
-#
-#         elif tmup.deleted == 1:
-#             tmup.deleted = 0
-#             db.session.commit()
-#             review = Review.query.get(review_id)
-#             review.likes = review.likes + 1
-#             db.session.commit()
-#
-#     except Exception as e:
-#         print(e)
-#
-# def getAllReviewsByTime(user_id,id):
-#     conn = pymysql.connect(
-#         host=DB_CONFIG["host"],
-#         port=DB_CONFIG["port"],
-#         user=DB_CONFIG["user"],
-#         passwd=DB_CONFIG["passwd"],
-#         db=DB_CONFIG["db"],
-#         charset=DB_CONFIG["charset"]
-#     )
-#     try:
-#         cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-#         sql = "SELECT db_user.nickname, db_user.photo, db_review.id, db_review.content, db_review.mark, db_review.likes,db_review.user_id  FROM db_review LEFT JOIN db_movie ON db_movie.id = db_review.movie_id LEFT JOIN db_user on db_user.id = db_review.user_id WHERE db_movie.id = {}  and db_review.deleted = 0 and db_review.user_id NOT IN ( SELECT u_id FROM banned WHERE user_id = '{}' AND deleted = 1 ) ORDER BY db_review.update_time DESC;".format(
-#             id,user_id)
-#         cursor.execute(sql)  # ASC
-#         result = cursor.fetchall()
-#         conn.close()
-#         return result
-#     except Exception as e:
-#         print(e)
-#
-# def getAllReviewsByHot(user_id, id):
-#     conn = pymysql.connect(
-#         host=DB_CONFIG["host"],
-#         port=DB_CONFIG["port"],
-#         user=DB_CONFIG["user"],
-#         passwd=DB_CONFIG["passwd"],
-#         db=DB_CONFIG["db"],
-#         charset=DB_CONFIG["charset"]
-#     )
-#     try:
-#         cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-#         sql = "SELECT db_user.nickname, db_user.photo, db_review.id, db_review.content, db_review.mark, db_review.likes,db_review.user_id  FROM db_review LEFT JOIN db_movie ON db_movie.id = db_review.movie_id LEFT JOIN db_user on db_user.id = db_review.user_id WHERE db_movie.id = {} and db_review.deleted = 0 and db_review.user_id NOT IN ( SELECT u_id FROM banned WHERE user_id = '{}' AND deleted = 1 ) ORDER BY db_review.likes DESC;".format(
-#             id, user_id)
-#         cursor.execute(sql)  # ASC
-#         result = cursor.fetchall()
-#         conn.close()
-#         return result
-#     except Exception as e:
-#         print(e)
-#
-# def gain_experience(id):
-#     try:
-#         user = User.query.get(id)
-#         user.points = user.points + 10
-#         db.session.commit()
-#     except Exception as e:
-#         print(e)
-#
-# def getThumbsOfReview(user_id, id):
-#     conn = pymysql.connect(
-#         host=DB_CONFIG["host"],
-#         port=DB_CONFIG["port"],
-#         user=DB_CONFIG["user"],
-#         passwd=DB_CONFIG["passwd"],
-#         db=DB_CONFIG["db"],
-#         charset=DB_CONFIG["charset"]
-#     )
-#     try:
-#         cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
-#         sql = "SELECT db_review.id  FROM db_review LEFT JOIN db_thumb_up ON db_review.id = db_thumb_up.review_id WHERE db_thumb_up.user_id = {} and db_review.movie_id = {} and db_thumb_up.deleted = 0;".format(
-#             user_id, id)
-#         cursor.execute(sql)  # ASC
-#         result = cursor.fetchall()
-#         conn.close()
-#         return result
-#
-#     except Exception as e:
-#         print(e)

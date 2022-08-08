@@ -8,23 +8,26 @@ from service.intershipService import *
 from data.models import *
 from flask_mail import *
 import json
-
+'''
+    This file is mainly about internship information
+'''
 internship_opt = Blueprint('internship_opt', __name__)
 
 token_key = "dreamTeam"
 
+# init homepage method
 @internship_opt.route('/home')
 def initpage():
     data = init()
     dict = {}
     for i in data:
         dict[repr(i.id)] = i.as_dict()
-    # message = Message(200,"ok", dict)
     data = {}
     data['data'] = dict
     data['errortype'] = 200
     return data
 
+# this api is used for search
 @internship_opt.route("/search", methods=['GET'])
 def searchInternship():
     key = request.values.get('key')
@@ -33,9 +36,7 @@ def searchInternship():
     type = request.values.get('right')
     city = request.values.get("city")
     state = request.values.get("state")
-    print(key, field, location, type, city, state)
     res = search_intership(key, field, location, type,city,state)
-    print("res:",res)
     dict = {}
     for i in res:
         dict[repr(i.id)] = i.as_dict()
@@ -44,6 +45,7 @@ def searchInternship():
     data['errortype'] = 200
     return data
 
+# This api is use for vew job
 @internship_opt.route("/view", methods=['GET'])
 def view():
     id = request.values.get("id")
@@ -51,6 +53,7 @@ def view():
 
     return job.as_dict()
 
+# This api is used for recommanding job for users
 @internship_opt.route("/recommand", methods=['GET'])
 def recommand():
     token = request.values.get('token')
@@ -65,6 +68,7 @@ def recommand():
     data['errortype'] = 200
     return data
 
+# This api is used for getting current jobs
 @internship_opt.route("/getcurrentjobs", methods=['GET'])
 def getcurrentjobs():
     res = getCurrentJobs()
@@ -76,6 +80,7 @@ def getcurrentjobs():
     data['errortype'] = 200
     return data
 
+# This api is used for getting hot jobs
 @internship_opt.route("/gethotjobs", methods=['GET'])
 def gethotjobs():
     res = getHotJobs()
@@ -87,30 +92,17 @@ def gethotjobs():
     data['errortype'] = 200
     return data
 
-# @internship_opt.route('wishlist', methods=['GET'])
-# def getwishlist():
-#     token = request.values.get('token')
-#     deco = jwt.decode(token, token_key, algorithms='HS256')
-#     id = deco['id']
-#     res = get_wish_list(id)
-#     dict = {}
-#     for i in res:
-#         dict[repr(i.id)] = i.as_dict()
-#     data = {}
-#     data['data'] = dict
-#     data['errortype'] = 200
-#     return data
-
+# This api is used for saving jobs
 @internship_opt.route("/save", methods=['GET'])
 def add():
     token = request.values.get('token')
     deco = jwt.decode(token, token_key, algorithms='HS256')
     id = deco['id']
     internship_id = request.values.get('internship')
-    print(id,internship_id)
     add_wishlist(id, internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
+# This api is used for unsaving jobs
 @internship_opt.route('/unsave', methods=['GET'])
 def delete():
     user_id = request.values.get("user_id")
@@ -118,55 +110,38 @@ def delete():
     delete_wishlist(user_id,internship_id)
     return json.dumps(errorMessage(200,"ok"),default=lambda obj: obj.__dict__)
 
+# This api is used for getting user wishlist
 @internship_opt.route("/getuserwishlist", methods=["GET"])
 def getuserwishlist():
     id = request.values.get("id")
     res = get_wish_list(id)
-    # dict = {}
-    # dict['data'] = res
-    print(res)
-    # res = [dict(zip(r.keys(),r)) for r in res]
-    # res = [dict(zip(result.keys(), result)) for result in res]
-    # for i in res:
-    #     print(i)
     data = {}
     data['data'] = res
     data['errortype'] = 200
     return data
 
+# This api is used for apply jobs
 @internship_opt.route("/apply", methods=["GET"])
 def apply():
     id = request.values.get("id")
-    # internship_id = request.values.get("internship_id")
-    # message = checkIfApplied(id,internship_id)
-    # if message.errortype == 1:
-    #     return json.dumps(message, default=lambda obj: obj.__dict__)
     channel = apply_internship(id)
-
-
     return json.dumps(errorMessage(200, channel),default=lambda obj: obj.__dict__)
 
-
+# This api is used for getting apply jobs
 @internship_opt.route("/getapplylist", methods=["GET"])
 def getapplylist():
     id = request.values.get("id")
     res = get_apply_list(id)
-    # dict = {}
-    # dict['data'] = res
     res = [dict(zip(result.keys(), result)) for result in res]
-    # for i in res:
-    #     print(i)
     data = {}
     data['data'] = res
     data['errortype'] = 200
     return data
 
-
-# He
+# This api is used for post new job
 @internship_opt.route("/add_internship", methods=['Post'], endpoint='add_internship')
 def add_internship():
     data = json.loads(request.data)
-    print(data)
     user_id = data['id']
     title = data['title']
     company = data['company']
@@ -184,10 +159,7 @@ def add_internship():
                             )
     mesvalue = addNewjob(internship)
 
-    # start_date = time.time() + 3600
     id = mesvalue.errormessage
-    # mes = {'id': id, 'exp': start_date}
-    # token = jwt.encode(mes, token_key, algorithm='HS256')
     data = {}
     data['id'] = id
     # add meetings
@@ -199,14 +171,13 @@ def add_internship():
                           deleted=0,
                           )
         addmeeting(meeting)
-
-    # data['token'] = token
     message = errorMessage(200, "ok")
 
     # send notification
     sendNotification(user_id, id)
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+# This api is used for getting internship detail information
 @internship_opt.route("/getinternship",methods=['GET'])
 def getinternship():
     id = request.values.get("id")
@@ -214,11 +185,11 @@ def getinternship():
     data = getInternshipById(id)
     return data
 
+# This api is used for editing internship information
 @internship_opt.route("/edit_internship", methods=['Post'], endpoint='edit_internship')
 def edit_internship():
     data = json.loads(request.data)
     id = data['id']
-    print(data)
     company = data['company']
     user_id = data['user_id']
     title = data['title']
@@ -237,7 +208,6 @@ def edit_internship():
                             )
     message = editjob(internship)
     id = message.errormessage
-    # editjob(internship)
     # add meetings
     for meeting in meetings:
         time = meeting['datetime']
@@ -251,54 +221,16 @@ def edit_internship():
 
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
-
+# This api is used for delete internship
 @internship_opt.route("/del_internship", methods=['GET'], endpoint='del_internship')
 def del_internship():
     id = request.values.get("id")
-    # title = data['title']
-    # field = data['field']
-    # location = data['location']
-    # state = data['state']
-    # city = data['city']
-    # working_right = data['working_right']
-    # description = data['description']
-    # meetings = data['meeting']
-    # internship = Internship(id=id, title=title, field=field, location=location, state=state, city=city,
-    #                        working_right=working_right, description=description,
-    #                         )
-    # internship = searchJobById(id)
-    # mesvalue = deletejob(internship)
 
     deleteInternshipAndMeeting(id)
 
-    # del meetings
-    # meetings = getmeetingsbyjobid(id)
-    # for meeting in meetings:
-    #     datetime = meeting['datetime']
-    #     link = meeting['link']
-    #     meeting = Meeting(intership_id=id,
-    #                       datetime=datetime, link=link,
-    #                       deleted=1,
-    #                       create_time=getTime(datetime),
-    #                       update_time=getTime(datetime))
-    #     save_meeting = deletemeeting(meeting)
-    #
-    # start_date = time.time() + 3600
-    # id = mesvalue.errormessage
-    # mes = {'id': id, 'exp': start_date}
-    # token = jwt.encode(mes, token_key, algorithm='HS256')
-    # data = {}
-    # data['id'] = id
-    # data['token'] = token
-    # message = errorMessage(200, data)
-    # deco = jwt.decode(token,
-    #                   token_key, algorithms='HS256', options={"varify_signature": False})
-    # exptime = deco['exp']
-
     return json.dumps(errorMessage(200, "ok"), default=lambda obj: obj.__dict__)
 
-
+# This api used for delete meeting
 @internship_opt.route("/del_meeting", methods=['Post'], endpoint='del_meeting')
 def del_meeting():
     data = json.loads(request.data)
@@ -313,23 +245,16 @@ def del_meeting():
                       )
     save_meeting = deletemeeting(meeting)
     data['id'] = id
-    # data['token'] = token
     message = errorMessage(200, data)
-    # deco = jwt.decode(token,
-    #                   token_key, algorithms='HS256', options={"varify_signature": False})
-    # exptime = deco['exp']
 
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
+# This api is used for getting all internship
 @internship_opt.route("/get_all_intern", methods=['Get'], endpoint='get_all_intern')
 def get_all_intern():
 
     id = request.values.get("id")
     internships = getinternsbyuserid(id)
-    # add info session
-    # for internship in internships:
-    #     internship['meetings'] = getmeetingsbyjobid(internship['id'])
     res = {}
     data = []
     if internships is not None:

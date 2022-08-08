@@ -4,7 +4,7 @@ from sqlalchemy.orm import class_mapper
 
 db = SQLAlchemy()
 
-
+# user model
 class User(db.Model):
     __tablename__ = 'db_user'
     id = Column(String(255), primary_key=True)
@@ -25,7 +25,7 @@ class User(db.Model):
         return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
-
+# internship model
 class Internship(db.Model):
     __tablename__ = 'db_internships'
     id = Column(String(255), primary_key=True)
@@ -55,7 +55,7 @@ class Internship(db.Model):
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
 
-# 简历信息
+# resumeUser model
 class ResumeUser(db.Model):
     __tablename__ = 'db_resume_user_info'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -71,7 +71,7 @@ class ResumeUser(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# resumeEducation model
 class ResumeEducation(db.Model):
     __tablename__ = 'db_resume_education'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -89,7 +89,7 @@ class ResumeEducation(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# resumeWorkExperience model
 class ResumeWorkExperience(db.Model):
     __tablename__ = 'db_resume_workExperience'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -104,7 +104,7 @@ class ResumeWorkExperience(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# resumeProjectExperience
 class ResumeProjectExperience(db.Model):
     __tablename__ = 'db_resume_projectExperience'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -118,7 +118,7 @@ class ResumeProjectExperience(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# ResumeSkill model
 class ResumeSkill(db.Model):
     __tablename__ = 'db_resume_skill'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -129,7 +129,7 @@ class ResumeSkill(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# resumeAward model
 class ResumeAward(db.Model):
     __tablename__ = 'db_resume_award'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -141,7 +141,7 @@ class ResumeAward(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# resumePorjectDisplay model
 class ResumeProjectDisplay(db.Model):
     __tablename__ = 'db_resume_project_display'
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -153,14 +153,14 @@ class ResumeProjectDisplay(db.Model):
     def to_dict(self):
         return {c.name: getattr(self, c.name, None) for c in self.__table__.columns if c.name not in {"id", "user_id"}}
 
-
+# follow model
 class Follow(db.Model):
     __tablename__ = 'db_follow'
     id = Column(Integer, primary_key=True, autoincrement=True)
     following_id = Column(String(255))
     follower_id = Column(String(255))
 
-
+# review model
 class Review(db.Model):
     __tablename__ = 'db_review'
     id = Column(String(255), primary_key=True)
@@ -181,7 +181,7 @@ class Review(db.Model):
     def __repr__(self):
         return '<Review %r>' % self.id
 
-
+# collection model
 class Collection(db.Model):
     __tablename__ = 'db_collection'
     id = Column(String(255), primary_key=True)
@@ -196,7 +196,7 @@ class Collection(db.Model):
     def __repr__(self):
         return '<Collection %r>' % self.id
 
-
+# apply model
 class Apply(db.Model):
     __tablename__ = 'db_apply'
     id = Column(String(255), primary_key=True)
@@ -213,9 +213,7 @@ class Apply(db.Model):
     def __repr__(self):
         return '<Apply %r>' % self.id
 
-# He
-
-
+# meeting model
 class Meeting(db.Model):
     __tablename__ = 'db_meetings'
     id = Column(String(255), primary_key=True)
@@ -231,6 +229,7 @@ class Meeting(db.Model):
         return dict((col.name, getattr(obj, col.name))
                     for col in class_mapper(obj.__class__).mapped_table.c)
 
+# notice model
 class Notice(db.Model):
     __tablename__ = 'db_notice'
     id = Column(String(255), primary_key=True)

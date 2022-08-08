@@ -21,11 +21,6 @@ def checkRegistered(username, email):
 
 def registerNewAccount(inputs):
     try:
-        # newUser=User(username=inputs["username"],password=inputs["password"],mobile=inputs["mobile"],
-        #              nickname=inputs['nickname'],sex=inputs['sex'],
-        #              country = inputs['country'],deleted=inputs['deleted'],
-        #              create_time=pymysql.Timestamp,update_time=pymysql.Timestamp,
-        # print('username:',inputs.username,"password:",inputs.password)
         id = getuuid()
         newUser = User(id=id, username=inputs.username, password=inputs.password, deleted=0,
                        email=inputs.email,
@@ -155,7 +150,7 @@ def get_info(id):
 def update_resume(user_id, resume):
 
     try:
-        # 删除原有数据
+        # delete ori data
         ResumeUser.query.filter_by(user_id=user_id).delete()
         ResumeEducation.query.filter_by(user_id=user_id).delete()
         ResumeWorkExperience.query.filter_by(user_id=user_id).delete()
@@ -163,17 +158,16 @@ def update_resume(user_id, resume):
         ResumeSkill.query.filter_by(user_id=user_id).delete()
         ResumeAward.query.filter_by(user_id=user_id).delete()
         ResumeProjectDisplay.query.filter_by(user_id=user_id).delete()
-        # 插入新数据
+        # add information
         db.session.add(ResumeUser(
             name=resume["userInfo"]["name"],
             university=resume["userInfo"]["university"],
             email=resume["userInfo"]["email"],
             introduction=resume["userInfo"]["introduction"],
-            # update 7.24 新增加一个 头像字段，写入
+            # update
             thumbnail=resume["userInfo"]["thumbnail"],
             user_id=user_id
         ))
-        print("here")
         for education in resume["education"]:
             db.session.add(ResumeEducation(
                 university=education["university"],
@@ -225,7 +219,7 @@ def update_resume(user_id, resume):
                 user_id=user_id
             ))
         db.session.commit()
-    # update 7.24: 修改返回结果格式
+    # update
         return errorMessage(200, "ok")
     except Exception as e:
         print(e)
@@ -244,36 +238,36 @@ def query_resume(user_id):
             "awards": [x.to_dict() for x in user.awards],
             "projectDisplay": [x.to_dict() for x in user.displays]
         }
-    # update 7.24: 修改返回结果格式
+    # update
         return errorMessage(200, body)
     except Exception as e:
         print(e)
         return errorMessage(1, str(e))
 
 
-# 关注
+# follow method
 def user_like(following_id, follower_id):
     count = Follow.query.filter_by(following_id=following_id, follower_id=follower_id).count()
     if count == 0:
         db.session.add(Follow(following_id=following_id, follower_id=follower_id))
         db.session.commit()
 
-    # update 7.24: 修改返回结果格式
+    # update 7.24
     return errorMessage(200, "ok")
 
 
-# 取消关注
+# unfollow
 def user_dislike(following_id, follower_id):
     count = Follow.query.filter_by(following_id=following_id, follower_id=follower_id).count()
     if count != 0:
         Follow.query.filter_by(following_id=following_id, follower_id=follower_id).delete()
         db.session.commit()
 
-    # update 7.24: 修改返回结果格式
+    # update
     return errorMessage(200, "ok")
 
 
-# 查询关注列表
+#
 def query_following(user_id):
     following_ids = [follow.following_id for follow in Follow.query.filter_by(follower_id=user_id).all()]
     users = [User.query.filter_by(id=following_id).first() for following_id in following_ids]
@@ -284,14 +278,12 @@ def query_following(user_id):
         "type": user.type
     } for user in users if user is not None]
 
-    # update 7.24: 修改返回结果格式
+    # update
     return errorMessage(200, data)
 
 
-# 查询粉丝列表
+#
 def query_follower(user_id):
-    # print(user_id)
-    # data = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
     follower_ids = [follow.follower_id for follow in Follow.query.filter_by(following_id=user_id).all()]
     users = [User.query.filter_by(id=follower_id).first() for follower_id in follower_ids]
     data = [{
@@ -300,11 +292,11 @@ def query_follower(user_id):
         "email": user.email,
         "type": user.type
     } for user in users if user is not None]
-    # update 7.24: 修改返回结果格式
+    # update 7.24
     return errorMessage(200, data)
 
 
-# update 7.24 新增加图片上传方法
+# update upload image
 def save_image_from_base64(user_id, base64_string):
     image_data = base64.b64decode(
         re.sub('^data:image/.+;base64,', '', base64_string))

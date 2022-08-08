@@ -80,10 +80,9 @@ def login():
     deco = jwt.decode(token,
                       token_key, algorithms='HS256', options={"varify_signature": False})
     exptime = deco['exp']
-    # exp_time = datetime.datetime.strptime(str(exptime), "%Y-%m-%d %H:%M:%S.%f")
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
+# This api is used for change password
 @user_opt.route("/changepassword",methods=['GET'], endpoint="changepassword")
 def changepassword():
     token = request.values.get('token')
@@ -104,12 +103,10 @@ def changepassword():
     data['id'] = id
     data['token'] = token
     message = errorMessage(200, data)
-    # deco = jwt.decode(token,
-    #                   token_key, algorithms='HS256', options={"varify_signature": False})
     exptime = deco['exp']
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
+# This function is used for forgetting password
 @user_opt.route("/forget", methods=['GET'], endpoint="forget")
 def forget():
     email = request.values.get("email")
@@ -141,13 +138,12 @@ def resetpassword():
     message = reset_password(email, password)
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
+# This api is used for logout
 @user_opt.route("/logout")
 def logout():
     token = request.values.get('token')
     deco_token = jwt.decode(token, token_key, algorithms='HS256')
     id = deco_token['id']
-    # id = request.values.get('id')
     message = logout_user(id)
     username = message.errormessage
     if username in login_users:
@@ -155,6 +151,7 @@ def logout():
     message = errorMessage(200, "ok")
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+# This api is used for get information of user
 @user_opt.route("/getinfo", methods=['GET'])
 def getinfo():
     token = request.values.get('token')
@@ -166,7 +163,7 @@ def getinfo():
     data['errortype'] = 200
     return data
 
-# update 7.24 新增加图片上传方法
+# update method
 @user_opt.route("/upload_image", methods=['POST'])
 def upload_image():
     user_id = request.json["user_id"]
@@ -175,7 +172,7 @@ def upload_image():
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
-# update 7.24 获取图片
+# update query image function
 @user_opt.route("/image_thumbnail/<user_id>", methods=['GET'])
 def query_image(user_id):
     return send_file(f"./image_thumbnail/{user_id}", mimetype='image/gif')
@@ -184,69 +181,65 @@ def query_image(user_id):
 def change_resume():
     resumeid = request.json["resumeid"]
     resume = request.json["resume"]
-    print(resumeid,resume)
     message = update_resume(resumeid, resume)
-    # update 7.24: 修改返回结果格式
+    # update
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
+# get user resume function
 @user_opt.route("/getResume", methods=['GET'])
 def get_resume():
     user_id = request.values.get('resumeId')
 
     message = query_resume(user_id)
-    # update 7.24: 修改返回结果格式
+    # update
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
-# 关注
+# This api is used for following user
 @user_opt.route("/like", methods=['GET'])
 def like():
     following_id = request.values.get('followingId')
     follower_id = request.values.get('followerId')
     message = user_like(following_id, follower_id)
-    # update 7.24: 修改返回结果格式
+    # update
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
-# 取关
+# This function is used for unfollow people
 @user_opt.route("/dislike", methods=['GET'])
 def dislike():
     following_id = request.values.get('followingId')
     follower_id = request.values.get('followerId')
     message = user_dislike(following_id, follower_id)
-    # update 7.24: 修改返回结果格式
+    # update
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
-
-# 关注列表
+# get following list
 @user_opt.route("/following", methods=['GET'])
 def following():
     user_id = request.values.get('userId')
     message = query_following(user_id)
-    # update 7.24: 修改返回结果格式
+    # update
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
 
-# 粉丝列表
+# get followers
 @user_opt.route("/follower", methods=['GET'])
 def follower():
     user_id = request.values.get('userId')
     message = query_follower(user_id)
-    # update 7.24: 修改返回结果格式
+    # update 7.24:
     return json.dumps(message, default=lambda obj: obj.__dict__)
 
+# This api is used for checking if user follows another user
 @user_opt.route("/checkfollow", methods=['GET'])
 def checkfollow():
     id = request.values.get("id")
     user_id = request.values.get("user_id")
-    print(id,user_id)
     type = getUserIdentity(user_id)
     flag = checkIfFollow(id,user_id)
     data = {}
     data['type'] = type
     data['flag'] = flag
     message = errorMessage(200, data)
-    # deco = jwt.decode(token,
-    #                   token_key, algorithms='HS256', options={"varify_signature": False})
     return json.dumps(message, default=lambda obj: obj.__dict__)

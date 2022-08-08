@@ -19,100 +19,74 @@ DB_CONFIG = { #---根据在你电脑上的schema名字改
 }
 def init():
     res = Internship.query.filter_by(deleted=0).order_by(desc("update_time")).all()
-    for e in res:
-        print(e)
+
     return res
 
-
+# This function is mainly for search by different conditions
 def search_intership(key, field, location, type, city, state):
-    # if type == 'international':
-    #     type = 0
-    # elif type == 'pr':
-    #     type = 1
-    print(key, field,location,type,city,state)
     if field == "" and location == "" and type == "":
-        print("1")
         res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key))).all()
     elif field == "" and location == "" and type != "":
-        print("2")
         res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                       Internship.working_right.like('%{type}'.format(type=type))).all()
 
     elif field == "" and location != "" and type == "":
-        print("3")
         if state != "" and city != "":
-            print("4")
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.state == state,
                                           Internship.city == city).all()
         elif state != "" and city == "":
-            print("5")
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.state == state).all()
         else:
-            print("6")
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location).all()
 
     elif field != "" and location == "" and type == "":
-        print("7")
         res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                       Internship.field == field).all()
     elif field != "" and location != "" and type == "":
         if state != "" and city != "":
-            print("8")
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.field == field,
                                           Internship.state == state,
                                           Internship.city == city).all()
         elif state != "" and city == "":
-            print("9")
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.field == field,
                                           Internship.state == state).all()
         else:
-            print("10")
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.field == field,
                                           Internship.location == location).all()
 
     elif field != "" and location == "" and type != "":
-        print("11")
         res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                       Internship.field == field,
                                       Internship.working_right.like('%{type}'.format(type=type))).all()
     elif field == "" and location != "" and type != "":
         if state != "" and city != "":
-            print("12")
-
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.working_right.like('%{type}%'.format(type=type)),
                                           Internship.state == state,
                                           Internship.city == city).all()
         elif state != "" and city == "":
-            print("13")
-
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.working_right.like('%{type}%'.format(type=type)),
                                           Internship.state == state).all()
         else:
-            print("14")
-
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.working_right.like('%{type}%'.format(type=type)),
                                           Internship.location == location).all()
 
     else:
         if state != "" and city != "":
-            print(state,city)
-            print("15")
-
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.working_right.like('%{type}%'.format(type=type)),
@@ -120,16 +94,12 @@ def search_intership(key, field, location, type, city, state):
                                           Internship.field == field,
                                           Internship.city == city).all()
         elif state != "" and city == "":
-            print("16")
-
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.location == location,
                                           Internship.working_right.like('%{type}%'.format(type=type)),
                                           Internship.field == field,
                                           Internship.state == state).all()
         else:
-            print("17")
-
             res = db.session.query(Internship).filter(Internship.title.like('%{keyword}%'.format(keyword=key)),
                                           Internship.working_right.like('%{type}%'.format(type=type)),
                                           Internship.field == field,
@@ -137,6 +107,7 @@ def search_intership(key, field, location, type, city, state):
 
     return res
 
+# Thsi function is used for increase view times
 def click(id):
     try:
         intern = Internship.query.get(id)
@@ -146,6 +117,7 @@ def click(id):
     except Exception as e:
         print(e)
 
+# This function is used for view job detail
 def searchJobById(id):
     try:
         click(id)
@@ -163,16 +135,14 @@ def searchResume(id):
     except Exception as e:
         print(e)
 
+# This function is used for job recommandation
 def getRecommJobs(id):
     resumeedu = ResumeEducation.query.filter_by(user_id=id).first()
-    print("############",resumeedu.id)
     position = ResumeWorkExperience.query.filter_by(user_id=id).first()
     resume = ResumeUser.query.filter_by(user_id=id).first()
     if resumeedu is None or position is None or resume is None:
-        print("herer-----------------")
         return []
     field = resumeedu.major
-    print(field)
     aim = position.position
     intro = resume.introduction
     res = Internship.query.all()
@@ -184,7 +154,6 @@ def getRecommJobs(id):
             if e.city != "":
                 temp = temp + " " + e.city
         list.append(temp.lower())
-    print(list)
     if field is not None:
         descrip = field + " "
     if aim is not None:
@@ -192,22 +161,21 @@ def getRecommJobs(id):
     if intro is not None:
         descrip = descrip + intro
     descrip = descrip.lower()
-    print(descrip)
     recomm_index = get_recomm(descrip,list,10)
     return_lst = [res[i-1] for i in recomm_index]
-    print(return_lst)
     return return_lst
 
+# get similarity of jobs and user's information
 def get_recomm(descrip,soup,num):
     temp=[descrip]+soup
-    tfidf = TfidfVectorizer(stop_words='english',lowercase=True)
+    tfidf = TfidfVectorizer(stop_words='english', lowercase=True)
     tfidf_matrix = tfidf.fit_transform(temp)
     cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
     ct=0
-    ans=[[i,cosine_sim[0][i]] for i in range(1,len(cosine_sim[0])) if cosine_sim[0][i]>0]
+    ans=[[i, cosine_sim[0][i]] for i in range(1, len(cosine_sim[0])) if cosine_sim[0][i]>0]
     ans=sorted(ans, key=lambda x:x[1],reverse=True )
 #     ans=ans.sort()
-    if num<len(ans):
+    if num < len(ans):
         return [ans[i][0] for i in range(1,num)]
     else:
         return [ans[i][0] for i in range(1,len(ans))]
@@ -231,7 +199,6 @@ def getHotJobs():
         print(e)
 
 def get_wish_list(id):
-    # Movie.query.join(Wishlist).filter()
     conn = pymysql.connect(
         host=DB_CONFIG["host"],
         port=DB_CONFIG["port"],
@@ -244,10 +211,7 @@ def get_wish_list(id):
     sql = "SELECT db_internships.id, db_internships.title,db_internships.state,db_internships.city,db_internships.company,db_internships.location, db_internships.user_id,db_collection.id,db_resume_user_info.thumbnail from db_collection LEFT JOIN db_internships on db_internships.id = db_collection.internship_id " \
           "LEFT JOIN db_resume_user_info on db_internships.user_id = db_resume_user_info.user_id " \
           "where db_collection.user_id = {} and db_collection.deleted = 0 and db_internships.deleted=0;".format(id)
-    # res = db.session.query(Internship.id,Internship.title, Internship.user_id,
-    #                        Collection.id).outerjoin(Collection, Collection.internship_id == Internship.id).filter(
-    #     Collection.user_id == id,Collection.deleted==0).all()
-    # return res
+
     cursor.execute(sql)  # ASC
     result = cursor.fetchall()
     conn.close()
@@ -309,7 +273,7 @@ def get_apply_list(id):
     except Exception as e:
         print(e)
 
-# He
+# add new internship by using this function
 def addNewjob(inputs):
     try:
         id = getuuid()
@@ -351,8 +315,6 @@ def editjob(inputs):
                             create_time=getTime(datetime),
                             update_time=getTime(datetime),
                             )
-        # delete old job
-        # Internship.query.filter_by(id=inputs.id).delete()
         # add new job
         db.session.add(Job)
         db.session.commit()
