@@ -3,8 +3,7 @@ import Typography from '@mui/material/Typography';
 import './JobDetail.css';
 import { Avatar, Button, Divider, Grid, Paper } from '@mui/material';
 import Comments from '../comments/Comments';
-import { citizenship, faqSample } from '../assets';
-import FAQ from './FAQ';
+import { citizenship } from '../assets';
 import { apiGet } from '../API';
 import { useNavigate } from 'react-router-dom';
 

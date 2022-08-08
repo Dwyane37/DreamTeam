@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 
-import WelcomePage from './pages/WelcomePage';
 import SignInSide from './pages/SignIn';
 import SignUp from './pages/SignUpPage';
 import FindPasswordPage from './pages/FindPasswordPage';
@@ -12,14 +11,11 @@ import AddJobPage from './pages/AddJobPage';
 import EditJobPage from './pages/EditJobPage';
 import DashboardPage from './pages/DashboardPage';
 import SavedJobs from './pages/SavedJobs';
-import AppliedJobs from './pages/AppliedJobs';
 import ResumePage from './pages/ResumePage';
 import FollowPage from './pages/FollowPage';
 import { io } from 'socket.io-client';
 import Snackbar from '@mui/material/Snackbar';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import SnackbarContent from '@mui/material/SnackbarContent';
+
 // import Link from '@mui/material/Link';
 
 function App() {
@@ -69,8 +65,6 @@ function App() {
           <Route path="/editjob/:jobId" element={<EditJobPage />} />
           <Route path="/dashboard" element={<DashboardPage socket={socket} />} />
           <Route path="/saved-jobs" element={<SavedJobs socket={socket} />} />
-          <Route path="/applied-jobs" element={<AppliedJobs socket={socket} />} />
-          <Route path="/" element={<WelcomePage />} />
           <Route path="/profile/:userId" element={<ResumePage socket={socket} />} />
           <Route path="/follow" element={<FollowPage socket={socket} />} />
         </Routes>
