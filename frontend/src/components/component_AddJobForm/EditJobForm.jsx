@@ -214,9 +214,9 @@ export default function AddJobForm() {
         />
       </Paper>
 
-      <JobBigButton variant="outlined" onClick={createSession}>
+      <JobSmallButton variant="outlined" onClick={createSession}>
         Create an Info Session
-      </JobBigButton>
+      </JobSmallButton>
 
       <Divider className="divider" variant="middle" />
 
@@ -241,14 +241,14 @@ export default function AddJobForm() {
               }}
             />
           </FormControl>
-          <Stack spacing={6} direction="row">
+          <div className="sessionButton">
             <JobSmallButton variant="outlined" color="error" onClick={Cancel}>
               Cancel
             </JobSmallButton>
             <JobSmallButton variant="outlined" onClick={Create}>
               {editItemIdx ? 'Save' : 'Create'}
             </JobSmallButton>
-          </Stack>
+          </div>
         </Paper>
       )}
 
@@ -267,9 +267,9 @@ export default function AddJobForm() {
         ))}
 
       <Box className="PostForm">
-        <JobSmallButton type="submit" variant="outlined">
+        <JobBigButton type="submit" variant="outlined">
           Save Changes
-        </JobSmallButton>
+        </JobBigButton>
       </Box>
     </Box>
   );

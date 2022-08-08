@@ -59,7 +59,7 @@
   background-color: red;
 }
 
-.sessionButton {
+.createSession .sessionButton {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
