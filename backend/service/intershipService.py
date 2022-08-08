@@ -1,4 +1,5 @@
 import datetime
+import pymysql
 from interface.intershipApi import *
 from utils.exceptionMessage import *
 from utils.generator import *
