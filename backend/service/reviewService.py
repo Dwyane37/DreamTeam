@@ -7,13 +7,13 @@ from interface.reviewApi import *
 from utils.exceptionMessage import *
 from utils.generator import *
 
-DB_CONFIG = { #---根据在你电脑上的schema名字改
+DB_CONFIG = {
     "host": "127.0.0.1",
     "port": 3306,
     "user": "root",
     "passwd": "123456",
     # "db": "Sleep_project1",
-    "db": "db",
+    "db": "intern",
     "charset": "utf8"
 }
 
