@@ -71,7 +71,7 @@ export default function JobDetail(props) {
                 .toString()
                 .split('')
                 .map((item, idx) => (
-                  <li key={idx}>{citizenship[item - 1].label}</li>
+                  <li key={idx}>{citizenship[item - 1]?.label}</li>
                 ))}
             </ul>
           </div>
