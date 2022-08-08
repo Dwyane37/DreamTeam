@@ -312,8 +312,8 @@ def get_apply_list(id):
 # He
 def addNewjob(inputs):
     try:
-        id = getuuid()
-        newJob = Internship(id=id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
+        # id = getuuid()
+        newJob = Internship(id=inputs.id, user_id=inputs.user_id, company=inputs.company, title=inputs.title, field=inputs.field, location=inputs.location,
                             state=inputs.state, city=inputs.city,view=0,
                             deleted=0, working_right=inputs.working_right, description=inputs.description,
                             applychannel=inputs.applychannel,
