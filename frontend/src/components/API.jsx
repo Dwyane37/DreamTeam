@@ -10,7 +10,7 @@ export const apiPost = async (path, content) => {
   };
   const res = await fetch(`http://127.0.0.1:5500/${path}`, init);
   const body = await res.json();
-  await console.log(body);
+  // await console.log(body);
   if (body.errortype == 200) {
     return body;
   } else {
@@ -40,7 +40,7 @@ export const apiGet = async (path, paramDic) => {
   const res = await fetch(`http://127.0.0.1:5500/${path}?${params}`, init);
   // await console.log(res);
   const body = await res.json();
-  await console.log(body);
+  // await console.log(body);
   if (body.errortype == 200) {
     return body;
   } else {
@@ -53,7 +53,7 @@ export const apiCall = async (path, paramDic) => {
   const res = await fetch(`http://127.0.0.1:5500/${path}?${params}`);
   // await console.log(res);
   const body = await res.json();
-  await console.log(body);
+  // await console.log(body);
   if (body.errortype == 200) {
     return body;
   } else {
