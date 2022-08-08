@@ -2,11 +2,14 @@
 
 # Student internship SaaS system
 
-team member: z5289197
-team member: z5315042
-team member: z5330307
-team member: z5211485
-team member: z5253472
+- team member: z5289197
+- team member: z5315042
+- team member: z5330307
+- team member: z5211485
+- team member: z5253472
+
+Please see the detailed report in the document COMP9323_Project_Documentation
+
 
 # Run Backend Server
 
