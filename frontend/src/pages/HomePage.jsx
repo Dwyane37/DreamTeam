@@ -34,17 +34,17 @@ export default function HomePage({ socket }) {
       .then((data) => {
         getRecommend(data.data);
       })
-      .catch((e) => alert(e));
+      .catch((e) => console.error(e));
     apiGet('internship/gethotjobs', null)
       .then((data) => {
         getHotJobs(data.data);
       })
-      .catch((e) => alert(e));
+      .catch((e) => console.error(e));
     apiCall('internship/home', null)
       .then((data) => {
         getJobs(data.data);
       })
-      .catch((e) => alert(e));
+      .catch((e) => console.error(e));
   }, [refresh]);
 
   const mdTheme = createTheme();

@@ -13,7 +13,7 @@ export default function SavedJobs({ socket }) {
   React.useEffect(() => {
     apiGet('/internship/getuserwishlist', { id: sessionStorage.getItem('id') })
       .then((data) => setSaved(data.data))
-      .catch((e) => alert(e));
+      .catch((e) => console.error(e));
   }, [refresh]);
   return (
     <div>
