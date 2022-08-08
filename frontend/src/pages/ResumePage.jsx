@@ -198,7 +198,7 @@ function ResumePage({ socket }) {
     apiGet('internship/get_all_intern', { id: resumeId }).then((res) => {
       const temp = Object.values(res.data);
       temp.sort((a, b) => new Date(a.update_time).getTime() - new Date(b.update_time).getTime());
-      setJobs(temp);
+      setJobs(temp.reverse());
     });
   }, []);
 
