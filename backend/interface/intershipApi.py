@@ -235,7 +235,7 @@ def edit_internship():
                             state=state, city=city,applychannel=applychannel,
                             working_right=working_right, description=description,deleted=0
                             )
-    message = addNewjob(internship)
+    message = editjob(internship)
     id = message.errormessage
     # editjob(internship)
     # add meetings
