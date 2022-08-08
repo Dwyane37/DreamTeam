@@ -167,7 +167,7 @@ function ResumePage({ socket }) {
   });
   const [open, setOpen] = useState(false);
 
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({ name: '', university: '', email: '', introduction: '', thumbnail: '' });
   const [openUserInfo, setOpenUserInfo] = useState(false);
   const [type, setType] = useState('false');
   // user type
