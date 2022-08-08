@@ -50,7 +50,7 @@ export default function DashboardPage({ socket }) {
   return (
     logedIn && (
       <div>
-        <NavBar type={sessionStorage.getItem('type')} socket={socket} />
+        <NavBar type={sessionStorage.getItem('type')} socket={socket} setRefresh={setRefresh} />
         <div className="dashboard-main">
           <h3>My Job Posts</h3>
           <Button className="add-job-button" variant="contained" color="success" onClick={AddJob}>

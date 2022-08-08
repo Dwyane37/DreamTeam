@@ -47,6 +47,7 @@ export default function NavBar(props) {
 
   const navigateHome = () => {
     type === '0' ? navigate('/home') : navigate('/dashboard');
+    location.pathname === '/home' || location.pathname === '/dashboard' ? props.setRefresh((prev) => !prev) : null;
   };
 
   const navigateProfile = () => {
