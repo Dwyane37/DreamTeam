@@ -2,11 +2,12 @@
 
 # Student internship SaaS system
 
-- team member: z5289197
-- team member: z5315042
-- team member: z5330307
-- team member: z5211485
-- team member: z5253472
+- z5289197 - Shiqi Zhou 
+- z5211485 - Serena Zhang 
+- z5330307 - Hanqiu Wu 
+- z5285518 - Xingze Li 
+- z5215042 - Zhibo Hu 
+- z5253472 - Chenglong He
 
 ## Setup and Deployment
 
