@@ -37,7 +37,7 @@ export default function JobPanel(props) {
   const [jobId, setJobId] = React.useState(null);
 
   const handleClickOpen = (e) => {
-    console.log('open detail');
+    // console.log('open detail');
     setOpen(true);
     setJobId(e.currentTarget.id);
   };
@@ -58,7 +58,7 @@ export default function JobPanel(props) {
     apiGet('internship/getinternship', { id: jobId }).then((res) => {
       setApplyMethod(res.internship[0].applychannel);
     });
-    console.log('apply ' + jobId);
+    // console.log('apply ' + jobId);
     setOpenApply(true);
     // TODO display apply method
   };

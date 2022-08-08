@@ -213,7 +213,7 @@ function ResumePage({ socket }) {
   };
 
   const handleUserInput = (e, type) => {
-    console.log(type);
+    // console.log(type);
     let temp = { ...userInfo };
     temp[type] = e.target.value;
     setUserInfo(temp);
@@ -224,10 +224,10 @@ function ResumePage({ socket }) {
   };
 
   const saveUserInfo = () => {
-    console.log(userInfo);
+    // console.log(userInfo);
     const temp = { ...resumeData };
     temp.userInfo = { ...userInfo };
-    console.log(temp);
+    // console.log(temp);
     setResumeData({ ...temp });
     setOpenUserInfo(false);
     setUserInfo({ thumbnail: '', ...userInfo });
@@ -236,9 +236,9 @@ function ResumePage({ socket }) {
   const deleteItem = (index) => {
     const tempData = { ...resumeData };
     tempData[type].splice(index - 1, 1);
-    console.log(tempData);
+    // console.log(tempData);
     setResumeData({ ...tempData });
-    console.log(tempData);
+    // console.log(tempData);
   };
 
   const save = (data) => {
@@ -249,10 +249,10 @@ function ResumePage({ socket }) {
   };
 
   const submit = () => {
-    console.log(resumeData);
+    // console.log(resumeData);
     apiPost('user/submitResume', { resumeid: id, resume: resumeData })
       .then((res) => {
-        console.log('success');
+        // console.log('success');
         alert('Profile updated');
       })
       .catch((e) => console.error(e));
@@ -266,16 +266,13 @@ function ResumePage({ socket }) {
     const inputEl = document.createElement('input');
     inputEl.type = 'file';
     inputEl.click();
-    console.log(inputEl);
     inputEl.onchange = (e) => {
-      console.log(e);
       const file = e.target.files[0];
       if (!!file) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function (e) {
           let data = e.target.result;
-          console.log(data);
           let temp = { ...userInfo };
           let temp2 = { ...resumeData };
           temp.thumbnail = data;

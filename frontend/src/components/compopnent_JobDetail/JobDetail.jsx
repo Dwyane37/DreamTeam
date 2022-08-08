@@ -33,7 +33,7 @@ export default function JobDetail(props) {
       internship: job.id,
     })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       })
       .catch((e) => alert(e));
   };
@@ -92,7 +92,6 @@ export default function JobDetail(props) {
             </Typography>
             {meetings?.map((meeting, idx) => {
               const date = new Date(meeting.datetime);
-              console.log(date.getTime());
               return (
                 <div key={idx}>
                   <span className="session-date">{date.toDateString()}</span>

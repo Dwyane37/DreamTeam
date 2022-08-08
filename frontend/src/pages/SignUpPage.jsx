@@ -58,7 +58,7 @@ export default function SignUp() {
       })
         .then((body) => {
           setActiveStep(activeStep + 1);
-          console.log(body);
+          // console.log(body);
         })
         .catch((e) => alert(e));
     } else {
@@ -69,12 +69,6 @@ export default function SignUp() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
-  React.useEffect(() => {
-    console.log(accType);
-    console.log(signupInfo);
-    console.log(profileInfo);
-  }, [accType, signupInfo, profileInfo]);
 
   return (
     <ThemeProvider theme={theme}>

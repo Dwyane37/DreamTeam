@@ -39,7 +39,7 @@ const FollowPage = ({ socket }) => {
 
   useEffect(() => {
     apiGet('user/following', { userId: id }).then((res) => {
-      console.log(res);
+      // console.log(res);
       setFollowList(res.errormessage);
     });
   }, []);

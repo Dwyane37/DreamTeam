@@ -15,7 +15,6 @@ function getJobDetail(jobs, id) {
 export default function RecommenderPanel(props) {
   const handleRefresh = (all_jobs) => {
     const shuffled = [...all_jobs].sort(() => 0.5 - Math.random());
-    console.log('fetch new recommendations');
     setCurrentDisplay(shuffled.slice(0, 2));
   };
 

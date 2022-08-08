@@ -45,7 +45,6 @@ export default function FindPassword() {
     e.preventDefault();
     apiCall('user/resetpassword', { email: sessionStorage.getItem('email'), password: passwords['new_password'] })
       .then((body) => {
-        console.log(body);
         setResetSuccess(true);
       })
       .catch((e) => alert(e));

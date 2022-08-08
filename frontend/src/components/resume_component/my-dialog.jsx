@@ -29,7 +29,7 @@ function MyDialog(props) {
   const addItem = (name) => {
     const tempData = [...inputData];
     tempData.unshift({});
-    console.log(inputData,tempData)
+    // console.log(inputData,tempData)
     setInputData([...tempData]);
   };
 
@@ -40,7 +40,7 @@ function MyDialog(props) {
     const temp = inputData.filter((item) => {
       let flag = false;
       Object.keys(item).forEach((key) => {
-        console.log(item[key]);
+        // console.log(item[key]);
         if (item[key]) {
           flag = true;
         }
@@ -51,13 +51,13 @@ function MyDialog(props) {
     props.save(temp);
   };
   const aaa = (str) => {
-     return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
-   }
-  console.log(props.type);
+    return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+  };
+  // console.log(props.type);
   return (
     <div className="my_dialog">
       {inputData.map((element, index) => (
-        <div className="form" key={index+new Date()}>
+        <div className="form" key={index + new Date()}>
           {props.type !== 'userInfo' ? (
             <div className="opearte">
               <Button className="add" variant="contained" size="small" onClick={() => addItem()}>

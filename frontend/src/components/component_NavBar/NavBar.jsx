@@ -105,7 +105,7 @@ export default function NavBar(props) {
       field: filter.field?.label || '',
       right: right || '',
     };
-    console.log(attr);
+    // console.log(attr);
     apiGet('internship/search', attr)
       .then((data) => {
         setJobFunc(data.data);

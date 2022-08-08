@@ -52,7 +52,7 @@ export default function SignInSide() {
       password: data.get('password'),
     })
       .then((body) => {
-        console.log(body);
+        // console.log(body);
         sessionStorage.setItem('token', body.errormessage.token);
         sessionStorage.setItem('id', body.errormessage.id);
         sessionStorage.setItem('type', body.errormessage.type);

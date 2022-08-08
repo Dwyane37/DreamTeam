@@ -79,11 +79,9 @@ export default function AddJobForm({ socket }) {
       applychannel: application,
       meeting: sessions, //e.g. [{datetime: string, link: string }, {datetime: string , link: string }]
     };
-    console.log(attr);
 
     apiPost('internship/add_internship', attr)
       .then((body) => {
-        console.log(body);
         clearAll();
         apiGet('user/follower', { userId: sessionStorage.getItem('id') }).then((res) => {
           // const followers;
@@ -110,7 +108,6 @@ export default function AddJobForm({ socket }) {
   const editSession = (e) => {
     setEditItemIdx(e.target.parentNode.id);
     let session = sessions[e.target.parentNode.id];
-    console.log(session);
     setDatetime(session.datetime);
     setLink(session.link);
     setOpen(true);
@@ -136,7 +133,6 @@ export default function AddJobForm({ socket }) {
 
   const deleteSession = (e) => {
     const idx = e.target.parentNode.id;
-    console.log(typeof parseInt(idx));
     setSessions([...sessions.slice(0, parseInt(idx)), ...sessions.slice(parseInt(idx) + 1)]);
   };
 
@@ -148,16 +144,6 @@ export default function AddJobForm({ socket }) {
     setOpen(false);
   };
 
-  // React.useEffect(() => {
-  //   console.log(filter);
-  // }, [filter]);
-  // React.useEffect(() => {
-  //   console.log(link);
-  // }, [link]);
-
-  React.useEffect(() => {
-    console.log(sessions);
-  }, [sessions]);
   return (
     <Box
       className="AddJobForm"

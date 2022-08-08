@@ -91,7 +91,7 @@ export default function JobCard(props) {
         internship: jobId,
       })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
         })
         .catch((e) => alert(e));
       setSave(true);
@@ -112,14 +112,14 @@ export default function JobCard(props) {
   const handleEdit = (e) => {
     e.stopPropagation();
     const jobID = e.currentTarget.parentNode.parentNode.id;
-    console.log('edit');
+    // console.log('edit');
     navigate(`/editjob/${jobID}`);
   };
 
   const handleDelete = (e) => {
     e.stopPropagation();
     const jobID = e.currentTarget.parentNode.parentNode.id;
-    console.log('delete ' + jobID);
+    // console.log('delete ' + jobID);
     apiGet('internship/del_internship', { id: jobID }).then((res) => {
       props.refresh((prev) => !prev);
     });

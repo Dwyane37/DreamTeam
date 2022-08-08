@@ -63,7 +63,7 @@ export default function Settings() {
         new_password: passwords.new_password,
       })
         .then((body) => {
-          console.log(body);
+          // console.log(body);
           clear();
           setSuccess(true);
         })
