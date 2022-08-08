@@ -19,10 +19,36 @@ import { SessionInfo, JobBigButton, JobSmallButton } from './AddJobFormStyle';
 import FieldFilter from '../component_Filter/FieldFilter';
 import RegionFilter from '../component_Filter/RegionFilter';
 import CitizenshipFilter from '../component_Filter/CitizenshipFilter';
+import { Country, State, City } from 'country-state-city';
+import { fields, citizenship } from '../assets';
 
 import './AddJobForm.css';
 
 export default function AddJobForm() {
+  const countries = Country.getAllCountries();
+  const getFilterItem = (type, name) => {
+    switch (type) {
+      case 'country':
+        const country = countries.find((c) => c.name === name);
+        setFilter((prev) => ({ ...prev, country: country }));
+      case 'state':
+        const states = State.getStatesOfCountry(filter.country?.isoCode);
+        const state = states?.find((c) => c.name === name);
+        setFilter((prev) => ({ ...prev, state: state ? state : { name: name } }));
+      case 'city':
+        const cities = City.getCitiesOfState(filter.country?.isoCode, filter.state?.isoCode);
+        const city = cities?.find((c) => c.name === name);
+        setFilter((prev) => ({ ...prev, city: city ? city : { name: name } }));
+      case 'field':
+        const field = fields.find((c) => c.label === name);
+        setFilter((prev) => ({ ...prev, field: field }));
+      case 'citizenship':
+        const ids = name.toString().split('');
+        const selected = [];
+        ids.map((id) => selected.push(citizenship[id - 1]));
+        setFilter((prev) => ({ ...prev, citizenship: selected }));
+    }
+  };
   const params = useParams();
   const jobId = params.jobId;
 
@@ -46,7 +72,6 @@ export default function AddJobForm() {
 
   const [sessions, setSessions] = React.useState([]);
 
-  //const [aaaa, setaaaa] = React.useState(new Date(datetime));
   React.useEffect(() => {
     apiGet('internship/getinternship', { id: jobId }).then((res) => {
       const job = res.internship[0];
@@ -55,6 +80,11 @@ export default function AddJobForm() {
       setDescription(job.description);
       setApplication(job.applychannel);
       setSessions(res.meetings);
+      getFilterItem('country', job.location);
+      getFilterItem('state', job.state);
+      getFilterItem('city', job.city);
+      getFilterItem('field', job.field);
+      getFilterItem('citizenship', job.working_right);
     });
   }, []);
 
@@ -153,9 +183,9 @@ export default function AddJobForm() {
     setOpen(false);
   };
 
-  React.useEffect(() => {
-    console.log(sessions);
-  }, [sessions]);
+  // React.useEffect(() => {
+  //   console.log(sessions);
+  // }, [sessions]);
   return (
     <Box
       className="AddJobForm"

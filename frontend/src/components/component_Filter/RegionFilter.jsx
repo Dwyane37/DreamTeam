@@ -19,12 +19,13 @@ function RegionFilterElement(props) {
       className="region_filter_box"
       disablePortal
       id={props.id}
+      isOptionEqualToValue={(option, value) => option.id === value?.id}
       getOptionLabel={(option) => option.name}
       options={props.options}
+      value={props.value}
       onChange={(e, value, reason) => {
         handleUpdate(e, value, reason);
       }}
-      value={props.value}
       renderInput={(params) => <TextField {...params} label={props.label} />}
     />
   );
@@ -73,7 +74,7 @@ export default function RegionFilter(props) {
           <RegionFilterElement
             id="state"
             label="State"
-            options={getState(filter.country?.isoCode)}
+            options={getState(filter.country?.isoCode) || State.getAllStates()}
             updateFunction={setState}
             value={filter.state}
           />
@@ -83,7 +84,7 @@ export default function RegionFilter(props) {
           <RegionFilterElement
             id="city"
             label="City"
-            options={getCity(filter.country?.isoCode, filter.state?.isoCode)}
+            options={getCity(filter.country?.isoCode, filter.state?.isoCode) || City.getAllCities()}
             updateFunction={setCity}
             value={filter.city}
           />
