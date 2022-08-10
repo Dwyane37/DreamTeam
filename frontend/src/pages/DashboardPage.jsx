@@ -15,9 +15,10 @@ export default function DashboardPage({ socket }) {
   const [refresh, setRefresh] = React.useState(false);
 
   function AddJob() {
-    // // get follower list
+    // get follower list
     // apiGet('user/follower', { userId: sessionStorage.getItem('id') }).then((res) => {
     //   // const followers;
+    //   console.log(res.errormessage);
     //   res.errormessage.map((user) => {
     //     socket?.emit('newJob', {
     //       senderName: sessionStorage.getItem('id'),

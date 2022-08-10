@@ -25,9 +25,9 @@ import SideDrawer from './Drawer';
 
 // #########################
 export default function NavBar(props) {
-  React.useEffect(() => {
-    props.socket?.emit('newUser', sessionStorage.getItem('id'));
-  }, []);
+  // React.useEffect(() => {
+  //   props.socket?.emit('newUser', sessionStorage.getItem('id'));
+  // }, []);
 
   const type = props.type;
   const navigate = useNavigate();

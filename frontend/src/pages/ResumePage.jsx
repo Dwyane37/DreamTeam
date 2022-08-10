@@ -438,7 +438,7 @@ function ResumePage({ socket }) {
         {inUserType == '1' && id !== resumeId ? hr_detail : inUserType == '0' ? student_resume : null}
 
         <div className="resume_footer">
-          {id === resumeId && inUserType == 0 && (
+          {id === resumeId && (
             <Button className="save" variant="contained" size="small" color="success" onClick={() => submit()}>
               save
             </Button>
